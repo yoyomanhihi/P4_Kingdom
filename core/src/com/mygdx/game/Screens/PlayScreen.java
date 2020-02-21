@@ -29,6 +29,17 @@ public class PlayScreen implements Screen {
         renderer = new OrthogonalTiledMapRenderer(map);
     }
 
+    public void handleInput(float dt){
+        if(Gdx.input.isTouched()){
+
+        }
+    }
+
+    public void update(float dt){
+        handleInput(dt);
+
+    }
+
     @Override
     public void show() {
 
