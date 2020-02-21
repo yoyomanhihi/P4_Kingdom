@@ -4,16 +4,29 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.mygdx.game.ProtectTheKingdom;
 
 public class PlayScreen implements Screen {
 
     private ProtectTheKingdom game;
     Texture texture;
+    private TmxMapLoader mapLoader;
+    private TiledMap map;
+    private OrthogonalTiledMapRenderer renderer;
 
     public PlayScreen(ProtectTheKingdom game){
         this.game = game;
+
         texture = new Texture("badlogic.jpg");
+
+        mapLoader = new TmxMapLoader();
+
+        map = mapLoader.load("Map 1.tmx");
+
+        renderer = new OrthogonalTiledMapRenderer(map);
     }
 
     @Override
