@@ -31,7 +31,9 @@ public class MenuScreen implements Screen {
         table.setDebug(true);
         stage.addActor(table);
 
-        Skin skin = new Skin(Gdx.files.internal("skin/sgx-ui.json"));
+        Skin skin = new Skin(Gdx.files.internal("skin2/glassy-ui.json"));
+
+        //Skin skin = new Skin(Gdx.files.internal("skin/sgx-ui.json"));
 
         TextButton newGame = new TextButton("New Game", skin);
         TextButton exit = new TextButton("Exit", skin);
