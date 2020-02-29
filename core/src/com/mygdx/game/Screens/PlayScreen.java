@@ -37,7 +37,6 @@ public class PlayScreen implements Screen {
 
         font = new BitmapFont();
         batch = new SpriteBatch();
-
         map = new TmxMapLoader().load("Map 1.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / 32f);
         camera.setToOrtho(false, 48, 30);
