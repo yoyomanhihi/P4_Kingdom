@@ -1,23 +1,31 @@
 package com.mygdx.game;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class Player {
 
-    public int argent;
-    public int nombredevies;
+    public int money;
+    public int life;
+    public LinkedList<Tower> weapons;
+    public int score;
 
     public Player(){ //donne un budget et un nombre de vie au joueur au début de la partie
-        argent = 150;
-        nombredevies = 1;
+        money = 150;
+        life = 1;
+        score = 0;
+        weapons = new LinkedList<>();
     }
 
-    public void Achat(int prix){ //Si le joueur a assez d'argent, enleve le prix de l arme a son budget
-        if(prix < argent){
-            argent = argent - prix; // Il faut aussi faire comprendre que dans ce cas la il recupere l arme
+    public void buyWeapons(Tower tour){ //Si le joueur a assez d'argent, enleve le prix de l arme a son budget
+        if(tour.getPrice() < money){
+            tour.locked = false;
+            money = money - tour.getPrice(); // Il faut aussi faire comprendre que dans ce cas la il recupere l arme
         }
     }
 
-    public void Vente(int prix){
-        argent = argent + prix/2;
+    public void sellWeapon(Tower tour){
+        money = money + tour.getPrice()/2;
     }
 
 }
