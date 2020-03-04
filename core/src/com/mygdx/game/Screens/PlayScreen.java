@@ -8,9 +8,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapProperties;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.ProtectTheKingdom;
 
 public class PlayScreen implements Screen {
@@ -42,11 +48,21 @@ public class PlayScreen implements Screen {
         camera.setToOrtho(false, 48, 30);
         camera.update();
 
+        for (MapObject mapObject : map.getLayers().get(1).getObjects() )
+        {
+            final RectangleMapObject collisionObject = (RectangleMapObject) mapObject;
+            final Rectangle rectangle = collisionObject.getRectangle();
+            System.out.println(rectangle.x + " "+ rectangle.y);
+            MapProperties props = mapObject.getProperties();
+            System.out.println(props.get("type", String.class) + " x: "
+                    + props.get("x",Integer.class)+" y: "+ props.get("y",Integer.class));
+        }
     }
 
     public void handleInput(float dt){
-        if(Gdx.input.isTouched()){
-
+        if(Gdx.input.justTouched()){
+            Vector3 pos = camera.unproject(new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
+            System.out.println(pos.x+ "  "+pos.y);
         }
     }
 
@@ -65,6 +81,7 @@ public class PlayScreen implements Screen {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        update(delta);
         camera.update();
         renderer.setView(camera);
         renderer.render();
