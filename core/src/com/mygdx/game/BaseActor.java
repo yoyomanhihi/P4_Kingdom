@@ -41,6 +41,19 @@ public class BaseActor extends Animations
             velocityVec.setLength(speed);
     }
 
+    public float getSpeed()
+    {
+        return velocityVec.len();
+    }
+    public void setMotionAngle(float angle)
+    {
+        velocityVec.setAngle(angle);
+    }
+    public float getMotionAngle()
+    {
+        return velocityVec.angle();
+    }
+
     public void setMaxSpeed(float ms)
     {
         maxSpeed = ms;
@@ -76,6 +89,21 @@ public class BaseActor extends Animations
         String[] fileNames = new String[1];
         fileNames[0] = fileName;
         return loadAnimationFromFiles(fileNames, 1, true);
+    }
+
+    public void centerAtPosition(float x, float y)
+    {
+        setPosition( x - getWidth()/2 , y - getHeight()/2 );
+    }
+
+    public void centerAtActor(BaseActor other)
+    {
+        centerAtPosition( other.getX() + other.getWidth()/2 , other.getY() + other.getHeight()/2 );
+    }
+
+    public void setOpacity(float opacity)
+    {
+        this.getColor().a = opacity;
     }
 
 }
