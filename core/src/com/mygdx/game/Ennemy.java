@@ -15,11 +15,6 @@ public class Ennemy {
         this.point = point;
     }
 
-    //Pas sur que je doive faire comme ca, je pense qu il faut creer une nouvelle classe qui herite
-    public Ennemy slow_walker = new Ennemy(100,5,100,20);
-    public Ennemy fast_walker = new Ennemy(80,10,80,25);
-    public Ennemy boss = new Ennemy(500,3,500,100);
-    public Ennemy[] type_list = new Ennemy[] {slow_walker,fast_walker,boss};
 
     public boolean isAlive(Ennemy Ennemy){
         if (Ennemy.current_life <= 0)
@@ -29,5 +24,29 @@ public class Ennemy {
 
     public void spawnEnnemy(int pos_x, int pos_y, Ennemy Ennemy){
         //Je sais pas vraiment comment faire
+    }
+
+    public int getLife(Ennemy Ennemy){
+        return Ennemy.life;
+    }
+
+    public int getSpeed(Ennemy Ennemy){
+        return Ennemy.speed;
+    }
+
+    public int getCurrent_life(Ennemy Ennemy){
+        return Ennemy.current_life;
+    }
+
+    public int getPoint(Ennemy Ennemy){
+        return Ennemy.point;
+    }
+
+    public void setLife(Ennemy Ennemy, int current_life){
+        Ennemy.current_life = current_life;
+    }
+
+    public void setSpeed(Ennemy Ennemy, int speed){
+        Ennemy.speed = speed;
     }
 }

@@ -10,6 +10,11 @@ import com.mygdx.game.Screens.MenuScreen;
 import com.mygdx.game.Screens.PlayScreen;
 
 public class ProtectTheKingdom extends Game {
+	public Ennemy slow_walker = new Ennemy(100,5,100,20);
+	public Ennemy fast_walker = new Ennemy(80,10,80,25);
+	public Ennemy boss = new Ennemy(500,3,500,100);
+	//public Tower basic_gun = new Tower(15, 10, 1000, 100);
+	//public Tower fast_gun = new Tower(12, 5, 300, 250);
 	public SpriteBatch batch;
 	//Texture img;
 	private MenuScreen menuScreen;
