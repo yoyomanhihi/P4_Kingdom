@@ -18,6 +18,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.BaseActor;
 import com.mygdx.game.Ennemy;
 import com.mygdx.game.ProtectTheKingdom;
 
@@ -55,10 +56,6 @@ public class PlayScreen implements Screen{
         renderer = new OrthogonalTiledMapRenderer(map, 1 / 32f);
         camera.setToOrtho(false, 48, 30);
         camera.update();
-        Ennemy ennemy1 = new Ennemy(100,5,100,20, mainStage);
-        ennemy1.setTexture(Tank);
-        ennemy1.setPosition(20, 20);
-        mainStage.addActor(ennemy1);
 
         for (MapObject mapObject : map.getLayers().get(1).getObjects() )
         {
@@ -71,6 +68,7 @@ public class PlayScreen implements Screen{
         }
 
     }
+
 
     public void handleInput(float dt){
         if(Gdx.input.justTouched()){
@@ -103,8 +101,21 @@ public class PlayScreen implements Screen{
         font.setColor(Color.BLACK);
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 1680, 30);
         font.getData().setScale(1.8f);
+        batch.draw(Tank, 20, 20);
         batch.end();
     }
+
+    public void initialize()
+    {
+        Ennemy ennemy1 = new Ennemy(100,5,100,20, mainStage);
+        ennemy1.setTexture(Tank);
+        ennemy1.setPosition(400, 400);
+        ennemy1.loadTexture("Tank.png");
+        ennemy1.setSize(1000, 1000);
+        ennemy1.setVisible(true);
+        mainStage.addActor(ennemy1);
+    }
+
 
     @Override
     public void resize(int width, int height) {
