@@ -10,10 +10,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.Screens.MenuScreen;
 import com.mygdx.game.Screens.PlayScreen;
+import com.mygdx.game.BaseActor;
+import com.mygdx.game.TexturedActor;
 
 public class ProtectTheKingdom extends Game {
-	private Stage s = new Stage();
-	public Ennemy slow_walker = new Ennemy(100,5,100,20, s);
+	private Stage mainStage;
+	public Ennemy slow_walker = new Ennemy(100,5,100,20, mainStage);
 	//public Ennemy fast_walker = new Ennemy(80,10,80,25);
 	//public Ennemy boss = new Ennemy(500,3,500,100);
 	//public Tower basic_gun = new Tower(15, 10, 1000, 100, );
@@ -26,13 +28,16 @@ public class ProtectTheKingdom extends Game {
 	public final static int MENU = 0;
 	public final static int PLAY = 1;
 
-	public ProtectTheKingdom(){
-
-	}
-
 	
 	@Override
 	public void create () {
+		mainStage = new Stage();
+
+		Ennemy ennemy1 = slow_walker;
+		ennemy1.setTexture( new Texture(Gdx.files.internal("Tank.png")));
+		ennemy1.setPosition(20, 770);
+		mainStage.addActor(ennemy1);
+
 		batch = new SpriteBatch();
 		menuScreen = new MenuScreen(this);
 		setScreen(menuScreen);
@@ -61,4 +66,5 @@ public class ProtectTheKingdom extends Game {
 				break;
 		}
 	}
+
 }
