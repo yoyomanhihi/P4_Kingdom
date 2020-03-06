@@ -14,9 +14,8 @@ import com.mygdx.game.BaseActor;
 import com.mygdx.game.TexturedActor;
 
 public class ProtectTheKingdom extends Game {
-	private Stage mainStage;
-	public Ennemy slow_walker = new Ennemy(100,5,100,20, mainStage);
-	//public Ennemy fast_walker = new Ennemy(80,10,80,25);
+	public Stage mainStage;
+	//public Ennemy fast_walker = new Ennemy(80,10,80,25, mainStage);
 	//public Ennemy boss = new Ennemy(500,3,500,100);
 	//public Tower basic_gun = new Tower(15, 10, 1000, 100, );
 	//public Tower fast_gun = new Tower(12, 5, 300, 250);
@@ -32,11 +31,11 @@ public class ProtectTheKingdom extends Game {
 	@Override
 	public void create () {
 		mainStage = new Stage();
-
-		Ennemy ennemy1 = slow_walker;
+		Ennemy ennemy1 = new Ennemy(80,10,80,25, mainStage);;
 		ennemy1.setTexture( new Texture(Gdx.files.internal("Tank.png")));
 		ennemy1.setPosition(20, 770);
 		mainStage.addActor(ennemy1);
+
 
 		batch = new SpriteBatch();
 		menuScreen = new MenuScreen(this);

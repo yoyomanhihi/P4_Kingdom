@@ -17,23 +17,31 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.Ennemy;
 import com.mygdx.game.ProtectTheKingdom;
 
-public class PlayScreen implements Screen {
+public class PlayScreen implements Screen{
 
     private ProtectTheKingdom game;
     Texture texture;
     private TmxMapLoader mapLoader;
+    public Stage mainStage = new Stage();
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
     private BitmapFont font;
     private SpriteBatch batch;
+    public Ennemy slow_walker = new Ennemy(100,5,100,20, mainStage);
+    private Texture Tank;
+
 
     public PlayScreen(ProtectTheKingdom game){
 
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
+        Tank = new Texture("Tank.png");
+
 
         this.game = game;
 
@@ -47,6 +55,10 @@ public class PlayScreen implements Screen {
         renderer = new OrthogonalTiledMapRenderer(map, 1 / 32f);
         camera.setToOrtho(false, 48, 30);
         camera.update();
+        Ennemy ennemy1 = new Ennemy(100,5,100,20, mainStage);
+        ennemy1.setTexture(Tank);
+        ennemy1.setPosition(20, 20);
+        mainStage.addActor(ennemy1);
 
         for (MapObject mapObject : map.getLayers().get(1).getObjects() )
         {
@@ -57,6 +69,7 @@ public class PlayScreen implements Screen {
             System.out.println(props.get("type", String.class) + " x: "
                     + props.get("x",Integer.class)+" y: "+ props.get("y",Integer.class));
         }
+
     }
 
     public void handleInput(float dt){
