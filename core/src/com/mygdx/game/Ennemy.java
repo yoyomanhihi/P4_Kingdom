@@ -1,6 +1,8 @@
 package com.mygdx.game;
 
-public class Ennemy {
+import com.badlogic.gdx.scenes.scene2d.Stage;
+
+public class Ennemy extends BaseActor{
 
     public int life;
     public int speed;
@@ -8,7 +10,8 @@ public class Ennemy {
     public int point;
     //public int damage;  Si on veut faire en sorte qu'un ennemy puisse attaquer une tour
 
-    public Ennemy(int life, int speed, int current_life, int point){
+    public Ennemy(int life, int speed, int current_life, int point, Stage s){
+        super(0, 1, s);
         this.life = life;
         this.speed = speed;
         this.current_life = current_life;
