@@ -51,7 +51,7 @@ public class PlayScreen implements Screen{
         world = new World(new Vector2(0, 0), true);
         Tank = new Texture("Tank.png");
         Pistol = new Texture("Pistol.png");
-        ennemylol = new Ennemy(20, 20, 20, 20, Tank, mainStage);
+        ennemylol = new Ennemy(20, 20, 20, Tank, mainStage);
         pistol = new Tower(40, 40, 40, 40, 500, 500, Pistol, mainStage);
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
