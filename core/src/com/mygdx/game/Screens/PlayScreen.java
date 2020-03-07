@@ -17,10 +17,13 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.BaseActor;
 import com.mygdx.game.Ennemy;
 import com.mygdx.game.ProtectTheKingdom;
+import com.mygdx.game.Tower;
 
 public class PlayScreen implements Screen{
 
@@ -35,15 +38,23 @@ public class PlayScreen implements Screen{
     private SpriteBatch batch;
     private Texture Tank;
     private Ennemy ennemylol;
+    private World world;
+    private Box2DDebugRenderer b2dr;
+    private Tower pistol;
+    private Texture Pistol;
+
 
 
     public PlayScreen(ProtectTheKingdom game){
 
         mainStage = new Stage();
-        ennemylol = new Ennemy(20, 20, 20, 20, mainStage);
+        world = new World(new Vector2(0, 0), true);
+        Tank = new Texture("Tank.png");
+        Pistol = new Texture("Pistol.png");
+        ennemylol = new Ennemy(20, 20, 20, 20, Tank, mainStage);
+        pistol = new Tower(40, 40, 40, 40, 500, 500, Pistol, mainStage);
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
-        Tank = new Texture("Tank.png");
 
 
         this.game = game;
@@ -58,6 +69,7 @@ public class PlayScreen implements Screen{
         renderer = new OrthogonalTiledMapRenderer(map, 1 / 32f);
         camera.setToOrtho(false, 48, 30);
         camera.update();
+        b2dr = new Box2DDebugRenderer();
 
         for (MapObject mapObject : map.getLayers().get(1).getObjects() )
         {
@@ -81,6 +93,7 @@ public class PlayScreen implements Screen{
 
     public void update(float dt){
         handleInput(dt);
+        ennemylol.update(dt);
     }
 
     @Override
@@ -102,7 +115,8 @@ public class PlayScreen implements Screen{
         font.setColor(Color.BLACK);
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 1680, 30);
         font.getData().setScale(1.8f);
-        batch.draw(Tank, ennemylol.getX(), ennemylol.getY());
+        batch.draw(ennemylol.getTexture(), ennemylol.getX(), ennemylol.getY());
+        batch.draw(pistol.getTexture(), pistol.getX(), pistol.getY());
         batch.end();
     }
 

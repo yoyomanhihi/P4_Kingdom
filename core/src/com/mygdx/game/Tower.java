@@ -1,4 +1,5 @@
 package com.mygdx.game;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
@@ -11,15 +12,17 @@ public class Tower extends BaseActor{
     public int fireRate;
     public int price;
     public boolean locked;
+    public Texture texture;
     int distance; // ne doit pas etre ici mais permet de compiler en attendant, distance a calculer avec getX et getY
 
-    public Tower(int degats, int portee, int cadence, int prix, float x, float y, Stage s){
+    public Tower(int degats, int portee, int cadence, int prix, float x, float y, Texture texture, Stage s){
         super(x,y,s);
         this.damage = degats;
         this.range = portee;
         this.fireRate = cadence;
         this.price = prix;
         this.locked = true;
+        this.texture = texture;
     }
 
 
@@ -48,6 +51,10 @@ public class Tower extends BaseActor{
 
     public int getDamage(){
         return damage;
+    }
+
+    public Texture getTexture(){
+        return this.texture;
     }
 
 }
