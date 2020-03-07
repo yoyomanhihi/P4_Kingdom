@@ -12,11 +12,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class Ennemy extends BaseActor{
 
-    public int life;
-    public int speed;
-    public int point;
-    public Texture texture;
-    public Body b2body;
+    private int life;
+    private int speed;
+    private int point;
+    private Texture texture;
+    private Body b2body;
+    private float stateTime;
 
 
     //public int damage;  Si on veut faire en sorte qu'un ennemy puisse attaquer une tour
@@ -52,9 +53,13 @@ public class Ennemy extends BaseActor{
     }
 
     public void update(float dt) {
+        stateTime += dt;
         this.setSpeed(20);
         setPosition(getX(), getY());
+    }
 
+    public void act(float dt){
+            super.act( dt );
     }
 
 
@@ -66,12 +71,12 @@ public class Ennemy extends BaseActor{
         return point;
     }
 
-    public void setLife(Ennemy Ennemy, int current_life){
-        Ennemy.life = life;
+    public void setLife(int life){
+        this.life = life;
     }
 
-    public void setSpeed(Ennemy Ennemy, int speed){
-        Ennemy.speed = speed;
+    public void setSpeed(int speed){
+        this.speed = speed;
     }
 
     public Texture getTexture(){

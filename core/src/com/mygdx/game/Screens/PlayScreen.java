@@ -150,5 +150,9 @@ public class PlayScreen implements Screen{
     public void dispose() {
         map.dispose();
     }
+
+    public boolean gameOver(){
+        return false;
+    }
 }
 
