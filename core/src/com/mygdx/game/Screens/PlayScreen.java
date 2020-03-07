@@ -27,18 +27,20 @@ public class PlayScreen implements Screen{
     private ProtectTheKingdom game;
     Texture texture;
     private TmxMapLoader mapLoader;
-    public Stage mainStage = new Stage();
+    private Stage mainStage;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
     private BitmapFont font;
     private SpriteBatch batch;
-    public Ennemy slow_walker = new Ennemy(100,5,100,20, mainStage);
     private Texture Tank;
+    private Ennemy ennemylol;
 
 
     public PlayScreen(ProtectTheKingdom game){
 
+        mainStage = new Stage();
+        ennemylol = new Ennemy(20, 20, 20, 20, mainStage);
         float w = Gdx.graphics.getWidth();
         float h = Gdx.graphics.getHeight();
         Tank = new Texture("Tank.png");
@@ -79,7 +81,6 @@ public class PlayScreen implements Screen{
 
     public void update(float dt){
         handleInput(dt);
-
     }
 
     @Override
@@ -101,19 +102,12 @@ public class PlayScreen implements Screen{
         font.setColor(Color.BLACK);
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 1680, 30);
         font.getData().setScale(1.8f);
-        batch.draw(Tank, 20, 20);
+        batch.draw(Tank, ennemylol.getX(), ennemylol.getY());
         batch.end();
     }
 
     public void initialize()
     {
-        Ennemy ennemy1 = new Ennemy(100,5,100,20, mainStage);
-        ennemy1.setTexture(Tank);
-        ennemy1.setPosition(400, 400);
-        ennemy1.loadTexture("Tank.png");
-        ennemy1.setSize(1000, 1000);
-        ennemy1.setVisible(true);
-        mainStage.addActor(ennemy1);
     }
 
 

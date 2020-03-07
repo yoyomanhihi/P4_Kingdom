@@ -6,11 +6,9 @@ import com.badlogic.gdx.math.Vector3;
 
 public abstract class State {
     protected OrthographicCamera cam;
-    protected Vector3 mouse;
 
     protected State(){
         cam = new OrthographicCamera();
-        mouse = new Vector3();
     }
 
     protected abstract void handleInput();

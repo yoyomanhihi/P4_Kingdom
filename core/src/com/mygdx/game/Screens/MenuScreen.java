@@ -18,6 +18,14 @@ public class MenuScreen implements Screen {
     private final Stage stage;
     private ProtectTheKingdom game;
 
+    public void initialize(){
+
+    }
+
+    public void update(float dt){
+
+    }
+
     public MenuScreen(ProtectTheKingdom game){
         this.game = game;
         stage = new Stage(new ScreenViewport());

@@ -11,11 +11,12 @@ public class Ennemy extends BaseActor{
     //public int damage;  Si on veut faire en sorte qu'un ennemy puisse attaquer une tour
 
     public Ennemy(int life, int speed, int current_life, int point, Stage s){
-        super(50, 50, s);
+        super(0, 1200, s);
         this.life = life;
-        this.speed = speed;
         this.current_life = current_life;
         this.point = point;
+        loadTexture("Tank.png");
+        this.setSpeed(speed);
     }
 
 
@@ -25,9 +26,6 @@ public class Ennemy extends BaseActor{
         return true;
     }
 
-    public void spawnEnnemy(int pos_x, int pos_y, Ennemy Ennemy){
-        //Je sais pas vraiment comment faire
-    }
 
     public int getLife(Ennemy Ennemy){
         return Ennemy.life;

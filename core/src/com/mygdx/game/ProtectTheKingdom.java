@@ -31,12 +31,6 @@ public class ProtectTheKingdom extends Game {
 	@Override
 	public void create () {
 		mainStage = new Stage();
-		Ennemy ennemy1 = new Ennemy(80,10,80,25, mainStage);;
-		ennemy1.setTexture( new Texture(Gdx.files.internal("Tank.png")));
-		ennemy1.setPosition(20, 770);
-		mainStage.addActor(ennemy1);
-
-
 		batch = new SpriteBatch();
 		menuScreen = new MenuScreen(this);
 		setScreen(menuScreen);
