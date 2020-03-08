@@ -21,9 +21,9 @@ public class Laser extends BaseActor
         addAction( Actions.delay(1) );
         addAction( Actions.after( Actions.fadeOut(0.5f) ) );
         addAction( Actions.after( Actions.removeActor() ) );
-        setSpeed(10);
+        setSpeed(60);
         setDeceleration(0);
-        this.speed = 10;
+        this.speed = 60;
     }
 
     public void update(float dt, SpriteBatch batch) {
