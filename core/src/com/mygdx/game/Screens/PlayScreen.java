@@ -134,9 +134,7 @@ public class PlayScreen implements Screen{
         font.getData().setScale(1.8f);
         batch.draw(ennemylol.getTexture(), ennemylol.getX(), ennemylol.getY());
         batch.draw(pistol.getTexture(), pistol.getX(), pistol.getY());
-        if(pistol.isShooting()){
-            batch.draw(laser, pistol.getX(), pistol.getY());
-        }
+        batch.draw(laser, pistol.getX(), pistol.getY());
         batch.end();
     }
 
