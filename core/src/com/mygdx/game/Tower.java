@@ -7,12 +7,13 @@ import java.util.concurrent.TimeUnit;
 
 public class Tower extends BaseActor{
 
-    public int damage;
-    public int range;
-    public int fireRate;
-    public int price;
-    public boolean locked;
-    public Texture texture;
+    private int damage;
+    private int shoot;
+    private int range;
+    private int fireRate;
+    private int price;
+    private boolean locked;
+    private Texture texture;
     int distance; // ne doit pas etre ici mais permet de compiler en attendant, distance a calculer avec getX et getY
 
     public Tower(int degats, int portee, int cadence, int prix, float x, float y, Texture texture, Stage s){
@@ -32,8 +33,15 @@ public class Tower extends BaseActor{
             return;
         Laser laser = new Laser(0,0, this.getStage());
         laser.centerAtActor(this);
-        laser.setRotation( this.getRotation() );
-        laser.setMotionAngle( this.getRotation() );
+        this.shoot = 1;
+    }
+
+    public boolean isShooting(){
+        if(this.shoot == 1){
+            this.shoot = 0;
+            return true;
+        }
+        return false;
     }
 
 
@@ -55,6 +63,14 @@ public class Tower extends BaseActor{
 
     public Texture getTexture(){
         return this.texture;
+    }
+
+    public boolean isLocked(){
+        return this.locked;
+    }
+
+    public void setLocked(boolean locked){
+        this.locked = locked;
     }
 
 }

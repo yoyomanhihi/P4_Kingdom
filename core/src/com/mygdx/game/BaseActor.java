@@ -12,6 +12,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Intersector;
 
 /**
  * Extend functionality of the LibGDX Actor class.
@@ -25,6 +27,7 @@ public class BaseActor extends Animations
     private TextureRegion textureRegion;
     private Rectangle rectangle;
     private static Rectangle worldBounds;
+    private Polygon boundaryPolygon;
 
     public BaseActor(float x, float y, Stage s)
     {
@@ -87,8 +90,11 @@ public class BaseActor extends Animations
             anim.setPlayMode(Animation.PlayMode.LOOP);
         else
             anim.setPlayMode(Animation.PlayMode.NORMAL);
-        if (animation == null)
+        if (animation == null) {
             setAnimation(anim);
+            if (boundaryPolygon == null)
+                setBoundaryRectangle();
+        }
         return anim;
     }
 
@@ -148,6 +154,7 @@ public class BaseActor extends Animations
     {
         worldBounds = new Rectangle( 0,0, width, height );
     }
+
     public static void setWorldBounds(BaseActor ba)
     {
         setWorldBounds( ba.getWidth(), ba.getHeight() );
@@ -169,5 +176,48 @@ public class BaseActor extends Animations
             setY(worldBounds.height - getHeight());
     }
 
+    public void setBoundaryRectangle()
+    {
+        float w = getWidth();
+        float h = getHeight();
+        float[] vertices = {0,0, w,0, w,h, 0,h};
+        boundaryPolygon = new Polygon(vertices);
+    }
+
+    public void setBoundaryPolygon(int numSides)
+    {
+        float w = getWidth();
+        float h = getHeight();
+        float[] vertices = new float[2*numSides];
+        for (int i = 0; i < numSides; i++)
+        {
+            float angle = i * 6.28f / numSides;
+            // x-coordinate
+            vertices[2*i] = w/2 * MathUtils.cos(angle) + w/2;
+            // y-coordinate
+            vertices[2*i+1] = h/2 * MathUtils.sin(angle) + h/2;
+        }
+        boundaryPolygon = new Polygon(vertices);
+    }
+
+    public Polygon getBoundaryPolygon()
+    {
+        boundaryPolygon.setPosition( getX(), getY() );
+        boundaryPolygon.setOrigin( getOriginX(), getOriginY() );
+        boundaryPolygon.setRotation ( getRotation() );
+        boundaryPolygon.setScale( getScaleX(), getScaleY() );
+        return boundaryPolygon;
+    }
+
+
+    public boolean overlaps(BaseActor other)
+    {
+        Polygon poly1 = this.getBoundaryPolygon();
+        Polygon poly2 = other.getBoundaryPolygon();
+        // initial test to improve performance
+        if ( !poly1.getBoundingRectangle().overlaps(poly2.getBoundingRectangle()) )
+            return false;
+        return Intersector.overlapConvexPolygons( poly1, poly2 );
+    }
 
 }

@@ -19,7 +19,7 @@ public class Player {
 
     public void buyWeapons(Tower tour){ //Si le joueur a assez d'argent, enleve le prix de l arme a son budget
         if(tour.getPrice() < money){
-            tour.locked = false;
+            tour.setLocked(false);
             money = money - tour.getPrice(); // Il faut aussi faire comprendre que dans ce cas la il recupere l arme
         }
     }

@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -17,7 +18,11 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.BaseActor;
@@ -42,6 +47,9 @@ public class PlayScreen implements Screen{
     private Box2DDebugRenderer b2dr;
     private Tower pistol;
     private Texture Pistol;
+    private float w;
+    private float h;
+    private Texture laser;
 
 
 
@@ -51,10 +59,11 @@ public class PlayScreen implements Screen{
         world = new World(new Vector2(0, 0), true);
         Tank = new Texture("Tank.png");
         Pistol = new Texture("Pistol.png");
-        ennemylol = new Ennemy(20, 20, 20, Tank, 270, mainStage);
+        laser = new Texture("Bullet.png");
+        ennemylol = new Ennemy(20, 200, 20, Tank, 0, mainStage, world);
         pistol = new Tower(40, 40, 40, 40, 500, 500, Pistol, mainStage);
-        float w = Gdx.graphics.getWidth();
-        float h = Gdx.graphics.getHeight();
+        w = Gdx.graphics.getWidth();
+        h = Gdx.graphics.getHeight();
 
 
         this.game = game;
@@ -70,6 +79,10 @@ public class PlayScreen implements Screen{
         camera.setToOrtho(false, 48, 30);
         camera.update();
         b2dr = new Box2DDebugRenderer();
+        BodyDef bdef = new BodyDef();
+        PolygonShape shape = new PolygonShape();
+        FixtureDef fdef = new FixtureDef();
+        Body body;
 
         for (MapObject mapObject : map.getLayers().get(1).getObjects() )
         {
@@ -93,7 +106,9 @@ public class PlayScreen implements Screen{
 
     public void update(float dt){
         handleInput(dt);
+        world.step(1/60f, 6, 2);
         ennemylol.update(dt);
+        pistol.shoot();
     }
 
     @Override
@@ -111,17 +126,23 @@ public class PlayScreen implements Screen{
         renderer.setView(camera);
         renderer.render();
 
+        b2dr.render(world, camera.combined);
+
         batch.begin();
         font.setColor(Color.BLACK);
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 1680, 30);
         font.getData().setScale(1.8f);
         batch.draw(ennemylol.getTexture(), ennemylol.getX(), ennemylol.getY());
         batch.draw(pistol.getTexture(), pistol.getX(), pistol.getY());
+        if(pistol.isShooting()){
+            batch.draw(laser, pistol.getX(), pistol.getY());
+        }
         batch.end();
     }
 
     public void initialize()
     {
+        BaseActor.setWorldBounds(w, h);
     }
 
 
