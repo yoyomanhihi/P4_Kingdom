@@ -45,4 +45,6 @@ public class ActorBeta extends Actor
                     getX(), getY(), getOriginX(), getOriginY(),
                     getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation() );
     }
+
+
 }

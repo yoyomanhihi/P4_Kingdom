@@ -1,14 +1,19 @@
 package com.mygdx.game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.math.Polygon;
+import com.badlogic.gdx.math.Intersector;
 
 /**
  * Extend functionality of the LibGDX Actor class.
@@ -19,6 +24,10 @@ public class BaseActor extends Animations
     private Vector2 velocityVec;
     private float maxSpeed;
     private float deceleration;
+    private TextureRegion textureRegion;
+    private Rectangle rectangle;
+    private static Rectangle worldBounds;
+    private Polygon boundaryPolygon;
 
     public BaseActor(float x, float y, Stage s)
     {
@@ -30,6 +39,8 @@ public class BaseActor extends Animations
         velocityVec = new Vector2(0,0);
         maxSpeed = 1000;
         deceleration = 0;
+        textureRegion = new TextureRegion();
+        rectangle = new Rectangle();
     }
 
     public void setSpeed(float speed)
@@ -79,8 +90,11 @@ public class BaseActor extends Animations
             anim.setPlayMode(Animation.PlayMode.LOOP);
         else
             anim.setPlayMode(Animation.PlayMode.NORMAL);
-        if (animation == null)
+        if (animation == null) {
             setAnimation(anim);
+            if (boundaryPolygon == null)
+                setBoundaryRectangle();
+        }
         return anim;
     }
 
@@ -104,6 +118,106 @@ public class BaseActor extends Animations
     public void setOpacity(float opacity)
     {
         this.getColor().a = opacity;
+    }
+
+    public void setTexture(Texture t)
+    {
+        textureRegion.setRegion(t);
+        setSize( t.getWidth(), t.getHeight() );
+        rectangle.setSize( t.getWidth(), t.getHeight() );
+    }
+    public Rectangle getRectangle()
+    {
+        rectangle.setPosition( getX(), getY() );
+        return rectangle;
+    }
+    public boolean overlaps(ActorBeta other)
+    {
+        return this.getRectangle().overlaps( other.getRectangle() );
+    }
+    public void act(float dt)
+    {
+        super.act(dt);
+    }
+    public void draw(Batch batch, float parentAlpha)
+    {
+        super.draw( batch, parentAlpha );
+        Color c = getColor(); // used to apply tint color effect
+        batch.setColor(c.r, c.g, c.b, c.a);
+        if ( isVisible() )
+            batch.draw( textureRegion,
+                    getX(), getY(), getOriginX(), getOriginY(),
+                    getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation() );
+    }
+
+    public static void setWorldBounds(float width, float height)
+    {
+        worldBounds = new Rectangle( 0,0, width, height );
+    }
+
+    public static void setWorldBounds(BaseActor ba)
+    {
+        setWorldBounds( ba.getWidth(), ba.getHeight() );
+    }
+
+    public void boundToWorld()
+    {
+        // check left edge
+        if (getX() < 0)
+            setX(0);
+        // check right edge
+        if (getX() + getWidth() > worldBounds.width)
+            setX(worldBounds.width - getWidth());
+        // check bottom edge
+        if (getY() < 0)
+            setY(0);
+        // check top edge
+        if (getY() + getHeight() > worldBounds.height)
+            setY(worldBounds.height - getHeight());
+    }
+
+    public void setBoundaryRectangle()
+    {
+        float w = getWidth();
+        float h = getHeight();
+        float[] vertices = {0,0, w,0, w,h, 0,h};
+        boundaryPolygon = new Polygon(vertices);
+    }
+
+    public void setBoundaryPolygon(int numSides)
+    {
+        float w = getWidth();
+        float h = getHeight();
+        float[] vertices = new float[2*numSides];
+        for (int i = 0; i < numSides; i++)
+        {
+            float angle = i * 6.28f / numSides;
+            // x-coordinate
+            vertices[2*i] = w/2 * MathUtils.cos(angle) + w/2;
+            // y-coordinate
+            vertices[2*i+1] = h/2 * MathUtils.sin(angle) + h/2;
+        }
+        boundaryPolygon = new Polygon(vertices);
+    }
+
+    public Polygon getBoundaryPolygon()
+    {
+        boundaryPolygon.setPosition( getX(), getY() );
+        boundaryPolygon.setOrigin( getOriginX(), getOriginY() );
+        boundaryPolygon.setRotation ( getRotation() );
+        boundaryPolygon.setScale( getScaleX(), getScaleY() );
+        return boundaryPolygon;
+    }
+
+
+    public boolean overlaps(BaseActor other)
+    {
+        Polygon poly1 = this.getBoundaryPolygon();
+        Polygon poly2 = other.getBoundaryPolygon();
+        // initial test to improve performance
+        if ( !poly1.getBoundingRectangle().overlaps(poly2.getBoundingRectangle()) )
+            return false;
+        return Intersector.overlapConvexPolygons( poly1, poly2 );
     }
 
 }
