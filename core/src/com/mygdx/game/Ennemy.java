@@ -18,15 +18,17 @@ public class Ennemy extends BaseActor{
     private Texture texture;
     private Body b2body;
     private float stateTime;
+    private float direction;
 
 
     //public int damage;  Si on veut faire en sorte qu'un ennemy puisse attaquer une tour
 
-    public Ennemy(int life, int speed, int point, Texture texture, Stage s){
+    public Ennemy(int life, int speed, int point, Texture texture, float direction, Stage s){
         super(200, 1200, s);
         this.life = life;
         this.point = point;
         this.texture = texture;
+        this.direction = direction;
         this.setSpeed(speed);
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
@@ -55,6 +57,7 @@ public class Ennemy extends BaseActor{
     public void update(float dt) {
         stateTime += dt;
         this.setSpeed(20);
+        this.setMotionAngle(270);
         setPosition(getX(), getY());
     }
 
