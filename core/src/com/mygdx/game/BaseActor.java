@@ -105,6 +105,25 @@ public class BaseActor extends Animations
         return loadAnimationFromFiles(fileNames, 1, true);
     }
 
+    public float getDistance(Tower Tower){
+        return (float)Math.sqrt(Math.pow(this.getX()-Tower.getX(),2) + Math.pow(this.getY()-Tower.getY(),2));
+    }
+
+    public boolean isInRange(Tower Tower){
+        float distance = this.getDistance(Tower);
+        if (Tower.getRange() >= distance)
+            return true;
+        return false;
+    }
+
+    public float orientation(Tower Tower){
+        float hypotenuse = this.getDistance(Tower);
+        float diff_x = this.getX()-Tower.getX();
+        float degre = (float)Math.acos(diff_x/hypotenuse);
+
+        return degre;
+    }
+
     public void centerAtPosition(float x, float y)
     {
         setPosition( x - getWidth()/2 , y - getHeight()/2 );

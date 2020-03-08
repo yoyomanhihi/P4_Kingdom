@@ -26,14 +26,18 @@ public class Tower extends BaseActor{
         this.texture = texture;
     }
 
-
-    public void shoot()
+    //First checks if there is a Stage
+    //Then checks if the ennemy is in range
+    public void shoot(Ennemy ennemy)
     {
         if ( getStage() == null )
             return;
-        Laser laser = new Laser(0,0, this.getStage());
-        laser.centerAtActor(this);
-        this.shoot = 1;
+
+        if (ennemy.isInRange(this)) {
+            Laser laser = new Laser(0, 0, this.getStage());
+            laser.centerAtActor(this);
+            this.shoot = 1;
+        }
     }
 
     public boolean isShooting(){

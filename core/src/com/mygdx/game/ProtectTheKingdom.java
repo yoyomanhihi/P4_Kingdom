@@ -59,5 +59,4 @@ public class ProtectTheKingdom extends Game {
 				break;
 		}
 	}
-
 }
