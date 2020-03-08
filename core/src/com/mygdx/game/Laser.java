@@ -1,5 +1,6 @@
 package com.mygdx.game;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -11,6 +12,7 @@ public class Laser extends BaseActor
     private float stateTime;
     private int speed;
     private Texture texture;
+    private float direction;
 
     public Laser(float x, float y, Stage s)
     {
@@ -19,16 +21,17 @@ public class Laser extends BaseActor
         addAction( Actions.delay(1) );
         addAction( Actions.after( Actions.fadeOut(0.5f) ) );
         addAction( Actions.after( Actions.removeActor() ) );
-        setSpeed(400);
-        setMaxSpeed(400);
+        setSpeed(10);
         setDeceleration(0);
-        this.speed = 1000;
+        this.speed = 10;
     }
 
-    public void update(float dt) {
+    public void update(float dt, SpriteBatch batch) {
         stateTime += dt;
         setPosition(getX() + dt * speed, getY());
+        batch.draw(texture, this.getX(), this.getY());
     }
+
 
     public void act(float dt)
     {

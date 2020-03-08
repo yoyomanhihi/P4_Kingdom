@@ -61,7 +61,7 @@ public class PlayScreen implements Screen{
         Pistol = new Texture("Pistol.png");
         laser = new Texture("Bullet.png");
         ennemylol = new Ennemy(20, 200, 20, Tank, 0, mainStage, world);
-        pistol = new Tower(40, 40, 40, 40, 500, 500, Pistol, mainStage);
+        pistol = new Tower(40, 750, 40, 40, 500, 500, Pistol, mainStage);
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
 
@@ -108,7 +108,6 @@ public class PlayScreen implements Screen{
         handleInput(dt);
         world.step(1/60f, 6, 2);
         ennemylol.update(dt);
-        pistol.shoot();
     }
 
     @Override
@@ -134,7 +133,7 @@ public class PlayScreen implements Screen{
         font.getData().setScale(1.8f);
         batch.draw(ennemylol.getTexture(), ennemylol.getX(), ennemylol.getY());
         batch.draw(pistol.getTexture(), pistol.getX(), pistol.getY());
-        batch.draw(laser, pistol.getX(), pistol.getY());
+        pistol.shoot(ennemylol, batch, delta);
         batch.end();
     }
 
