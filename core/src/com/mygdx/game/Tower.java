@@ -28,7 +28,7 @@ public class Tower extends BaseActor{
 
     //First checks if there is a Stage
     //Then checks if the ennemy is in range
-    public void shoot(Ennemy ennemy)
+    public void shoot(Ennemy ennemy) //est-ce qu'on utilise toujours un "ennemy" ?
     {
         if ( getStage() == null )
             return;

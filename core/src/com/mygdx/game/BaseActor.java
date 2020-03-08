@@ -121,6 +121,15 @@ public class BaseActor extends Animations
         float diff_x = this.getX()-Tower.getX();
         float degre = (float)Math.acos(diff_x/hypotenuse);
 
+        if (this.getX() < Tower.getX() && this.getY() > Tower.getY()) { //L'ennemi est en haut à gauche de la tour
+            degre += 90;
+        }
+        else if (this.getX() < Tower.getX() && this.getY() <= Tower.getY()){ //L'ennemi est en bas à gauche de la tour
+            degre += 180;
+        }
+        else if (this.getX() > Tower.getX() && this.getY() < Tower.getY()){ //L'ennemi est en bas à droite de la tour
+            degre += 270;
+        }
         return degre;
     }
 
