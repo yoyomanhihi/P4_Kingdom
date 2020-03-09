@@ -27,7 +27,7 @@ public class Ennemy extends BaseActor{
     //public int damage;  Si on veut faire en sorte qu'un ennemy puisse attaquer une tour
 
     public Ennemy(int life, int speed, int point, Texture texture, float direction, Stage s, World world){
-        super(0, 1200, s);
+        super(0, 800, s);
         this.life = life;
         this.point = point;
         this.texture = texture;
