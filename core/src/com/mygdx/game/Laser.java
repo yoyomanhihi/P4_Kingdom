@@ -1,4 +1,5 @@
 package com.mygdx.game;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -10,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.mygdx.game.BaseActor;
+import com.mygdx.game.Screens.WinScreen;
 
 public class Laser extends BaseActor
 {
@@ -48,12 +50,12 @@ public class Laser extends BaseActor
         setBoundaryRectangle();
     }
 
-    public void update(float dt, SpriteBatch batch, Ennemy ennemy) {
+    public void update(float dt, SpriteBatch batch, Ennemy ennemy, Game game) {
         stateTime += dt;
         setPosition(getX() + dt * speed, getY());
         batch.draw(texture, this.getX(), this.getY());
         if(this.overlaps(ennemy)){
-            ennemy.setPosition(1000, 1000);
+            game.setScreen(new WinScreen(game));
         }
     }
 
