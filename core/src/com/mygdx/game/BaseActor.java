@@ -165,7 +165,7 @@ public class BaseActor extends Animations
         rectangle.setPosition( getX(), getY() );
         return rectangle;
     }
-    public boolean overlapsAB(ActorBeta other)
+    public boolean overlaps(ActorBeta other)
     {
         return this.getRectangle().overlaps( other.getRectangle() );
     }
@@ -244,7 +244,7 @@ public class BaseActor extends Animations
     }
 
 
-    public boolean overlapsBA(BaseActor other)
+    public boolean overlaps(BaseActor other)
     {
         Polygon poly1 = this.getBoundaryPolygon();
         Polygon poly2 = other.getBoundaryPolygon();
