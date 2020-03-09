@@ -28,6 +28,7 @@ public class LoseScreen implements Screen {
         this.game = game;
         viewport = new FitViewport(ProtectTheKingdom.V_WIDTH, ProtectTheKingdom.V_HEIGHT, new OrthographicCamera());
         stage = new Stage(viewport, ((ProtectTheKingdom) game).batch);
+        Gdx.input.setInputProcessor(stage);
 
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
 

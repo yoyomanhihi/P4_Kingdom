@@ -25,6 +25,15 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScalingViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.BaseActor;
 import com.mygdx.game.Ennemy;
 import com.mygdx.game.Laser;
@@ -56,12 +65,14 @@ public class PlayScreen implements Screen{
     protected Stage uiStage;
     private int temps;
     private Laser laser1;
+    private Stage menuStage;
 
 
 
     public PlayScreen(ProtectTheKingdom game){
 
         mainStage = new Stage();
+        menuStage = new Stage(new FitViewport(Gdx.graphics.getWidth()*2/10, Gdx.graphics.getHeight()));
         gameOver = false;
         world = new World(new Vector2(0, 0), true);
         Tank = new Texture("Tank.png");
@@ -130,9 +141,10 @@ public class PlayScreen implements Screen{
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 0, 0, 1);
+        Gdx.gl.glClearColor(160/255f, 160/255f, 160/255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth()*8/10, Gdx.graphics.getHeight());
         update(delta);
         camera.update();
         renderer.setView(camera);
@@ -154,6 +166,21 @@ public class PlayScreen implements Screen{
         laser1.update(delta, batch, ennemylol, game);
         temps ++;
         batch.end();
+
+        Gdx.gl.glViewport(Gdx.graphics.getWidth()*8/10, 0, Gdx.graphics.getWidth()*2/10, Gdx.graphics.getHeight());
+        Gdx.input.setInputProcessor(menuStage);
+        Table table = new Table();
+        table.setFillParent(true);
+        table.setDebug(true);
+        menuStage.addActor(table);
+        Drawable pistolImage = new TextureRegionDrawable(Pistol);
+        pistolImage.setMinHeight(80);
+        pistolImage.setMinWidth(80);
+        ImageButton newGun = new ImageButton(pistolImage);
+        //newGun.addListener(); FIXME
+        table.add(newGun).size(80,80);
+        menuStage.act(Math.min(Gdx.graphics.getDeltaTime(),1/30f));
+        menuStage.draw();
     }
 
     public void initialize()
@@ -164,7 +191,6 @@ public class PlayScreen implements Screen{
 
     @Override
     public void resize(int width, int height) {
-
         camera.update();
     }
 
@@ -180,12 +206,15 @@ public class PlayScreen implements Screen{
 
     @Override
     public void hide() {
-
+        menuStage.dispose();
+        mainStage.dispose();
+        Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     @Override
     public void dispose() {
         map.dispose();
+        Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     public boolean gameOver(){
