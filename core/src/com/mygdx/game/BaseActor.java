@@ -116,29 +116,6 @@ public class BaseActor extends Animations
         return false;
     }
 
-    public float orientation(Tower Tower){
-        float hypotenuse = this.getDistance(Tower);
-        float diff_x = this.getX()-Tower.getX();
-        float degre = (float)Math.acos(diff_x/hypotenuse);
-
-        if (this.getX() < Tower.getX() && this.getY() < Tower.getY()) { //L'ennemi est en haut à gauche de la tour
-            degre += 90;
-        }
-        else if (this.getX() < Tower.getX() && this.getY() == Tower.getY()){ //L'ennemi est pile à gauche de la tour
-            degre = 180;
-        }
-        else if (this.getX() < Tower.getX() && this.getY() > Tower.getY()){ //L'ennemi est en bas à gauche de la tour
-            degre += 180;
-        }
-        else if (this.getX() == Tower.getX() && this.getY() > Tower.getY()){ //L'ennemmi est pile en bas de la tour
-            degre = 270;
-        }
-        else if (this.getX() > Tower.getX() && this.getY() > Tower.getY()){ //L'ennemi est en bas à droite de la tour
-            degre += 270;
-        }
-        return degre;
-    }
-
     public void centerAtPosition(float x, float y)
     {
         setPosition( x - getWidth()/2 , y - getHeight()/2 );
