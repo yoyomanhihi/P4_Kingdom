@@ -54,7 +54,7 @@ public class Ennemy extends BaseActor{
 
 
     public boolean isAlive(){
-        if (getLife() <= 0)
+        if (this.getLife() <= 0)
             return false;
         return true;
     }

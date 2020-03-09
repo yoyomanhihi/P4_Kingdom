@@ -121,13 +121,19 @@ public class BaseActor extends Animations
         float diff_x = this.getX()-Tower.getX();
         float degre = (float)Math.acos(diff_x/hypotenuse);
 
-        if (this.getX() < Tower.getX() && this.getY() > Tower.getY()) { //L'ennemi est en haut à gauche de la tour
+        if (this.getX() < Tower.getX() && this.getY() < Tower.getY()) { //L'ennemi est en haut à gauche de la tour
             degre += 90;
         }
-        else if (this.getX() < Tower.getX() && this.getY() <= Tower.getY()){ //L'ennemi est en bas à gauche de la tour
+        else if (this.getX() < Tower.getX() && this.getY() == Tower.getY()){ //L'ennemi est pile à gauche de la tour
+            degre = 180;
+        }
+        else if (this.getX() < Tower.getX() && this.getY() > Tower.getY()){ //L'ennemi est en bas à gauche de la tour
             degre += 180;
         }
-        else if (this.getX() > Tower.getX() && this.getY() < Tower.getY()){ //L'ennemi est en bas à droite de la tour
+        else if (this.getX() == Tower.getX() && this.getY() > Tower.getY()){ //L'ennemmi est pile en bas de la tour
+            degre = 270;
+        }
+        else if (this.getX() > Tower.getX() && this.getY() > Tower.getY()){ //L'ennemi est en bas à droite de la tour
             degre += 270;
         }
         return degre;
@@ -159,7 +165,7 @@ public class BaseActor extends Animations
         rectangle.setPosition( getX(), getY() );
         return rectangle;
     }
-    public boolean overlaps(ActorBeta other)
+    public boolean overlapsAB(ActorBeta other)
     {
         return this.getRectangle().overlaps( other.getRectangle() );
     }
@@ -238,7 +244,7 @@ public class BaseActor extends Animations
     }
 
 
-    public boolean overlaps(BaseActor other)
+    public boolean overlapsBA(BaseActor other)
     {
         Polygon poly1 = this.getBoundaryPolygon();
         Polygon poly2 = other.getBoundaryPolygon();

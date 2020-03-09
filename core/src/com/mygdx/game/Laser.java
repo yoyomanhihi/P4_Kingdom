@@ -23,7 +23,7 @@ public class Laser extends BaseActor
         addAction( Actions.after( Actions.removeActor() ) );
         setSpeed(60);
         setDeceleration(0);
-        this.speed = 60;
+        this.speed = 200;
     }
 
     public void update(float dt, SpriteBatch batch) {
@@ -33,9 +33,9 @@ public class Laser extends BaseActor
     }
 
 
-    public void act(float dt)
-    {
+    public void act(float dt){
         super.act(dt);
+        boundToWorld();
     }
 
     public Texture getTexture(){
