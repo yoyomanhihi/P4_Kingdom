@@ -1,6 +1,7 @@
 package com.mygdx.game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
@@ -29,15 +30,16 @@ public class Tower extends BaseActor{
 
     //First checks if there is a Stage
     //Then checks if the ennemy is in range
-    public void shoot(Ennemy ennemy, SpriteBatch batch, float dt) //est-ce qu'on utilise toujours un "ennemy" ?
+    public void shoot(Ennemy ennemy, SpriteBatch batch, float dt, World world) //est-ce qu'on utilise toujours un "ennemy" ?
     {
         if ( getStage() == null )
             return;
 
         if (ennemy.isInRange(this)) {
-            Laser laser = new Laser(0, 0, this.getStage());
+            Laser laser = new Laser(0, 0, this.getStage(), world);
+            laser.defineLaser();
             laser.centerAtActor(this);
-            laser.update(dt, batch);
+            laser.update(dt, batch, ennemy);
             this.shoot = 1;
         }
     }

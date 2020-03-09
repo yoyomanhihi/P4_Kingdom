@@ -50,6 +50,7 @@ public class Ennemy extends BaseActor{
         shape.setRadius(5);
         fdef.shape = shape;
         b2body.createFixture(fdef);
+        setBoundaryRectangle();
     }
 
 

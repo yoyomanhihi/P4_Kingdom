@@ -29,6 +29,7 @@ import com.mygdx.game.BaseActor;
 import com.mygdx.game.Ennemy;
 import com.mygdx.game.ProtectTheKingdom;
 import com.mygdx.game.Tower;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 
 public class PlayScreen implements Screen{
 
@@ -50,18 +51,22 @@ public class PlayScreen implements Screen{
     private float w;
     private float h;
     private Texture laser;
+    private boolean gameOver;
+    protected Stage uiStage;
 
 
 
     public PlayScreen(ProtectTheKingdom game){
 
         mainStage = new Stage();
+        gameOver = false;
         world = new World(new Vector2(0, 0), true);
         Tank = new Texture("Tank.png");
         Pistol = new Texture("Pistol.png");
         laser = new Texture("Bullet.png");
         ennemylol = new Ennemy(20, 200, 20, Tank, 0, mainStage, world);
-        pistol = new Tower(40, 750, 40, 40, 500, 500, Pistol, mainStage);
+        ennemylol.defineEnnemy();
+        pistol = new Tower(40, 750, 40, 40, 500, 1200, Pistol, mainStage);
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
 
@@ -83,6 +88,7 @@ public class PlayScreen implements Screen{
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
+        uiStage = new Stage();
 
         for (MapObject mapObject : map.getLayers().get(1).getObjects() )
         {
@@ -133,7 +139,7 @@ public class PlayScreen implements Screen{
         font.getData().setScale(1.8f);
         batch.draw(ennemylol.getTexture(), ennemylol.getX(), ennemylol.getY());
         batch.draw(pistol.getTexture(), pistol.getX(), pistol.getY());
-        pistol.shoot(ennemylol, batch, delta);
+        pistol.shoot(ennemylol, batch, delta, world);
         batch.end();
     }
 
@@ -170,7 +176,7 @@ public class PlayScreen implements Screen{
     }
 
     public boolean gameOver(){
-        return false;
+        return gameOver;
     }
 }
 
