@@ -27,6 +27,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.BaseActor;
 import com.mygdx.game.Ennemy;
+import com.mygdx.game.Laser;
 import com.mygdx.game.ProtectTheKingdom;
 import com.mygdx.game.Tower;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
@@ -53,6 +54,8 @@ public class PlayScreen implements Screen{
     private Texture laser;
     private boolean gameOver;
     protected Stage uiStage;
+    private int temps;
+    private Laser laser1;
 
 
 
@@ -69,6 +72,7 @@ public class PlayScreen implements Screen{
         pistol = new Tower(40, 750, 40, 40, 500, 800, Pistol, mainStage);
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
+        temps = 61;
 
 
         this.game = game;
@@ -142,7 +146,13 @@ public class PlayScreen implements Screen{
         font.getData().setScale(1.8f);
         batch.draw(ennemylol.getTexture(), ennemylol.getX(), ennemylol.getY());
         batch.draw(pistol.getTexture(), pistol.getX(), pistol.getY());
-        pistol.shoot(ennemylol, batch, delta, world, game);
+        if(temps > 60){
+            laser1 = new Laser(0, 0, mainStage, world);
+            pistol.shoot(ennemylol, batch, delta, world, game, laser1);
+            temps = 0;
+        }
+        laser1.update(delta, batch, ennemylol, game);
+        temps ++;
         batch.end();
     }
 

@@ -31,16 +31,14 @@ public class Tower extends BaseActor{
 
     //First checks if there is a Stage
     //Then checks if the ennemy is in range
-    public void shoot(Ennemy ennemy, SpriteBatch batch, float dt, World world, Game game) //est-ce qu'on utilise toujours un "ennemy" ?
+    public void shoot(Ennemy ennemy, SpriteBatch batch, float dt, World world, Game game, Laser laser) //est-ce qu'on utilise toujours un "ennemy" ?
     {
         if ( getStage() == null )
             return;
 
         if (ennemy.isInRange(this)) {
-            Laser laser = new Laser(0, 0, this.getStage(), world);
             laser.defineLaser();
             laser.centerAtActor(this);
-            laser.update(dt, batch, ennemy, game);
             this.shoot = 1;
         }
     }

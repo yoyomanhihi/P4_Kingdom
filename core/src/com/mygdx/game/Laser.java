@@ -31,9 +31,10 @@ public class Laser extends BaseActor
         addAction( Actions.delay(1) );
         addAction( Actions.after( Actions.fadeOut(0.5f) ) );
         addAction( Actions.after( Actions.removeActor() ) );
-        setSpeed(60);
+        setSpeed(2000);
         setDeceleration(0);
         this.world = world;
+        this.speed = 2000;
     }
 
     public void defineLaser(){
