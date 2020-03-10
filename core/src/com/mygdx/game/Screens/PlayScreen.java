@@ -78,9 +78,9 @@ public class PlayScreen implements Screen{
         Tank = new Texture("Tank.png");
         Pistol = new Texture("Pistol.png");
         laser = new Texture("Bullet.png");
-        ennemylol = new Ennemy(20, 200, 20, Tank, 0, mainStage, world);
+        ennemylol = new Ennemy(150, 100, 20, Tank, 0, mainStage, world);
         ennemylol.defineEnnemy();
-        pistol = new Tower(40, 750, 40, 40, 500, 800, Pistol, mainStage);
+        pistol = new Tower(40, 750, 40, 40, 1000, 800, Pistol, mainStage);
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
         temps = 61;
@@ -128,7 +128,7 @@ public class PlayScreen implements Screen{
     public void update(float dt){
         handleInput(dt);
         world.step(1/60f, 6, 2);
-        ennemylol.update(dt);
+        ennemylol.update(dt, game);
         if(ennemylol.getY() < 1){
             game.setScreen(new LoseScreen(game));
         }
@@ -158,12 +158,15 @@ public class PlayScreen implements Screen{
         font.getData().setScale(1.8f);
         batch.draw(ennemylol.getTexture(), ennemylol.getX(), ennemylol.getY());
         batch.draw(pistol.getTexture(), pistol.getX(), pistol.getY());
-        if(temps > 60){
+        if(temps > 60 && ennemylol.isInRange(pistol)){
             laser1 = new Laser(0, 0, mainStage, world);
+            laser1.defineLaser();
             pistol.shoot(ennemylol, batch, delta, world, game, laser1);
             temps = 0;
         }
-        laser1.update(delta, batch, ennemylol, game);
+        if(ennemylol.isInRange(pistol)) {
+            laser1.update(delta, batch, ennemylol, game);
+        }
         temps ++;
         batch.end();
 

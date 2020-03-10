@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.Screens.WinScreen;
 
 import java.awt.Rectangle;
 
@@ -60,7 +62,7 @@ public class Ennemy extends BaseActor{
         return true;
     }
 
-    public void update(float dt) {
+    public void update(float dt, Game game) {
         stateTime += dt;
         if(direction == 0) {
             setPosition(getX() + dt * speed, getY());
@@ -73,6 +75,9 @@ public class Ennemy extends BaseActor{
         }
         if(direction == 270){
             setPosition(getX(), getY() - dt * speed);
+        }
+        if(!isAlive()) {
+            game.setScreen(new WinScreen(game));
         }
     }
 

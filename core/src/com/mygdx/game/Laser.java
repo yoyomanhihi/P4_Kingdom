@@ -84,7 +84,8 @@ public class Laser extends BaseActor
         setPosition(getX() + dt * speed, getY());
         batch.draw(texture, this.getX(), this.getY());
         if(this.overlaps(Ennemy)){
-            game.setScreen(new WinScreen(game));
+            Ennemy.setLife(Ennemy.getLife() - 30);
+            this.setPosition(4000, 0);
         }
     }
 

@@ -71,7 +71,6 @@ public class Tower extends BaseActor{
             return;
 
         if (ennemy.isInRange(this)) {
-            laser.defineLaser();
             laser.centerAtActor(this);
             this.shoot = 1;
         }
