@@ -89,10 +89,6 @@ public class Laser extends BaseActor
         }
     }
 
-    public void Orientation (Ennemy Ennemy){
-
-    }
-
 
     public void act(float dt)
     {
