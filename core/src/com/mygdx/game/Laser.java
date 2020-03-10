@@ -22,6 +22,7 @@ public class Laser extends BaseActor
     private float direction;
     private Body b2body;
     public World world;
+    private float angle;
 
 
     public Laser(float x, float y, Stage s, World world)
@@ -81,12 +82,21 @@ public class Laser extends BaseActor
         }
         */
 
-        setPosition(getX() + dt * speed, getY());
+        angle = this.getOrientation(Ennemy);
+        move(angle, dt);
         batch.draw(texture, this.getX(), this.getY());
-        if(this.overlaps(Ennemy)){
+        if (this.overlaps(Ennemy)) {
             Ennemy.setLife(Ennemy.getLife() - 30);
             this.setPosition(4000, 0);
         }
+    }
+
+    public void move(float angle, float dt){
+        float a = (float) this.getX() ;
+        float b = (float) Math.cos(angle);
+        float c = (float) this.getY();
+        float d = (float) Math.sin(angle);
+        this.setPosition(a - b * speed *dt ,c - d * speed * dt);
     }
 
 

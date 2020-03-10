@@ -29,7 +29,7 @@ public class Ennemy extends BaseActor{
     //public int damage;  Si on veut faire en sorte qu'un ennemy puisse attaquer une tour
 
     public Ennemy(int life, int speed, int point, Texture texture, float direction, Stage s, World world){
-        super(0, 800, s);
+        super(0, 888, s);
         this.life = life;
         this.point = point;
         this.texture = texture;
@@ -64,6 +64,27 @@ public class Ennemy extends BaseActor{
 
     public void update(float dt, Game game) {
         stateTime += dt;
+        if(this.getX() > 570 && getY() == 888){
+            direction = 270;
+        }
+        else if(this.getX() > 570 && getX() < 700 && getY() < 240){
+            direction = 0;
+        }
+        else if(this.getX() > 700 && this.getY() < 240 && getY() > 140 && getX() < 960){
+            direction = 270;
+        }
+        else if(this.getX() > 700 && getY() < 140 && this.getX() < 960){
+            direction = 0;
+        }
+        else if(this.getX() > 960 && this.getY() < 240 && this.getX() < 1080){
+            direction = 90;
+        }
+        else if(this.getX() > 960 && this.getY() > 240 && this.getX() < 1080){
+            direction = 0;
+        }
+        else if(this.getX() > 1100 && this.getY() < 888){
+            direction = 90;
+        }
         if(direction == 0) {
             setPosition(getX() + dt * speed, getY());
         }
