@@ -65,14 +65,14 @@ public class PlayScreen implements Screen{
     protected Stage uiStage;
     private int temps;
     private Laser laser1;
-    private Stage menuStage;
+    //private Stage menuStage;
 
 
 
     public PlayScreen(ProtectTheKingdom game){
 
         mainStage = new Stage();
-        menuStage = new Stage(new FitViewport(Gdx.graphics.getWidth()*2/10, Gdx.graphics.getHeight()));
+        //menuStage = new Stage(new FitViewport(Gdx.graphics.getWidth()*2/10, Gdx.graphics.getHeight()));
         gameOver = false;
         world = new World(new Vector2(0, 0), true);
         Tank = new Texture("Tank.png");
@@ -141,10 +141,10 @@ public class PlayScreen implements Screen{
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(160/255f, 160/255f, 160/255f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        //Gdx.gl.glClearColor(160/255f, 160/255f, 160/255f, 1);
+        //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth()*8/10, Gdx.graphics.getHeight());
+        //Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth()*8/10, Gdx.graphics.getHeight());
         update(delta);
         camera.update();
         renderer.setView(camera);
@@ -158,18 +158,19 @@ public class PlayScreen implements Screen{
         font.getData().setScale(1.8f);
         batch.draw(ennemylol.getTexture(), ennemylol.getX(), ennemylol.getY());
         batch.draw(pistol.getTexture(), pistol.getX(), pistol.getY());
-        if(temps > 60 && ennemylol.isInRange(pistol)){
+        if (temps > 60 && ennemylol.isInRange(pistol)) {
             laser1 = new Laser(0, 0, mainStage, world);
             laser1.defineLaser();
             pistol.shoot(ennemylol, batch, delta, world, game, laser1);
             temps = 0;
         }
-        if(ennemylol.isInRange(pistol)) {
+        if (ennemylol.isInRange(pistol)) {
             laser1.update(delta, batch, ennemylol, game);
         }
-        temps ++;
+        temps++;
         batch.end();
 
+        /*
         Gdx.gl.glViewport(Gdx.graphics.getWidth()*8/10, 0, Gdx.graphics.getWidth()*2/10, Gdx.graphics.getHeight());
         Gdx.input.setInputProcessor(menuStage);
         Table table = new Table();
@@ -184,6 +185,7 @@ public class PlayScreen implements Screen{
         table.add(newGun).size(80,80);
         menuStage.act(Math.min(Gdx.graphics.getDeltaTime(),1/30f));
         menuStage.draw();
+    */
     }
 
     public void initialize()
@@ -209,9 +211,9 @@ public class PlayScreen implements Screen{
 
     @Override
     public void hide() {
-        menuStage.dispose();
-        mainStage.dispose();
-        Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        //menuStage.dispose();
+        //mainStage.dispose();
+        //Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
 
     @Override
