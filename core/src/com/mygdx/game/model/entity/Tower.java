@@ -1,14 +1,12 @@
-package com.mygdx.game;
+package com.mygdx.game.model.entity;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.mygdx.game.model.utils.BaseActor;
 
-import java.util.concurrent.TimeUnit;
-
-public class Tower extends BaseActor{
+public class Tower extends BaseActor {
 
     private int damage;
     private int shoot;

@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.model.entity;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -8,10 +8,8 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.mygdx.game.BaseActor;
-import com.mygdx.game.Screens.WinScreen;
+import com.mygdx.game.model.utils.BaseActor;
 
 public class Laser extends BaseActor
 {

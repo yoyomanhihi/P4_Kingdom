@@ -1,7 +1,6 @@
-package com.mygdx.game;
+package com.mygdx.game.model.entity;
 
 import java.util.LinkedList;
-import java.util.List;
 
 public class Player {
 
