@@ -52,7 +52,7 @@ public class PlayScreen implements Screen{
     private boolean gameOver;
     protected Stage uiStage;
     private int temps;
-    private Laser laser1;
+    private int wave;
     //private Stage menuStage;
 
 
@@ -68,7 +68,7 @@ public class PlayScreen implements Screen{
         laser = new Texture("Bullet.png");
         ennemylol = new Ennemy(200, 125, 20, Tank, 0, mainStage, world);
         ennemylol.defineEnnemy();
-        pistol = new Tower(40, 500, 40, 40, 850, 240, Pistol, mainStage);
+        pistol = new Tower(40, 500, 40, 40, 850, 240, Pistol, mainStage, world);
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
         temps = 61;
@@ -115,6 +115,9 @@ public class PlayScreen implements Screen{
 
     public void update(float dt){
         handleInput(dt);
+        if(dt > 100 && dt < 500) {
+            Wave1(temps);
+        }
         world.step(1/60f, 6, 2);
         ennemylol.update(dt, game);
         if(ennemylol.getY() < 1){
@@ -147,14 +150,10 @@ public class PlayScreen implements Screen{
         batch.draw(ennemylol.getTexture(), ennemylol.getX(), ennemylol.getY());
         batch.draw(pistol.getTexture(), pistol.getX(), pistol.getY());
         if (temps > 60 && ennemylol.isInRange(pistol)) {
-            laser1 = new Laser(0, 0, mainStage, world);
-            laser1.defineLaser();
-            pistol.shoot(ennemylol, batch, delta, world, game, laser1);
+            pistol.shoot(ennemylol, batch, delta, world, game, uiStage);
             temps = 0;
         }
-        if (ennemylol.isInRange(pistol)) {
-            laser1.update(delta, batch, ennemylol, game);
-        }
+        pistol.updateLaser(delta, batch, ennemylol, game, uiStage);
         temps++;
         batch.end();
 
@@ -212,6 +211,13 @@ public class PlayScreen implements Screen{
 
     public boolean gameOver(){
         return gameOver;
+    }
+
+    public void Wave1(float dt){
+        if(temps == 59){
+            Ennemy ennemy = new Ennemy(200, 125, 20, Tank, 0, mainStage, world);
+            ennemy.defineEnnemy();
+        }
     }
 }
 

@@ -50,36 +50,8 @@ public class Laser extends BaseActor
         setBoundaryRectangle();
     }
 
-    public void update(float dt, SpriteBatch batch, Ennemy Ennemy, Game game) {
+    public void update(float dt, SpriteBatch batch, Ennemy Ennemy, Game game, Stage stage) {
         stateTime += dt;
-        /*
-        if (this.getX() > Ennemy.getX() && this.getY() > Ennemy.getY()) { //L'ennemi est en haut à gauche de la tour
-            setPosition(getX()-dt*speed*Math.cos(distance), getY()-dt*speed*Math.sin(distance));
-        }
-        else if (this.getX() > Ennemy.getX() && this.getY() == Ennemy.getY()){ //L'ennemi est pile à gauche de la tour
-            setPosition(getX()-dt*speed*Math.cos(distance), getY());
-        }
-        else if (this.getX() > Ennemy.getX() && this.getY() < Ennemy.getY()){ //L'ennemi est en bas à gauche de la tour
-            setPosition(getX()-dt*speed*Math.cos(distance), getY()+dt*speed*Math.sin(distance));
-        }
-        else if (this.getX() == Ennemy.getX() && this.getY() < Ennemy.getY()){ //L'ennemmi est pile en bas de la tour
-            setPosition(getX(), getY()+dt*speed*Math.sin(distance));
-        }
-
-        else if (this.getX() < Ennemy.getX() && this.getY() < Ennemy.getY()){ //L'ennemi est en bas à droite de la tour
-            setPosition(getX()+dt*speed*Math.cos(distance), getY()+dt*speed*Math.sin(distance));
-        }
-        else if (this.getX() < Ennemy.getX() && this.getY() == Ennemy.getY()){ //L'ennemi pile à droite de la tour
-            setPosition(getX()+dt*speed*Math.cos(distance), getY());
-        }
-        else if (this.getX() < Ennemy.getX() && this.getY() > Ennemy.getY()){ //L'ennemi est en haut à droite de la tour
-            setPosition(getX()+dt*speed*Math.cos(distance), getY()-dt*speed*Math.sin(distance));
-        }
-        else if (this.getX() == Ennemy.getX() && this.getY() > Ennemy.getY()){ //L'ennemi est en pile en haut de la tour
-            setPosition(getX(), getY()-dt*speed*Math.sin(distance));
-        }
-        */
-
         angle = this.getOrientation(Ennemy);
         move(angle, dt);
         batch.draw(texture, this.getX(), this.getY());

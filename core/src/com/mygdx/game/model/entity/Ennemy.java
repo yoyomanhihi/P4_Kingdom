@@ -21,7 +21,7 @@ public class Ennemy extends BaseActor {
     private Body b2body;
     private float stateTime;
     private float direction;
-    public World world;
+    private World world;
 
 
     //public int damage;  Si on veut faire en sorte qu'un ennemy puisse attaquer une tour
@@ -51,6 +51,11 @@ public class Ennemy extends BaseActor {
         fdef.shape = shape;
         b2body.createFixture(fdef);
         setBoundaryRectangle();
+    }
+
+    public void addEnnemy(int life, int speed, int point, Texture texture, float direction, Stage s, World world){
+        Ennemy ennemy = new Ennemy(life, speed, 20, texture, direction, s, world);
+        ennemy.defineEnnemy();
     }
 
 

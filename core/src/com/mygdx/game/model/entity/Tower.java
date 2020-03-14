@@ -15,9 +15,10 @@ public class Tower extends BaseActor {
     private int price;
     private boolean locked;
     private Texture texture;
-    int distance; // ne doit pas etre ici mais permet de compiler en attendant, distance a calculer avec getX et getY
+    private Laser laser1;
+    private World world;
 
-    public Tower(int degats, int portee, int cadence, int prix, float x, float y, Texture texture, Stage s){
+    public Tower(int degats, int portee, int cadence, int prix, float x, float y, Texture texture, Stage s, World world){
         super(x,y,s);
         this.damage = degats;
         this.range = portee;
@@ -25,6 +26,7 @@ public class Tower extends BaseActor {
         this.price = prix;
         this.locked = true;
         this.texture = texture;
+        this.world = world;
     }
 
     public float getDistance(Ennemy Ennemy){
@@ -63,23 +65,25 @@ public class Tower extends BaseActor {
 
     //First checks if there is a Stage
     //Then checks if the ennemy is in range
-    public void shoot(Ennemy ennemy, SpriteBatch batch, float dt, World world, Game game, Laser laser) //est-ce qu'on utilise toujours un "ennemy" ?
+    public void shoot(Ennemy ennemy, SpriteBatch batch, float dt, World world, Game game, Stage stage) //est-ce qu'on utilise toujours un "ennemy" ?
     {
         if ( getStage() == null )
             return;
 
         if (ennemy.isInRange(this)) {
-            laser.centerAtActor(this);
-            this.shoot = 1;
+            laser1 = new Laser(0, 0, stage, world);
+            laser1.defineLaser();
+            laser1.centerAtActor(this);
+            laser1.update(dt, batch, ennemy, game, stage);
         }
     }
 
-    public boolean isShooting(){
-        if(this.shoot == 1){
-            this.shoot = 0;
-            return true;
+    public void updateLaser(float dt, SpriteBatch batch, Ennemy Ennemy, Game game, Stage stage){
+        if(laser1 != null) {
+            if (laser1.getX() != this.getX() && laser1.getY() != this.getY()) {
+                laser1.update(dt, batch, Ennemy, game, stage);
+            }
         }
-        return false;
     }
 
 
