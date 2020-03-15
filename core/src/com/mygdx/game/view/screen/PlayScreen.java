@@ -1,8 +1,10 @@
 package com.mygdx.game.view.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -23,6 +25,12 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.model.utils.BaseActor;
 import com.mygdx.game.model.entity.Ennemy;
 import com.mygdx.game.model.entity.Laser;
@@ -38,7 +46,8 @@ public class PlayScreen implements Screen{
     private Stage mainStage;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
-    private OrthographicCamera camera;
+    private OrthographicCamera gameAreaCamera;
+    private OrthographicCamera menuAreaCamera;
     private BitmapFont font;
     private SpriteBatch batch;
     private Texture Tank;
@@ -47,8 +56,9 @@ public class PlayScreen implements Screen{
     private Box2DDebugRenderer b2dr;
     private Tower pistol;
     private Texture Pistol;
-    private float w;
-    private float h;
+    private float GAME_WIDTH = Gdx.graphics.getWidth()*4/5.0f;
+    private float MENU_WIDTH = Gdx.graphics.getWidth()/5.0f;
+    private float HEIGHT = Gdx.graphics.getHeight();
     private Texture laser;
     private boolean gameOver;
     protected Stage uiStage;
@@ -58,24 +68,23 @@ public class PlayScreen implements Screen{
     private boolean round1;
     private int ennemycount;
     private int temps1;
-    //private Stage menuStage;
-
+    private Viewport gameAreaViewport;
+    private final FitViewport menuAreaViewport;
+    private Stage menuStage;
 
 
     public PlayScreen(ProtectTheKingdom game){
 
-        mainStage = new Stage();
-        //menuStage = new Stage(new FitViewport(Gdx.graphics.getWidth()*2/10, Gdx.graphics.getHeight()));
+        mainStage = new Stage(new FitViewport(GAME_WIDTH, HEIGHT));
+        menuStage = new Stage(new FitViewport(MENU_WIDTH, HEIGHT));
         gameOver = false;
         world = new World(new Vector2(0, 0), true);
         Tank = new Texture("Tank.png");
         Pistol = new Texture("Pistol.png");
         laser = new Texture("Bullet.png");
-        //ennemylol = new Ennemy(200, 125, 20, Tank, mainStage, world);
+        //ennemylol = new Ennemy(200, 125, 20, Tank, 0, mainStage, world);
         //ennemylol.defineEnnemy();
-        pistol = new Tower(40, 500, 40, 40, 500, 500, Pistol, mainStage, world);
-        w = Gdx.graphics.getWidth();
-        h = Gdx.graphics.getHeight();
+        pistol = new Tower(40, 500, 40, 40, 850, 240, Pistol, mainStage, world);
         temps = 61;
         round = new Round();
         ennemycount = 0;
@@ -83,16 +92,23 @@ public class PlayScreen implements Screen{
 
         this.game = game;
 
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, w, h);
-        camera.update();
+        gameAreaCamera = new OrthographicCamera();
+        gameAreaCamera.setToOrtho(false, GAME_WIDTH, HEIGHT);
+        gameAreaCamera.update();
+        gameAreaViewport = new FitViewport(GAME_WIDTH, HEIGHT, gameAreaCamera);
+
+        menuAreaCamera = new OrthographicCamera();
+        menuAreaCamera.setToOrtho(false, MENU_WIDTH, HEIGHT);
+        menuAreaCamera.update();
+        menuAreaViewport = new FitViewport(MENU_WIDTH, HEIGHT, menuAreaCamera);
+
 
         font = new BitmapFont();
         batch = new SpriteBatch();
         map = new TmxMapLoader().load("Map 1.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / 32f);
-        camera.setToOrtho(false, 48, 30);
-        camera.update();
+        gameAreaCamera.setToOrtho(false, 48, 30);
+        gameAreaCamera.update();
         b2dr = new Box2DDebugRenderer();
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
@@ -117,7 +133,7 @@ public class PlayScreen implements Screen{
 
     public void handleInput(float dt){
         if(Gdx.input.justTouched()){
-            Vector3 pos = camera.unproject(new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
+            Vector3 pos = gameAreaCamera.unproject(new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
             System.out.println(pos.x+ "  "+pos.y);
         }
     }
@@ -147,63 +163,25 @@ public class PlayScreen implements Screen{
 
     @Override
     public void render(float delta) {
-        //Gdx.gl.glClearColor(160/255f, 160/255f, 160/255f, 1);
-        //Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        //Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth()*8/10, Gdx.graphics.getHeight());
-        update(delta);
-        camera.update();
-        renderer.setView(camera);
-        renderer.render();
+        Gdx.gl.glViewport(0, 0, (int) GAME_WIDTH, (int) HEIGHT);
+        drawGameArea(delta);
+        Gdx.gl.glViewport((int) GAME_WIDTH, 0, (int) MENU_WIDTH, (int) HEIGHT);
+        drawMenuArea(delta);
 
-        b2dr.render(world, camera.combined);
-
-        batch.begin();
-        font.setColor(Color.BLACK);
-        font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 1680, 30);
-        font.getData().setScale(1.8f);
-        //batch.draw(ennemylol.getTexture(), ennemylol.getX(), ennemylol.getY());
-        if(round1) {
-            round.draw(batch);
-        }
-        batch.draw(pistol.getTexture(), pistol.getX(), pistol.getY());
-        if (temps > 60 && round1) {
-            round.shoot(pistol, batch, delta, world, game, uiStage);
-            temps = 0;
-        }
-        if(round1) {
-            round.updateLaser(delta, batch, game, uiStage, pistol);
-        }
-        temps++;
-        batch.end();
-
-        /*
-        Gdx.gl.glViewport(Gdx.graphics.getWidth()*8/10, 0, Gdx.graphics.getWidth()*2/10, Gdx.graphics.getHeight());
-        Gdx.input.setInputProcessor(menuStage);
-        Table table = new Table();
-        table.setFillParent(true);
-        table.setDebug(true);
-        menuStage.addActor(table);
-        Drawable pistolImage = new TextureRegionDrawable(Pistol);
-        pistolImage.setMinHeight(80);
-        pistolImage.setMinWidth(80);
-        ImageButton newGun = new ImageButton(pistolImage);
-        //newGun.addListener(); FIXME
-        table.add(newGun).size(80,80);
-        menuStage.act(Math.min(Gdx.graphics.getDeltaTime(),1/30f));
-        menuStage.draw();
-    */
     }
 
     public void initialize()
     {
-        BaseActor.setWorldBounds(w, h);
+        BaseActor.setWorldBounds(GAME_WIDTH, HEIGHT);
     }
 
 
     @Override
     public void resize(int width, int height) {
-        camera.update();
+        gameAreaCamera.update();
     }
 
     @Override
@@ -233,5 +211,61 @@ public class PlayScreen implements Screen{
         return gameOver;
     }
 
+    public void Wave1(float dt){
+        if(temps == 59){
+            Ennemy ennemy = new Ennemy(200, 125, 20, Tank, mainStage, world);
+            ennemy.defineEnnemy();
+        }
+    }
+
+    private void drawGameArea(float delta) {
+        update(delta);
+        gameAreaCamera.update();
+        renderer.setView(gameAreaCamera);
+        renderer.render();
+
+        b2dr.render(world, gameAreaCamera.combined);
+
+        batch.begin();
+        font.setColor(Color.BLACK);
+        font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 1680, 30);
+        font.getData().setScale(1.8f);
+        //batch.draw(ennemylol.getTexture(), ennemylol.getX(), ennemylol.getY());
+        if(round1) {
+            round.draw(batch);
+        }
+        batch.draw(pistol.getTexture(), pistol.getX(), pistol.getY());
+        if (temps > 60 && round1) {
+            round.shoot(pistol, batch, delta, world, game, uiStage);
+            temps = 0;
+        }
+        if(round1) {
+            round.updateLaser(delta, batch, game, uiStage, pistol);
+        }
+        temps++;
+        batch.end();
+    }
+
+    private void drawMenuArea(float delta) {
+        update(delta);
+        menuAreaCamera.update();
+        batch.setProjectionMatrix(menuAreaCamera.combined);
+
+        batch.begin();
+        Gdx.input.setInputProcessor(menuStage);
+        Table table = new Table();
+        table.setFillParent(true);
+        table.setDebug(true);
+        menuStage.addActor(table);
+        Drawable pistolImage = new TextureRegionDrawable(Pistol);
+        pistolImage.setMinHeight(80);
+        pistolImage.setMinWidth(80);
+        ImageButton newGun = new ImageButton(pistolImage);
+        //newGun.addListener(); FIXME
+        table.add(newGun).size(80,80);
+        menuStage.act(Math.min(Gdx.graphics.getDeltaTime(),1/30f));
+        menuStage.draw();
+        batch.end();
+    }
 }
 
