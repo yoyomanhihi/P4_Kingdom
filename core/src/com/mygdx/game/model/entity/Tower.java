@@ -30,18 +30,18 @@ public class Tower extends BaseActor {
         this.ennemyinrange = 0;
     }
 
-    public float getDistance(Ennemy Ennemy){
+    public float getDistance(Ennemy Ennemy){ //calcule la distance avec l ennemi
         return (float)Math.sqrt(Math.pow(this.getX()-Ennemy.getX(),2) + Math.pow(this.getY()-Ennemy.getY(),2));
     }
 
-    public boolean isInRange(Ennemy Ennemy){
+    public boolean isInRange(Ennemy Ennemy){ //verifie si l ennemi est a portee de tir mais on utilise autre chose
         float distance = this.getDistance(Ennemy);
         if (this.getRange() >= distance)
             return true;
         return false;
     }
 
-    public float getOrientation(Ennemy Ennemy){
+    public float getOrientation(Ennemy Ennemy){ // s oriente vers l ennemi mais on utiliser autre chose
         float hypotenuse = this.getDistance(Ennemy);
         float diff_x = this.getX()-Ennemy.getX();
         float degre = (float)Math.acos(diff_x/hypotenuse);
@@ -66,18 +66,18 @@ public class Tower extends BaseActor {
 
     //First checks if there is a Stage
     //Then checks if the ennemy is in range
-    public void shoot(Ennemy ennemy, SpriteBatch batch, float dt, World world, Game game, Stage stage) //est-ce qu'on utilise toujours un "ennemy" ?
+    public void shoot(Ennemy ennemy, SpriteBatch batch, float dt, World world, Game game, Stage stage) //tire sur l ennemi
     {
         if (getStage() == null) {
             return;
         }
-        laser1 = new Laser(0, 0, stage, world);
+        laser1 = new Laser(0, 0, stage, world); //cree le laser et le met a jour
         laser1.defineLaser();
         laser1.centerAtActor(this);
         laser1.update(dt, batch, ennemy, game, stage);
     }
 
-    public void updateLaser(float dt, SpriteBatch batch, Ennemy Ennemy, Game game, Stage stage){
+    public void updateLaser(float dt, SpriteBatch batch, Ennemy Ennemy, Game game, Stage stage){ // fait que le laser suit l ennemi
         if(laser1 != null) {
             if (laser1.getX() != this.getX() && laser1.getY() != this.getY()) {
                 laser1.update(dt, batch, Ennemy, game, stage);

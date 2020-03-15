@@ -10,18 +10,18 @@ import com.mygdx.game.model.entity.Ennemy;
 import com.mygdx.game.model.entity.Tower;
 
 public class Round {
-    private Ennemy [] ennemies;
+    private Ennemy [] ennemies; //le tableau d ennemis
 
     public Round(){
-        ennemies = new Ennemy[5];
+        ennemies = new Ennemy[5]; //Put the good size for the first wave
     }
 
-    public void round1(int temps, Stage stage, World world, int ennemynbr){
-        ennemies[ennemynbr] = new Ennemy(50, 125, 20, new Texture("Tank.png"), stage, world);
+    public void round1(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
+        ennemies[ennemynbr] = new Ennemy(50, 3, 20, new Texture("Tank.png"), stage, world);
         ennemies[ennemynbr].defineEnnemy();
     }
 
-    public void update(float dt, Game game){
+    public void update(float dt, Game game){ //update la position et l etat des ennemis
         for(int i = 0; i < ennemies.length; i++){
             if(ennemies[i] != null) {
                 ennemies[i].update(dt, game);
@@ -32,7 +32,7 @@ public class Round {
         }
     }
 
-    public void draw(Batch batch){
+    public void draw(Batch batch){ // draw les ennemis du tableau
         for(int i = 0; i < ennemies.length; i++){
             if(ennemies[i] != null) {
                 batch.draw(ennemies[i].getTexture(), ennemies[i].getX(), ennemies[i].getY());
@@ -41,7 +41,7 @@ public class Round {
     }
 
 
-    public void shoot(Tower tour, SpriteBatch batch, float delta, World world, Game game, Stage uiStage){
+    public void shoot(Tower tour, SpriteBatch batch, float delta, World world, Game game, Stage uiStage){ // Prend une arme et lui fait tirer sur le bon ennemi
         if(ennemies[tour.getEnnemyinrange()] != null){
             if(ennemies[tour.getEnnemyinrange()].isInRange(tour)){
                 tour.shoot(ennemies[tour.getEnnemyinrange()], batch, delta, world, game, uiStage);
@@ -60,16 +60,13 @@ public class Round {
         }
     }
 
-    public void updateLaser(float delta, SpriteBatch batch, Game game, Stage uiStage, Tower tour){
+    public void updateLaser(float delta, SpriteBatch batch, Game game, Stage uiStage, Tower tour){ // Fait bouger le laser
         for(int i = 0; i < ennemies.length; i++){
             if(ennemies[i] != null) {
                 tour.updateLaser(delta, batch, ennemies[i], game, uiStage);
             }
         }
     }
-
-
-
 
 
 }

@@ -16,10 +16,9 @@ public class Ennemy extends BaseActor {
 
     private int life;
     private int speed;
-    private int point;
+    private int point; // l argent qu il rapporte s il meurt
     private Texture texture;
     private Body b2body;
-    private float stateTime;
     private float direction;
     private World world;
 
@@ -55,14 +54,13 @@ public class Ennemy extends BaseActor {
 
 
 
-    public boolean isAlive(){
+    public boolean isAlive(){ // verifie si l'ennemi est vivant
         if (this.getLife() <= 0)
             return false;
         return true;
     }
 
-    public void update(float dt, Game game) {
-        stateTime += dt;
+    public void update(float dt, Game game) { // Fait bouger l ennemi
         if(this.getX() > 570 && getY() == 888){
             direction = 270;
         }

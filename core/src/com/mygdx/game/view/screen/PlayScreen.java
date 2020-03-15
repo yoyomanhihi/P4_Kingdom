@@ -54,20 +54,19 @@ public class PlayScreen implements Screen{
     //private Ennemy ennemylol;
     private World world;
     private Box2DDebugRenderer b2dr;
-    private Tower pistol;
+    private Tower pistol; //weapon test
     private Texture Pistol;
     private float GAME_WIDTH = Gdx.graphics.getWidth()*4/5.0f;
     private float MENU_WIDTH = Gdx.graphics.getWidth()/5.0f;
     private float HEIGHT = Gdx.graphics.getHeight();
     private Texture laser;
-    private boolean gameOver;
+    private boolean gameOver; // Verifie si la partie est terminee
     protected Stage uiStage;
-    private int temps;
-    private int wave;
-    private Round round;
-    private boolean round1;
-    private int ennemycount;
-    private int temps1;
+    private int temps; // aide a faire tirer avec une certaine cadence
+    private Round round; // l objet round qui permet de gerer les niveaux
+    private boolean round1; //verifie si c est le premier round
+    private int ennemycount; // Permet la gestion des ennemis
+    private int temps1; //Permet la gestion d apparition des ennemis
     private Viewport gameAreaViewport;
     private final FitViewport menuAreaViewport;
     private Stage menuStage;
@@ -140,13 +139,13 @@ public class PlayScreen implements Screen{
 
     public void update(float dt){
         handleInput(dt);
-        if(ennemycount < 5 && temps1 > 100) {
+        if(ennemycount < 1 && temps1 > 100) { //demarre le premier round
             round.round1(temps, uiStage, world, ennemycount);
             round1 = true;
             ennemycount++;
             temps1 = 0;
         }
-        if(round1){
+        if(round1){ // met le round a jour
             round.update(dt, game);
         }
         temps1++;
@@ -230,7 +229,6 @@ public class PlayScreen implements Screen{
         font.setColor(Color.BLACK);
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 1680, 30);
         font.getData().setScale(1.8f);
-        //batch.draw(ennemylol.getTexture(), ennemylol.getX(), ennemylol.getY());
         if(round1) {
             round.draw(batch);
         }

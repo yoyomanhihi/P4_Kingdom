@@ -14,10 +14,8 @@ import com.mygdx.game.model.utils.BaseActor;
 public class Laser extends BaseActor
 {
 
-    private float stateTime;
     private int speed;
     private Texture texture;
-    private float direction;
     private Body b2body;
     public World world;
     private float angle;
@@ -50,18 +48,17 @@ public class Laser extends BaseActor
         setBoundaryRectangle();
     }
 
-    public void update(float dt, SpriteBatch batch, Ennemy Ennemy, Game game, Stage stage) {
-        stateTime += dt;
-        angle = this.getOrientation(Ennemy);
-        move(angle, dt);
-        batch.draw(texture, this.getX(), this.getY());
-        if (this.overlaps(Ennemy)) {
+    public void update(float dt, SpriteBatch batch, Ennemy Ennemy, Game game, Stage stage) { // met a jour le laser
+        angle = this.getOrientation(Ennemy); //calcule ou le laser doit aller
+        move(angle, dt); // fait bouger le laser
+        batch.draw(texture, this.getX(), this.getY()); //dessine le laser
+        if (this.overlaps(Ennemy)) { //verifie si le laser touche l ennemi
             Ennemy.setLife(Ennemy.getLife() - 30);
             this.setPosition(100000, 0);
         }
     }
 
-    public void move(float angle, float dt){
+    public void move(float angle, float dt){ //permet la gestion de deplacement du laser
         float a = (float) this.getX() ;
         float b = (float) Math.cos(angle);
         float c = (float) this.getY();
