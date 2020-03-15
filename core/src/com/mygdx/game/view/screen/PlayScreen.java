@@ -28,6 +28,7 @@ import com.mygdx.game.model.entity.Ennemy;
 import com.mygdx.game.model.entity.Laser;
 import com.mygdx.game.ProtectTheKingdom;
 import com.mygdx.game.model.entity.Tower;
+import com.mygdx.game.model.utils.Round;
 
 public class PlayScreen implements Screen{
 
@@ -41,7 +42,7 @@ public class PlayScreen implements Screen{
     private BitmapFont font;
     private SpriteBatch batch;
     private Texture Tank;
-    private Ennemy ennemylol;
+    //private Ennemy ennemylol;
     private World world;
     private Box2DDebugRenderer b2dr;
     private Tower pistol;
@@ -53,6 +54,10 @@ public class PlayScreen implements Screen{
     protected Stage uiStage;
     private int temps;
     private int wave;
+    private Round round;
+    private boolean round1;
+    private int ennemycount;
+    private int temps1;
     //private Stage menuStage;
 
 
@@ -66,12 +71,14 @@ public class PlayScreen implements Screen{
         Tank = new Texture("Tank.png");
         Pistol = new Texture("Pistol.png");
         laser = new Texture("Bullet.png");
-        ennemylol = new Ennemy(200, 125, 20, Tank, 0, mainStage, world);
-        ennemylol.defineEnnemy();
-        pistol = new Tower(40, 500, 40, 40, 850, 240, Pistol, mainStage, world);
+        //ennemylol = new Ennemy(200, 125, 20, Tank, mainStage, world);
+        //ennemylol.defineEnnemy();
+        pistol = new Tower(40, 500, 40, 40, 500, 500, Pistol, mainStage, world);
         w = Gdx.graphics.getWidth();
         h = Gdx.graphics.getHeight();
         temps = 61;
+        round = new Round();
+        ennemycount = 0;
 
 
         this.game = game;
@@ -92,6 +99,8 @@ public class PlayScreen implements Screen{
         FixtureDef fdef = new FixtureDef();
         Body body;
         uiStage = new Stage();
+        round1 = false;
+        temps1 = 0;
 
         for (MapObject mapObject : map.getLayers().get(1).getObjects() )
         {
@@ -115,14 +124,20 @@ public class PlayScreen implements Screen{
 
     public void update(float dt){
         handleInput(dt);
-        if(dt > 100 && dt < 500) {
-            Wave1(temps);
+        if(ennemycount < 5 && temps1 > 100) {
+            round.round1(temps, uiStage, world, ennemycount);
+            round1 = true;
+            ennemycount++;
+            temps1 = 0;
         }
+        if(round1){
+            round.update(dt, game);
+        }
+        temps1++;
         world.step(1/60f, 6, 2);
-        ennemylol.update(dt, game);
-        if(ennemylol.getY() < 1){
-            game.setScreen(new LoseScreen(game));
-        }
+        //if(ennemylol.getY() < 1){
+        //    game.setScreen(new LoseScreen(game));
+        //}
     }
 
     @Override
@@ -147,13 +162,18 @@ public class PlayScreen implements Screen{
         font.setColor(Color.BLACK);
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 1680, 30);
         font.getData().setScale(1.8f);
-        batch.draw(ennemylol.getTexture(), ennemylol.getX(), ennemylol.getY());
+        //batch.draw(ennemylol.getTexture(), ennemylol.getX(), ennemylol.getY());
+        if(round1) {
+            round.draw(batch);
+        }
         batch.draw(pistol.getTexture(), pistol.getX(), pistol.getY());
-        if (temps > 60 && ennemylol.isInRange(pistol)) {
-            pistol.shoot(ennemylol, batch, delta, world, game, uiStage);
+        if (temps > 60 && round1) {
+            round.shoot(pistol, batch, delta, world, game, uiStage);
             temps = 0;
         }
-        pistol.updateLaser(delta, batch, ennemylol, game, uiStage);
+        if(round1) {
+            round.updateLaser(delta, batch, game, uiStage, pistol);
+        }
         temps++;
         batch.end();
 
@@ -213,11 +233,5 @@ public class PlayScreen implements Screen{
         return gameOver;
     }
 
-    public void Wave1(float dt){
-        if(temps == 59){
-            Ennemy ennemy = new Ennemy(200, 125, 20, Tank, 0, mainStage, world);
-            ennemy.defineEnnemy();
-        }
-    }
 }
 

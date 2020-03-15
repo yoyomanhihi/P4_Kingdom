@@ -26,12 +26,12 @@ public class Ennemy extends BaseActor {
 
     //public int damage;  Si on veut faire en sorte qu'un ennemy puisse attaquer une tour
 
-    public Ennemy(int life, int speed, int point, Texture texture, float direction, Stage s, World world){
+    public Ennemy(int life, int speed, int point, Texture texture, Stage s, World world){
         super(0, 888, s);
         this.life = life;
         this.point = point;
         this.texture = texture;
-        this.direction = direction;
+        this.direction = 0;
         this.setSpeed(speed);
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
@@ -53,10 +53,6 @@ public class Ennemy extends BaseActor {
         setBoundaryRectangle();
     }
 
-    public void addEnnemy(int life, int speed, int point, Texture texture, float direction, Stage s, World world){
-        Ennemy ennemy = new Ennemy(life, speed, 20, texture, direction, s, world);
-        ennemy.defineEnnemy();
-    }
 
 
     public boolean isAlive(){
@@ -99,9 +95,6 @@ public class Ennemy extends BaseActor {
         }
         if(direction == 270){
             setPosition(getX(), getY() - dt * speed);
-        }
-        if(!isAlive()) {
-            game.setScreen(new WinScreen(game));
         }
     }
 

@@ -9,7 +9,6 @@ import com.mygdx.game.model.utils.BaseActor;
 public class Tower extends BaseActor {
 
     private int damage;
-    private int shoot;
     private int range;
     private int fireRate;
     private int price;
@@ -17,6 +16,7 @@ public class Tower extends BaseActor {
     private Texture texture;
     private Laser laser1;
     private World world;
+    private int ennemyinrange;
 
     public Tower(int degats, int portee, int cadence, int prix, float x, float y, Texture texture, Stage s, World world){
         super(x,y,s);
@@ -27,6 +27,7 @@ public class Tower extends BaseActor {
         this.locked = true;
         this.texture = texture;
         this.world = world;
+        this.ennemyinrange = 0;
     }
 
     public float getDistance(Ennemy Ennemy){
@@ -67,15 +68,13 @@ public class Tower extends BaseActor {
     //Then checks if the ennemy is in range
     public void shoot(Ennemy ennemy, SpriteBatch batch, float dt, World world, Game game, Stage stage) //est-ce qu'on utilise toujours un "ennemy" ?
     {
-        if ( getStage() == null )
+        if (getStage() == null) {
             return;
-
-        if (ennemy.isInRange(this)) {
-            laser1 = new Laser(0, 0, stage, world);
-            laser1.defineLaser();
-            laser1.centerAtActor(this);
-            laser1.update(dt, batch, ennemy, game, stage);
         }
+        laser1 = new Laser(0, 0, stage, world);
+        laser1.defineLaser();
+        laser1.centerAtActor(this);
+        laser1.update(dt, batch, ennemy, game, stage);
     }
 
     public void updateLaser(float dt, SpriteBatch batch, Ennemy Ennemy, Game game, Stage stage){
@@ -113,6 +112,14 @@ public class Tower extends BaseActor {
 
     public void setLocked(boolean locked){
         this.locked = locked;
+    }
+
+    public int getEnnemyinrange(){
+        return ennemyinrange;
+    }
+
+    public void setEnnemyinrange(int ennemynbr){
+        this.ennemyinrange = ennemynbr;
     }
 
 }
