@@ -56,7 +56,7 @@ public class PlayScreen implements Screen{
     private Box2DDebugRenderer b2dr;
     private Tower pistol; //weapon test
     private Texture Pistol;
-    private float GAME_WIDTH = Gdx.graphics.getWidth()*4/5.0f;
+    private float GAME_WIDTH = Gdx.graphics.getWidth()*4.0f/5.0f;
     private float MENU_WIDTH = Gdx.graphics.getWidth()/5.0f;
     private float HEIGHT = Gdx.graphics.getHeight();
     private Texture laser;
@@ -247,7 +247,6 @@ public class PlayScreen implements Screen{
     private void drawMenuArea(float delta) {
         update(delta);
         menuAreaCamera.update();
-        batch.setProjectionMatrix(menuAreaCamera.combined);
 
         batch.begin();
         Gdx.input.setInputProcessor(menuStage);
