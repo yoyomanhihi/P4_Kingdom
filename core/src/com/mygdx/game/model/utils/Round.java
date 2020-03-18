@@ -17,7 +17,7 @@ public class Round {
     }
 
     public void round1(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
-        ennemies[ennemynbr] = new Ennemy(50, 3, 20, new Texture("Tank.png"), stage, world);
+        ennemies[ennemynbr] = new Ennemy(100, 80, 20, new Texture("Tank.png"), stage, world);
         ennemies[ennemynbr].defineEnnemy();
     }
 

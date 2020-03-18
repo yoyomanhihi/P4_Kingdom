@@ -1,5 +1,8 @@
 package com.mygdx.game.model.entity;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.loaders.SoundLoader;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -19,6 +22,7 @@ public class Laser extends BaseActor
     private Body b2body;
     public World world;
     private float angle;
+    private Sound sound;
 
 
     public Laser(float x, float y, Stage s, World world)
@@ -32,6 +36,7 @@ public class Laser extends BaseActor
         setDeceleration(0);
         this.world = world;
         this.speed = 2000;
+        sound = Gdx.audio.newSound(Gdx.files.internal("Laser1.wav"));
     }
 
     public void defineLaser(){
@@ -52,10 +57,6 @@ public class Laser extends BaseActor
         angle = this.getOrientation(Ennemy); //calcule ou le laser doit aller
         move(angle, dt); // fait bouger le laser
         batch.draw(texture, this.getX(), this.getY()); //dessine le laser
-        if (this.overlaps(Ennemy)) { //verifie si le laser touche l ennemi
-            Ennemy.setLife(Ennemy.getLife() - 30);
-            this.setPosition(100000, 0);
-        }
     }
 
     public void move(float angle, float dt){ //permet la gestion de deplacement du laser
@@ -64,6 +65,10 @@ public class Laser extends BaseActor
         float c = (float) this.getY();
         float d = (float) Math.sin(angle);
         this.setPosition(a - b * speed *dt ,c - d * speed * dt);
+    }
+
+    public Sound getSound(){
+        return sound;
     }
 
 

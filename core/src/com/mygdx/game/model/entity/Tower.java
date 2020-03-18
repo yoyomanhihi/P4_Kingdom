@@ -1,4 +1,5 @@
 package com.mygdx.game.model.entity;
+import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -14,7 +15,7 @@ public class Tower extends BaseActor {
     private int price;
     private boolean locked;
     private Texture texture;
-    private Laser laser1;
+    private Laser [] laser1;
     private World world;
     private int ennemyinrange;
 
@@ -28,6 +29,7 @@ public class Tower extends BaseActor {
         this.texture = texture;
         this.world = world;
         this.ennemyinrange = 0;
+        laser1 = new Laser[1];
     }
 
     public float getDistance(Ennemy Ennemy){ //calcule la distance avec l ennemi
@@ -71,16 +73,21 @@ public class Tower extends BaseActor {
         if (getStage() == null) {
             return;
         }
-        laser1 = new Laser(0, 0, stage, world); //cree le laser et le met a jour
-        laser1.defineLaser();
-        laser1.centerAtActor(this);
-        laser1.update(dt, batch, ennemy, game, stage);
+        laser1[0]= new Laser(0, 0, stage, world); //cree le laser et le met a jour
+        laser1[0].getSound().play();
+        laser1[0].defineLaser();
+        laser1[0].centerAtActor(this);
+        laser1[0].update(dt, batch, ennemy, game, stage);
     }
 
     public void updateLaser(float dt, SpriteBatch batch, Ennemy Ennemy, Game game, Stage stage){ // fait que le laser suit l ennemi
-        if(laser1 != null) {
-            if (laser1.getX() != this.getX() && laser1.getY() != this.getY()) {
-                laser1.update(dt, batch, Ennemy, game, stage);
+        if(laser1[0] != null) {
+            if (laser1[0].getX() != this.getX() && laser1[0].getY() != this.getY()) {
+                laser1[0].update(dt, batch, Ennemy, game, stage);
+            }
+            if (laser1[0].overlaps(Ennemy)) { //verifie si le laser touche l ennemi
+                Ennemy.setLife(Ennemy.getLife() - 30);
+                laser1[0].setPosition(10000, 0);
             }
         }
     }
