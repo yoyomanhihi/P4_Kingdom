@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
@@ -248,13 +249,17 @@ public class PlayScreen implements Screen{
             System.out.println(Gdx.graphics.getWidth());
             Vector3 pos = gameAreaCamera.unproject(new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
             Vector3 pos3 = gameAreaCamera.unproject(new Vector3(Gdx.input.getX(),Gdx.input.getY(),0), 0, 0, (int) GAME_WIDTH, (int) HEIGHT);
+            //TiledMapTileLayer tiledMapTileLayer = (TiledMapTileLayer) map.getLayers().get(1);
+            //TiledMapTileLayer.Cell cell = tiledMapTileLayer.getCell((int)pos3.x, (int)pos3.y);
+            //System.out.println(cell);
             System.out.println(gameAreaViewport.getWorldWidth());
             System.out.println("GAME WIDTH "+GAME_WIDTH);
             System.out.println(pos.x+ "  "+pos.y);
             float y = HEIGHT - Gdx.input.getY();
             System.out.println( "click "+ Gdx.input.getX() + " "+ y);
             System.out.println("pos3 "+pos3.x+ "  "+pos3.y);
-            float x = (float) (pos3.x*37.375);
+            float offset = Gdx.graphics.getWidth()/48;
+            float x = (pos3.x*offset);
             if(pos3.x<numTilesHorizontal && pos3.y<numTilesVertical){
                 System.out.println("in game screen");
                 Tower tower = new Tower(40, 500, 40, 0, x, HEIGHT - Gdx.input.getY(), Pistol1, mainStage, world);
