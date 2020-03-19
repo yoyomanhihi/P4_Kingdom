@@ -56,6 +56,8 @@ public class PlayScreen implements Screen{
     private BitmapFont font;
     private SpriteBatch batch;
     private Texture Tank;
+    private int numTilesHorizontal;
+    private int numTilesVertical;
     //private Ennemy ennemylol;
     private World world;
     private Box2DDebugRenderer b2dr;
@@ -93,10 +95,13 @@ public class PlayScreen implements Screen{
 
         mainStage = new Stage(new FitViewport(GAME_WIDTH, HEIGHT));
         menuStage = new Stage(new FitViewport(MENU_WIDTH, HEIGHT));
-        multiplexer = new InputMultiplexer();
-        multiplexer.addProcessor(mainStage);
-        multiplexer.addProcessor(menuStage);
+        map = new TmxMapLoader().load("Map 1.tmx");
+        //multiplexer = new InputMultiplexer();
+        //multiplexer.addProcessor(mainStage);
+        //multiplexer.addProcessor(menuStage);
         player = new Player();
+        numTilesHorizontal = (int)map.getProperties().get("width");
+        numTilesVertical   = (int)map.getProperties().get("height");
         gameOver = false;
         world = new World(new Vector2(0, 0), true);
         Tank = new Texture("Tank.png");
@@ -133,7 +138,6 @@ public class PlayScreen implements Screen{
         font = new BitmapFont();
         font.getData().setScale(5.0f);
         batch = new SpriteBatch();
-        map = new TmxMapLoader().load("Map 1.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / 32f);
         gameAreaCamera.setToOrtho(false, 48, 30);
         gameAreaCamera.update();
@@ -234,15 +238,29 @@ public class PlayScreen implements Screen{
         table.add(Heart).expandX().right().size(60,60).colspan(1);
         table.add(lifeLabel).expandX().left().expandX().colspan(1);
 
-        Gdx.input.setInputProcessor(multiplexer);
+       // Gdx.input.setInputProcessor(multiplexer);
 
     }
 
 
     public void handleInput(float dt){
         if(Gdx.input.justTouched()){
+            System.out.println(Gdx.graphics.getWidth());
             Vector3 pos = gameAreaCamera.unproject(new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
+            Vector3 pos3 = gameAreaCamera.unproject(new Vector3(Gdx.input.getX(),Gdx.input.getY(),0), 0, 0, (int) GAME_WIDTH, (int) HEIGHT);
+            System.out.println(gameAreaViewport.getWorldWidth());
+            System.out.println("GAME WIDTH "+GAME_WIDTH);
             System.out.println(pos.x+ "  "+pos.y);
+            float y = HEIGHT - Gdx.input.getY();
+            System.out.println( "click "+ Gdx.input.getX() + " "+ y);
+            System.out.println("pos3 "+pos3.x+ "  "+pos3.y);
+            float x = (float) (pos3.x*37.375);
+            if(pos3.x<numTilesHorizontal && pos3.y<numTilesVertical){
+                System.out.println("in game screen");
+                Tower tower = new Tower(40, 500, 40, 0, x, HEIGHT - Gdx.input.getY(), Pistol1, mainStage, world);
+                System.out.println("tower: "+ tower.getX() + " "+ tower.getY());
+                player.buyWeapons(tower);
+            }
         }
     }
 
@@ -273,7 +291,10 @@ public class PlayScreen implements Screen{
 
     @Override
     public void show() {
-
+        InputMultiplexer im = new InputMultiplexer();
+        im.addProcessor(uiStage);
+        im.addProcessor(mainStage);
+        Gdx.input.setInputProcessor(im);
     }
 
     @Override
@@ -347,6 +368,11 @@ public class PlayScreen implements Screen{
             round.draw(batch);
         }
         batch.draw(pistol.getTexture(), pistol.getX(), pistol.getY());
+        if(!player.isEmptyWeapons()) {
+            for (Tower tower : player.getWeapons()) {
+                batch.draw(tower.getTexture(), tower.getX(), tower.getY());
+            }
+        }
         if (temps > 60 && round.getRoundnbr() != 0) {
             round.shoot(pistol, batch, delta, world, game, uiStage);
             temps = 0;
@@ -359,7 +385,7 @@ public class PlayScreen implements Screen{
     }
 
     private void drawMenuArea(float delta) {
-        update(delta);
+        //update(delta);
         menuAreaCamera.update();
 
         batch.begin();
