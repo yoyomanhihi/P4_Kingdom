@@ -10,8 +10,8 @@ public class Player {
     private int score;
 
     public Player(){ //donne un budget et un nombre de vie au joueur au début de la partie
-        money = 150;
-        life = 1;
+        setMoney(150);
+        setLife(1);
         setScore(0);
         weapons = new LinkedList<>();
     }
@@ -19,20 +19,32 @@ public class Player {
     public void buyWeapons(Tower tour){ //Si le joueur a assez d'argent, enleve le prix de l arme a son budget
         if(tour.getPrice() < money){
             tour.setLocked(false);
-            money = money - tour.getPrice();
+            setMoney(getMoney() - tour.getPrice());
             weapons.add(tour);
         }
     }
 
     public void sellWeapon(Tower tour){
-        money = money + tour.getPrice()/2;
+        setMoney(getMoney() + tour.getPrice()/2);
     }
 
     public int getScore() {
-        return score;
+        return this.score;
     }
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public int getLife() {return this.life;}
+
+    public void setLife(int life) {
+        this.life = life;
+    }
+
+    public int getMoney() {return this.money;}
+
+    public void setMoney(int money) {
+        this.money = money;
     }
 }

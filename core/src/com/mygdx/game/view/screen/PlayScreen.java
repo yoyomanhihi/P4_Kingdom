@@ -1,6 +1,7 @@
 package com.mygdx.game.view.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -24,16 +25,20 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.model.entity.Player;
 import com.mygdx.game.model.utils.BaseActor;
 import com.mygdx.game.model.entity.Ennemy;
-import com.mygdx.game.model.entity.Laser;
 import com.mygdx.game.ProtectTheKingdom;
 import com.mygdx.game.model.entity.Tower;
 import com.mygdx.game.model.utils.Round;
@@ -55,8 +60,14 @@ public class PlayScreen implements Screen{
     private World world;
     private Box2DDebugRenderer b2dr;
     private Tower pistol; //weapon test
-    private Texture Pistol;
-    private float GAME_WIDTH = Gdx.graphics.getWidth()*4/5.0f;
+    private Texture Pistol1;
+    private Texture Pistol2;
+    private Texture Pistol3;
+    private Texture Pistol4;
+    private Texture Pistol5;
+    private Texture Pistol6;
+    private Texture Exit;
+    private float GAME_WIDTH = Gdx.graphics.getWidth()*4.0f/5.0f;
     private float MENU_WIDTH = Gdx.graphics.getWidth()/5.0f;
     private float HEIGHT = Gdx.graphics.getHeight();
     private Texture laser;
@@ -69,18 +80,38 @@ public class PlayScreen implements Screen{
     private Viewport gameAreaViewport;
     private final FitViewport menuAreaViewport;
     private Stage menuStage;
+    private Texture Menu;
+    private InputMultiplexer multiplexer;
+    private Label moneyLabel;
+    private Label lifeLabel;
+    public Player player;
+    private Image Coin;
+    private Image Heart;
 
 
-    public PlayScreen(ProtectTheKingdom game){
+    public PlayScreen(final ProtectTheKingdom game){
 
         mainStage = new Stage(new FitViewport(GAME_WIDTH, HEIGHT));
         menuStage = new Stage(new FitViewport(MENU_WIDTH, HEIGHT));
+        multiplexer = new InputMultiplexer();
+        multiplexer.addProcessor(mainStage);
+        multiplexer.addProcessor(menuStage);
+        player = new Player();
         gameOver = false;
         world = new World(new Vector2(0, 0), true);
         Tank = new Texture("Tank.png");
-        Pistol = new Texture("Pistol.png");
+        Pistol1 = new Texture("Pistol.png");
+        Pistol2 = new Texture("tiny_gun_icons/md5.png");
+        Pistol3 = new Texture("tiny_gun_icons/mg6000.png");
+        Pistol4 = new Texture("tiny_gun_icons/pow9.png");
+        Pistol5 = new Texture("tiny_gun_icons/desert_hawk.png");
+        Pistol6 = new Texture("tiny_gun_icons/snp6plus.png");
+        Exit = new Texture("x.png");
+        Menu = new Texture("levelsel.png");
+        Heart = new Image(new Texture("heart.png"));
+        Coin = new Image(new Texture("coin.png"));
         laser = new Texture("Bullet.png");
-        pistol = new Tower(40, 500, 40, 40, 850, 240, Pistol, mainStage, world);
+        pistol = new Tower(40, 500, 40, 40, 850, 240, Pistol1, mainStage, world);
         temps = 61;
         round = new Round();
         ennemycount = 0;
@@ -100,6 +131,7 @@ public class PlayScreen implements Screen{
 
 
         font = new BitmapFont();
+        font.getData().setScale(5.0f);
         batch = new SpriteBatch();
         map = new TmxMapLoader().load("Map 1.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / 32f);
@@ -122,6 +154,87 @@ public class PlayScreen implements Screen{
             System.out.println(props.get("type", String.class) + " x: "
                     + props.get("x",Integer.class)+" y: "+ props.get("y",Integer.class));
         }
+
+        Drawable pistolImage1 = new TextureRegionDrawable(Pistol1);
+        pistolImage1.setMinHeight(80);
+        pistolImage1.setMinWidth(80);
+        ImageButton newGun1 = new ImageButton(pistolImage1);
+        //newGun1.addListener(); FIXME
+
+        Drawable pistolImage2 = new TextureRegionDrawable(Pistol2);
+        pistolImage2.setMinHeight(80);
+        pistolImage2.setMinWidth(80);
+        ImageButton newGun2 = new ImageButton(pistolImage2);
+        //newGun2.addListener(); FIXME
+
+        Drawable pistolImage3 = new TextureRegionDrawable(Pistol3);
+        pistolImage3.setMinHeight(80);
+        pistolImage3.setMinWidth(80);
+        ImageButton newGun3 = new ImageButton(pistolImage3);
+        //newGun3.addListener(); FIXME
+
+        Drawable pistolImage4 = new TextureRegionDrawable(Pistol4);
+        pistolImage4.setMinHeight(80);
+        pistolImage4.setMinWidth(80);
+        ImageButton newGun4 = new ImageButton(pistolImage4);
+        //newGun4.addListener(); FIXME
+
+        Drawable pistolImage5 = new TextureRegionDrawable(Pistol5);
+        pistolImage5.setMinHeight(80);
+        pistolImage5.setMinWidth(80);
+        ImageButton newGun5 = new ImageButton(pistolImage5);
+        //newGun5.addListener(); FIXME
+
+        Drawable pistolImage6 = new TextureRegionDrawable(Pistol6);
+        pistolImage6.setMinHeight(80);
+        pistolImage6.setMinWidth(80);
+        ImageButton newGun6 = new ImageButton(pistolImage6);
+        //newGun6.addListener(); FIXME
+
+        Drawable exitImage = new TextureRegionDrawable(Exit);
+        ImageButton exitButton = new ImageButton(exitImage);
+        exitButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.exit();
+            }
+        });
+
+        Drawable menuImage = new TextureRegionDrawable(Menu);
+        ImageButton menuButton = new ImageButton(menuImage);
+        menuButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new MenuScreen((ProtectTheKingdom) game));
+            }
+        });
+
+        moneyLabel = new Label("MONEY", new Label.LabelStyle(font, Color.WHITE));
+        lifeLabel = new Label("LIFE", new Label.LabelStyle(font, Color.WHITE));
+
+        Table table = new Table();
+        table.setFillParent(true);
+        table.setDebug(true);
+        menuStage.addActor(table);
+
+        table.add(menuButton).right().colspan(2);
+        table.add(exitButton).right().colspan(2);
+        table.row();
+        table.add(newGun1).expandX().expandY().size(80,80).colspan(2);
+        table.add(newGun2).expandX().expandY().size(80,80).colspan(2);
+        table.row();
+        table.add(newGun3).expandX().expandY().size(80,80).colspan(2);
+        table.add(newGun4).expandX().expandY().size(80,80).colspan(2);
+        table.row();
+        table.add(newGun5).expandX().expandY().size(80,80).colspan(2);
+        table.add(newGun6).expandX().expandY().size(80,80).colspan(2);
+        table.row();
+        table.add(Coin).expandX().right().size(60, 60).colspan(1);
+        table.add(moneyLabel).expandX().left().expandX().colspan(1);
+        table.add(Heart).expandX().right().size(60,60).colspan(1);
+        table.add(lifeLabel).expandX().left().expandX().colspan(1);
+
+        Gdx.input.setInputProcessor(multiplexer);
 
     }
 
@@ -154,6 +267,8 @@ public class PlayScreen implements Screen{
         }
         temps1++;
         world.step(1/60f, 6, 2);
+        moneyLabel.setText(String.format("%04d", player.getMoney()));
+        lifeLabel.setText(String.format("%01d", player.getLife()));
     }
 
     @Override
@@ -196,9 +311,7 @@ public class PlayScreen implements Screen{
 
     @Override
     public void hide() {
-        //menuStage.dispose();
-        //mainStage.dispose();
-        //Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
     }
 
     @Override
@@ -248,20 +361,8 @@ public class PlayScreen implements Screen{
     private void drawMenuArea(float delta) {
         update(delta);
         menuAreaCamera.update();
-        //batch.setProjectionMatrix(menuAreaCamera.combined);
 
         batch.begin();
-        Gdx.input.setInputProcessor(menuStage);
-        Table table = new Table();
-        table.setFillParent(true);
-        table.setDebug(true);
-        menuStage.addActor(table);
-        Drawable pistolImage = new TextureRegionDrawable(Pistol);
-        pistolImage.setMinHeight(80);
-        pistolImage.setMinWidth(80);
-        ImageButton newGun = new ImageButton(pistolImage);
-        //newGun.addListener(); FIXME
-        table.add(newGun).size(80,80);
         menuStage.act(Math.min(Gdx.graphics.getDeltaTime(),1/30f));
         menuStage.draw();
         batch.end();
