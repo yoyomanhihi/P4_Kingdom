@@ -87,7 +87,7 @@ public class Tower extends BaseActor {
             }
             if (laser1[0].overlaps(Ennemy)) { //verifie si le laser touche l ennemi
                 Ennemy.setLife(Ennemy.getLife() - 30);
-                laser1[0].setPosition(10000, 0);
+                laser1[0] = null;
             }
         }
     }
