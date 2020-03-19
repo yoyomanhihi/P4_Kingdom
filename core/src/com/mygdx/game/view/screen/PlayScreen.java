@@ -11,11 +11,14 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -89,6 +92,7 @@ public class PlayScreen implements Screen{
     private Player player;
     private Image Coin;
     private Image Heart;
+    private boolean [][] mapCollision;
 
 
 
@@ -102,8 +106,9 @@ public class PlayScreen implements Screen{
         //multiplexer.addProcessor(menuStage);
         player = new Player();
         numTilesHorizontal = (int)map.getProperties().get("width");
-        numTilesVertical   = (int)map.getProperties().get("height");
+        numTilesVertical = (int)map.getProperties().get("height");
         gameOver = false;
+        mapCollision = new boolean[numTilesHorizontal][numTilesVertical];
         world = new World(new Vector2(0, 0), true);
         Tank = new Texture("Tank.png");
         Pistol1 = new Texture("Pistol.png");
@@ -139,7 +144,7 @@ public class PlayScreen implements Screen{
         font.getData().setScale(5.0f);
         batch = new SpriteBatch();
         renderer = new OrthogonalTiledMapRenderer(map, 1 / 32f);
-        gameAreaCamera.setToOrtho(false, 48, 30);
+        gameAreaCamera.setToOrtho(false, numTilesHorizontal, numTilesVertical);
         gameAreaCamera.update();
         b2dr = new Box2DDebugRenderer();
         BodyDef bdef = new BodyDef();
@@ -251,6 +256,14 @@ public class PlayScreen implements Screen{
             //TiledMapTileLayer tiledMapTileLayer = (TiledMapTileLayer) map.getLayers().get(1);
             //TiledMapTileLayer.Cell cell = tiledMapTileLayer.getCell((int)pos3.x, (int)pos3.y);
             //System.out.println(cell);
+            for (MapObject mapObject : map.getLayers().get(1).getObjects() )
+            {
+                MapProperties props = mapObject.getProperties();
+                TiledMapTileMapObject tmtmo = (TiledMapTileMapObject)mapObject;
+                TiledMapTile t = tmtmo.getTile();
+                MapProperties defaultProps = t.getProperties();
+            }
+
             System.out.println(gameAreaViewport.getWorldWidth());
             System.out.println("GAME WIDTH "+GAME_WIDTH);
             System.out.println(pos.x+ "  "+pos.y);
