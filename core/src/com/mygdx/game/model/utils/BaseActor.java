@@ -120,14 +120,17 @@ public class BaseActor extends Animations
         float diff_y = this.getY()-BA.getY();
         float degre = (float)Math.atan(diff_y/diff_x);
 
-        if (this.getX() < BA.getX() && this.getY() > BA.getY()) { //L'ennemi est en haut à gauche de la tour
-            degre += 90;
+        if (this.getX() < BA.getX() && this.getY() > BA.getY()) { //L'ennemi est en bas à droite de la tour
+            degre -= 0;
         }
-        else if (this.getX() < BA.getX() && this.getY() <= BA.getY()){ //L'ennemi est en bas à gauche de la tour
-            degre += 180;
+        else if (this.getX() < BA.getX() && this.getY() <= BA.getY()){ //L'ennemi est en haut à droite de la tour
+            degre -= 0;
         }
-        else if (this.getX() > BA.getX() && this.getY() < BA.getY()){ //L'ennemi est en bas à droite de la tour
-            degre += 270;
+        else if (this.getX() > BA.getX() && this.getY() < BA.getY()){ //L'ennemi est en haut à gauche
+            degre += 135;
+        }
+        else{
+            degre += 135;
         }
         return degre;
     }

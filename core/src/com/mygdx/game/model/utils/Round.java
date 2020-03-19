@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.model.entity.Ennemy;
+import com.mygdx.game.model.entity.Player;
 import com.mygdx.game.model.entity.Tower;
 import com.mygdx.game.view.screen.PlayScreen;
 
@@ -27,23 +28,25 @@ public class Round {
     }
 
     public void round1(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
-        ennemies[ennemynbr] = new Ennemy(20, 80, 20, new Texture("Tank.png"), stage, world);
+        ennemies[ennemynbr] = new Ennemy(100, 80, 20, new Texture("Tank.png"), stage, world);
         ennemies[ennemynbr].defineEnnemy();
     }
 
     public void round2(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
-        ennemies[ennemynbr] = new Ennemy(20, 80, 20, new Texture("Tank.png"), stage, world);
+        ennemies[ennemynbr] = new Ennemy(100, 80, 20, new Texture("Tank.png"), stage, world);
         ennemies[ennemynbr].defineEnnemy();
     }
 
-    public void update(float dt, Game game){ //update la position et l etat des ennemis
+    public void update(float dt, Game game, Player player, Tower tower){ //update la position et l etat des ennemis
         if(ennemiesleft == 0){
             roundnbr++;
+            tower.setEnnemyinrange(0);
         }
         for(int i = 0; i < ennemies.length; i++){
             if(ennemies[i] != null) {
                 ennemies[i].update(dt, game);
                 if(!ennemies[i].isAlive()){
+                    player.setMoney(player.getMoney() + ennemies[i].getPoint());
                     ennemies[i] = null;
                     ennemiesleft--;
                 }
@@ -67,7 +70,7 @@ public class Round {
             }
         }
         else {
-            for (int i = tour.getEnnemyinrange()+1; i < ennemies.length; i++) {
+            for (int i = 0; i < ennemies.length; i++) {
                 if (ennemies[i] != null) {
                     if (ennemies[i].isInRange(tour)) {
                         tour.shoot(ennemies[i], batch, delta, world, game, uiStage);
@@ -80,9 +83,16 @@ public class Round {
     }
 
     public void updateLaser(float delta, SpriteBatch batch, Game game, Stage uiStage, Tower tour){ // Fait bouger le laser
-        for(int i = 0; i < ennemies.length; i++){
-            if(ennemies[i] != null) {
-                tour.updateLaser(delta, batch, ennemies[i], game, uiStage);
+        if(ennemies[tour.getEnnemyinrange()] != null){
+            if(ennemies[tour.getEnnemyinrange()].isInRange(tour)){
+                tour.updateLaser(delta, batch, ennemies[tour.getEnnemyinrange()], game, uiStage);
+            }
+        }
+        else{
+            for(int i = 0; i < ennemies.length; i++){
+                if(ennemies[i] != null) {
+                    tour.updateLaser(delta, batch, ennemies[i], game, uiStage);
+                }
             }
         }
     }

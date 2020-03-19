@@ -64,7 +64,7 @@ public class Laser extends BaseActor
         float b = (float) Math.cos(angle);
         float c = (float) this.getY();
         float d = (float) Math.sin(angle);
-        this.setPosition(a - b * speed *dt ,c - d * speed * dt);
+        this.setPosition(a + b * speed *dt ,c + d * speed * dt);
     }
 
     public Sound getSound(){

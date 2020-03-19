@@ -87,9 +87,10 @@ public class PlayScreen implements Screen{
     private InputMultiplexer multiplexer;
     private Label moneyLabel;
     private Label lifeLabel;
-    public Player player;
+    private Player player;
     private Image Coin;
     private Image Heart;
+
 
 
     public PlayScreen(final ProtectTheKingdom game){
@@ -117,7 +118,7 @@ public class PlayScreen implements Screen{
         Heart = new Image(new Texture("heart.png"));
         Coin = new Image(new Texture("coin.png"));
         laser = new Texture("Bullet.png");
-        pistol = new Tower(40, 500, 40, 40, 850, 240, Pistol1, mainStage, world);
+        pistol = new Tower(40, 500, 40, 40, 850, 500, Pistol1, mainStage, world);
         temps = 61;
         round = new Round();
         ennemycount = 0;
@@ -278,7 +279,7 @@ public class PlayScreen implements Screen{
             temps1 = 0;
         }
         if(round.getRoundnbr() != 0){ // met le round a jour
-            round.update(dt, game);
+            round.update(dt, game, player, pistol);
         }
         if(round.getRoundnbr() == 2 && ennemycount == 3 && temps1 > 125){
             round.preRound2();
