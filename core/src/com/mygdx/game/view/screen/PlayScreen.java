@@ -64,7 +64,6 @@ public class PlayScreen implements Screen{
     protected Stage uiStage;
     private int temps; // aide a faire tirer avec une certaine cadence
     private Round round; // l objet round qui permet de gerer les niveaux
-    private boolean round1; //verifie si c est le premier round
     private int ennemycount; // Permet la gestion des ennemis
     private int temps1; //Permet la gestion d apparition des ennemis
     private Viewport gameAreaViewport;
@@ -81,8 +80,6 @@ public class PlayScreen implements Screen{
         Tank = new Texture("Tank.png");
         Pistol = new Texture("Pistol.png");
         laser = new Texture("Bullet.png");
-        //ennemylol = new Ennemy(200, 125, 20, Tank, 0, mainStage, world);
-        //ennemylol.defineEnnemy();
         pistol = new Tower(40, 500, 40, 40, 850, 240, Pistol, mainStage, world);
         temps = 61;
         round = new Round();
@@ -114,7 +111,6 @@ public class PlayScreen implements Screen{
         FixtureDef fdef = new FixtureDef();
         Body body;
         uiStage = new Stage();
-        round1 = false;
         temps1 = 0;
 
         for (MapObject mapObject : map.getLayers().get(1).getObjects() )
@@ -139,20 +135,25 @@ public class PlayScreen implements Screen{
 
     public void update(float dt){
         handleInput(dt);
-        if(ennemycount < 1 && temps1 > 100) { //demarre le premier round
+        if(ennemycount < 3 && temps1 > 125) { //demarre le premier round
+            round.setRoundnbr(1);
             round.round1(temps, uiStage, world, ennemycount);
-            round1 = true;
             ennemycount++;
             temps1 = 0;
         }
-        if(round1){ // met le round a jour
+        if(round.getRoundnbr() != 0){ // met le round a jour
             round.update(dt, game);
+        }
+        if(round.getRoundnbr() == 2 && ennemycount == 3 && temps1 > 125){
+            round.preRound2();
+        }
+        if(round.getRoundnbr() == 2 && ennemycount < 8 && temps1 > 125){
+            round.round2(temps, uiStage, world, ennemycount - 3);
+            ennemycount++;
+            temps1 = 0;
         }
         temps1++;
         world.step(1/60f, 6, 2);
-        //if(ennemylol.getY() < 1){
-        //    game.setScreen(new LoseScreen(game));
-        //}
     }
 
     @Override
@@ -229,15 +230,15 @@ public class PlayScreen implements Screen{
         font.setColor(Color.BLACK);
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 1680, 30);
         font.getData().setScale(1.8f);
-        if(round1) {
+        if(round.getRoundnbr() != 0) {
             round.draw(batch);
         }
         batch.draw(pistol.getTexture(), pistol.getX(), pistol.getY());
-        if (temps > 60 && round1) {
+        if (temps > 60 && round.getRoundnbr() != 0) {
             round.shoot(pistol, batch, delta, world, game, uiStage);
             temps = 0;
         }
-        if(round1) {
+        if(round.getRoundnbr() != 0) {
             round.updateLaser(delta, batch, game, uiStage, pistol);
         }
         temps++;

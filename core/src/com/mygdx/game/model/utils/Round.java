@@ -8,25 +8,44 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.model.entity.Ennemy;
 import com.mygdx.game.model.entity.Tower;
+import com.mygdx.game.view.screen.PlayScreen;
 
 public class Round {
     private Ennemy [] ennemies; //le tableau d ennemis
+    private int ennemiesleft; // le nombre d ennemis en vie
+    private int roundnbr;
 
     public Round(){
-        ennemies = new Ennemy[5]; //Put the good size for the first wave
+        ennemies = new Ennemy[3];
+        ennemiesleft = 3;
+        roundnbr = 0;
+    } //Put the good size for the first wave
+
+    public void preRound2(){
+        ennemies = new Ennemy[5];
+        ennemiesleft = 5;
     }
 
     public void round1(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
-        ennemies[ennemynbr] = new Ennemy(100, 80, 20, new Texture("Tank.png"), stage, world);
+        ennemies[ennemynbr] = new Ennemy(20, 80, 20, new Texture("Tank.png"), stage, world);
+        ennemies[ennemynbr].defineEnnemy();
+    }
+
+    public void round2(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
+        ennemies[ennemynbr] = new Ennemy(20, 80, 20, new Texture("Tank.png"), stage, world);
         ennemies[ennemynbr].defineEnnemy();
     }
 
     public void update(float dt, Game game){ //update la position et l etat des ennemis
+        if(ennemiesleft == 0){
+            roundnbr++;
+        }
         for(int i = 0; i < ennemies.length; i++){
             if(ennemies[i] != null) {
                 ennemies[i].update(dt, game);
                 if(!ennemies[i].isAlive()){
                     ennemies[i] = null;
+                    ennemiesleft--;
                 }
             }
         }
@@ -66,6 +85,14 @@ public class Round {
                 tour.updateLaser(delta, batch, ennemies[i], game, uiStage);
             }
         }
+    }
+
+    public void setRoundnbr(int n){
+        roundnbr = n;
+    }
+
+    public int getRoundnbr(){
+        return roundnbr;
     }
 
 
