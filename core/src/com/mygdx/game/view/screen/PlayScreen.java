@@ -62,7 +62,6 @@ public class PlayScreen implements Screen{
     //private Ennemy ennemylol;
     private World world;
     private Box2DDebugRenderer b2dr;
-    private Tower pistol; //weapon test
     private Texture Pistol1;
     private Texture Pistol2;
     private Texture Pistol3;
@@ -118,7 +117,6 @@ public class PlayScreen implements Screen{
         Heart = new Image(new Texture("heart.png"));
         Coin = new Image(new Texture("coin.png"));
         laser = new Texture("Bullet.png");
-        pistol = new Tower(40, 500, 40, 40, 850, 500, Pistol1, mainStage, world);
         temps = 61;
         round = new Round();
         ennemycount = 0;
@@ -279,7 +277,7 @@ public class PlayScreen implements Screen{
             temps1 = 0;
         }
         if(round.getRoundnbr() != 0){ // met le round a jour
-            round.update(dt, game, player, pistol);
+            round.update(dt, game, player);
         }
         if(round.getRoundnbr() == 2 && ennemycount == 3 && temps1 > 125){
             round.preRound2();
@@ -373,18 +371,21 @@ public class PlayScreen implements Screen{
         if(round.getRoundnbr() != 0) {
             round.draw(batch);
         }
-        batch.draw(pistol.getTexture(), pistol.getX(), pistol.getY());
         if(!player.isEmptyWeapons()) {
             for (Tower tower : player.getWeapons()) {
                 batch.draw(tower.getTexture(), tower.getX(), tower.getY());
             }
         }
         if (temps > 60 && round.getRoundnbr() != 0) {
-            round.shoot(pistol, batch, delta, world, game, uiStage);
+            for(Tower tower : player.getWeapons()) {
+                round.shoot(tower, batch, delta, world, game, uiStage);
+            }
             temps = 0;
         }
         if(round.getRoundnbr() != 0) {
-            round.updateLaser(delta, batch, game, uiStage, pistol);
+            for(Tower tower : player.getWeapons()) {
+                round.updateLaser(delta, batch, game, uiStage, tower);
+            }
         }
         temps++;
         batch.end();

@@ -28,7 +28,7 @@ public class Round {
     }
 
     public void round1(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
-        ennemies[ennemynbr] = new Ennemy(100, 80, 20, new Texture("Tank.png"), stage, world);
+        ennemies[ennemynbr] = new Ennemy(150, 130, 20, new Texture("Tank.png"), stage, world);
         ennemies[ennemynbr].defineEnnemy();
     }
 
@@ -37,10 +37,12 @@ public class Round {
         ennemies[ennemynbr].defineEnnemy();
     }
 
-    public void update(float dt, Game game, Player player, Tower tower){ //update la position et l etat des ennemis
+    public void update(float dt, Game game, Player player){ //update la position et l etat des ennemis
         if(ennemiesleft == 0){
             roundnbr++;
-            tower.setEnnemyinrange(0);
+            for(Tower tower : player.getWeapons()) {
+                tower.setEnnemyinrange(0);
+            }
         }
         for(int i = 0; i < ennemies.length; i++){
             if(ennemies[i] != null) {
