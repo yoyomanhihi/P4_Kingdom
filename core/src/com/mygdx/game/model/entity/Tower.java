@@ -30,6 +30,8 @@ public class Tower extends BaseActor {
         this.world = world;
         this.ennemyinrange = 0;
         laser1 = new Laser[1];
+        laser1[0]= new Laser(50000, 50000, s, world);
+        laser1[0].defineLaser();
     }
 
     public float getDistance(Ennemy Ennemy){ //calcule la distance avec l ennemi
@@ -73,9 +75,7 @@ public class Tower extends BaseActor {
         if (getStage() == null) {
             return;
         }
-        laser1[0]= new Laser(0, 0, stage, world); //cree le laser et le met a jour
         laser1[0].getSound().play();
-        laser1[0].defineLaser();
         laser1[0].centerAtActor(this);
         laser1[0].update(dt, batch, ennemy, game, stage);
     }
@@ -87,7 +87,7 @@ public class Tower extends BaseActor {
             }
             if (laser1[0].overlaps(Ennemy)) { //verifie si le laser touche l ennemi
                 Ennemy.setLife(Ennemy.getLife() - 30);
-                laser1[0] = null;
+                laser1[0].setPosition(500000, 500000);
             }
         }
     }
