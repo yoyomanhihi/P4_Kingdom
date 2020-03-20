@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.model.entity.Ennemy;
@@ -11,15 +12,19 @@ import com.mygdx.game.model.entity.Player;
 import com.mygdx.game.model.entity.Tower;
 import com.mygdx.game.view.screen.PlayScreen;
 
+import java.util.ArrayList;
+
 public class Round {
     private Ennemy [] ennemies; //le tableau d ennemis
     private int ennemiesleft; // le nombre d ennemis en vie
     private int roundnbr;
+    private ArrayList<MapObject> directionsEnemy;
 
-    public Round(){
+    public Round(ArrayList<MapObject> directionsEnemy){
         ennemies = new Ennemy[3];
         ennemiesleft = 3;
         roundnbr = 0;
+        this.directionsEnemy = directionsEnemy;
     } //Put the good size for the first wave
 
     public void preRound2(){

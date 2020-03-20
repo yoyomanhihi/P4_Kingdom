@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
@@ -46,6 +47,8 @@ import com.mygdx.game.model.entity.Ennemy;
 import com.mygdx.game.ProtectTheKingdom;
 import com.mygdx.game.model.entity.Tower;
 import com.mygdx.game.model.utils.Round;
+
+import java.util.ArrayList;
 
 public class PlayScreen implements Screen{
 
@@ -123,7 +126,8 @@ public class PlayScreen implements Screen{
         Coin = new Image(new Texture("coin.png"));
         laser = new Texture("Bullet.png");
         temps = 61;
-        round = new Round();
+        ArrayList<MapObject> directions = getRectangleList("direction");
+        round = new Round(directions);
         ennemycount = 0;
 
 
@@ -154,14 +158,14 @@ public class PlayScreen implements Screen{
         uiStage = new Stage();
         temps1 = 0;
 
-        for (MapObject mapObject : map.getLayers().get(2).getObjects() )
+        for (MapObject mapObject : getRectangleList("direction") )
         {
-            final RectangleMapObject collisionObject = (RectangleMapObject) mapObject;
-            final Rectangle rectangle = collisionObject.getRectangle();
-            System.out.println(rectangle.x + " "+ rectangle.y);
+            //final RectangleMapObject collisionObject = (RectangleMapObject) mapObject;
+            //final Rectangle rectangle = collisionObject.getRectangle();
             MapProperties props = mapObject.getProperties();
             System.out.println(props.get("type", String.class) + " x: "
-                    + props.get("x",Integer.class)+" y: "+ props.get("y",Integer.class));
+                    + props.get("x",Integer.class)+" y: "+ props.get("y",Integer.class)
+                    + " rotation: "+props.get("rotation", Integer.class));
         }
 
         Drawable pistolImage1 = new TextureRegionDrawable(Pistol1);
@@ -247,6 +251,24 @@ public class PlayScreen implements Screen{
 
     }
 
+    public ArrayList<MapObject> getRectangleList(String propertyName)
+    {
+        ArrayList<MapObject> list = new ArrayList<>();
+
+        for ( MapLayer layer : map.getLayers() )
+        {
+            for ( MapObject obj : layer.getObjects() )
+            {
+
+                MapProperties props = obj.getProperties();
+
+                if ( props.containsKey("type") && props.get("type").equals(propertyName) ) {
+                    list.add(obj);
+                }
+            }
+        }
+        return list;
+    }
 
     public void handleInput(float dt) {
         if (Gdx.input.justTouched()) {
