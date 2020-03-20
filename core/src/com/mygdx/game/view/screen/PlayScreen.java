@@ -100,7 +100,7 @@ public class PlayScreen implements Screen{
 
         mainStage = new Stage(new FitViewport(GAME_WIDTH, HEIGHT));
         menuStage = new Stage(new FitViewport(MENU_WIDTH, HEIGHT));
-        map = new TmxMapLoader().load("Map 1.tmx");
+        map = new TmxMapLoader().load("Map 2.tmx");
         //multiplexer = new InputMultiplexer();
         //multiplexer.addProcessor(mainStage);
         //multiplexer.addProcessor(menuStage);
@@ -154,7 +154,7 @@ public class PlayScreen implements Screen{
         uiStage = new Stage();
         temps1 = 0;
 
-        for (MapObject mapObject : map.getLayers().get(1).getObjects() )
+        for (MapObject mapObject : map.getLayers().get(2).getObjects() )
         {
             final RectangleMapObject collisionObject = (RectangleMapObject) mapObject;
             final Rectangle rectangle = collisionObject.getRectangle();
@@ -253,30 +253,26 @@ public class PlayScreen implements Screen{
             System.out.println(Gdx.graphics.getWidth());
             Vector3 pos = gameAreaCamera.unproject(new Vector3(Gdx.input.getX(),Gdx.input.getY(),0));
             Vector3 pos3 = gameAreaCamera.unproject(new Vector3(Gdx.input.getX(),Gdx.input.getY(),0), 0, 0, (int) GAME_WIDTH, (int) HEIGHT);
-            //TiledMapTileLayer tiledMapTileLayer = (TiledMapTileLayer) map.getLayers().get(1);
-            //TiledMapTileLayer.Cell cell = tiledMapTileLayer.getCell((int)pos3.x, (int)pos3.y);
-            //System.out.println(cell);
-           /* for (MapObject mapObject : map.getLayers().get(1).getObjects() )
-            {
-                MapProperties props = mapObject.getProperties();
-                TiledMapTileMapObject tmtmo = (TiledMapTileMapObject)mapObject;
-                TiledMapTile t = tmtmo.getTile();
-                MapProperties defaultProps = t.getProperties();
-            }*/
-
-            System.out.println(gameAreaViewport.getWorldWidth());
-            System.out.println("GAME WIDTH "+GAME_WIDTH);
-            System.out.println(pos.x+ "  "+pos.y);
-            float y = HEIGHT - Gdx.input.getY();
-            System.out.println( "click "+ Gdx.input.getX() + " "+ y);
-            System.out.println("pos3 "+pos3.x+ "  "+pos3.y);
-            float offset = Gdx.graphics.getWidth()/48;
-            float x = (pos3.x*offset);
-            if(pos3.x<numTilesHorizontal && pos3.y<numTilesVertical){
-                System.out.println("in game screen");
-                Tower tower = new Tower(40, 500, 40, 0, x, HEIGHT - Gdx.input.getY(), Pistol1, mainStage, world);
-                System.out.println("tower: "+ tower.getX() + " "+ tower.getY());
-                player.buyWeapons(tower);
+            TiledMapTileLayer tiledMapTileLayer = (TiledMapTileLayer) map.getLayers().get(1);
+            TiledMapTileLayer.Cell cell = tiledMapTileLayer.getCell((int)pos3.x, (int)pos3.y);
+            if(cell != null){
+                System.out.println("Cell id: "+ cell.getTile().getId());
+                System.out.println("Pas placer sur le chemin");
+            }else{
+                System.out.println(gameAreaViewport.getWorldWidth());
+                System.out.println("GAME WIDTH "+GAME_WIDTH);
+                System.out.println(pos.x+ "  "+pos.y);
+                float y = HEIGHT - Gdx.input.getY();
+                System.out.println( "click "+ Gdx.input.getX() + " "+ y);
+                System.out.println("pos3 "+pos3.x+ "  "+pos3.y);
+                float offset = Gdx.graphics.getWidth()/48;
+                float x = (pos3.x*offset);
+                if(pos3.x<numTilesHorizontal && pos3.y<numTilesVertical){
+                    System.out.println("in game screen");
+                    Tower tower = new Tower(40, 500, 40, 0, x, HEIGHT - Gdx.input.getY(), Pistol1, mainStage, world);
+                    System.out.println("tower: "+ tower.getX() + " "+ tower.getY());
+                    player.buyWeapons(tower);
+                }
             }
         }
     }
