@@ -256,13 +256,13 @@ public class PlayScreen implements Screen{
             //TiledMapTileLayer tiledMapTileLayer = (TiledMapTileLayer) map.getLayers().get(1);
             //TiledMapTileLayer.Cell cell = tiledMapTileLayer.getCell((int)pos3.x, (int)pos3.y);
             //System.out.println(cell);
-            for (MapObject mapObject : map.getLayers().get(1).getObjects() )
+           /* for (MapObject mapObject : map.getLayers().get(1).getObjects() )
             {
                 MapProperties props = mapObject.getProperties();
                 TiledMapTileMapObject tmtmo = (TiledMapTileMapObject)mapObject;
                 TiledMapTile t = tmtmo.getTile();
                 MapProperties defaultProps = t.getProperties();
-            }
+            }*/
 
             System.out.println(gameAreaViewport.getWorldWidth());
             System.out.println("GAME WIDTH "+GAME_WIDTH);
