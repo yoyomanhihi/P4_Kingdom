@@ -54,6 +54,7 @@ public class Laser extends BaseActor
     }
 
     public void update(float dt, SpriteBatch batch, Ennemy Ennemy, Game game, Stage stage) { // met a jour le laser
+        if(this.getX() < 4500)
         angle = this.getOrientation(Ennemy); //calcule ou le laser doit aller
         move(angle, dt); // fait bouger le laser
         batch.draw(texture, this.getX(), this.getY()); //dessine le laser

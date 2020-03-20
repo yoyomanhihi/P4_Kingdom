@@ -274,7 +274,7 @@ public class PlayScreen implements Screen{
             float x = (pos3.x*offset);
             if(pos3.x<numTilesHorizontal && pos3.y<numTilesVertical){
                 System.out.println("in game screen");
-                Tower tower = new Tower(40, 500, 40, 0, x, HEIGHT - Gdx.input.getY(), Pistol1, mainStage, world);
+                Tower tower = new Tower(40, 500, 40, 50, x, HEIGHT - Gdx.input.getY(), Pistol1, mainStage, world);
                 System.out.println("tower: "+ tower.getX() + " "+ tower.getY());
                 player.buyWeapons(tower);
             }
