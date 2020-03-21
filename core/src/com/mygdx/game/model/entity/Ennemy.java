@@ -121,4 +121,12 @@ public class Ennemy extends BaseActor {
     public Texture getTexture(){
         return texture;
     }
+
+    public void setDirection(float direction){
+        this.direction = direction;
+    }
+
+    public float getDirection(){
+        return direction;
+    }
 }

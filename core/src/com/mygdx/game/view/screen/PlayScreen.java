@@ -315,6 +315,11 @@ public class PlayScreen implements Screen{
             ennemycount++;
             temps1 = 0;
         }
+        if(round.getRoundnbr() == 3 && ennemycount < 9 && temps1 > 125){
+            round.round3(temps, uiStage, world, ennemycount - 8);
+            ennemycount++;
+            temps1 = 0;
+        }
         temps1++;
         world.step(1/60f, 6, 2);
         moneyLabel.setText(String.format("%04d", player.getMoney()));
