@@ -13,76 +13,70 @@ import com.mygdx.game.model.entity.Tower;
 import com.mygdx.game.view.screen.PlayScreen;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class Round {
-    private Ennemy [] ennemies; //le tableau d ennemis
+    private LinkedList <Ennemy> ennemies; //le tableau d ennemis
     private int ennemiesleft; // le nombre d ennemis en vie
     private int roundnbr;
     private ArrayList<MapObject> directionsEnemy;
 
     public Round(ArrayList<MapObject> directionsEnemy){
-        ennemies = new Ennemy[3];
-        ennemiesleft = 3;
         roundnbr = 0;
         this.directionsEnemy = directionsEnemy;
+        ennemies = new LinkedList<Ennemy>();
     } //Put the good size for the first wave
 
-    public void preRound2(){
-        ennemies = new Ennemy[5];
-        ennemiesleft = 5;
-    }
-
     public void round1(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
-        ennemies[ennemynbr] = new Ennemy(500, 100, 20, new Texture("Tank.png"), stage, world);
-        ennemies[ennemynbr].defineEnnemy();
+        ennemies.add(new Ennemy(500, 100, 20, new Texture("Tank.png"), stage, world));
+        ennemies.get(ennemynbr).defineEnnemy();
     }
 
     public void round2(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
-        ennemies[ennemynbr] = new Ennemy(500, 100, 20, new Texture("Tank.png"), stage, world);
-        ennemies[ennemynbr].defineEnnemy();
+        ennemies.add(new Ennemy(500, 100, 20, new Texture("Tank.png"), stage, world));
+        ennemies.get(ennemynbr).defineEnnemy();
     }
 
     public void update(float dt, Game game, Player player){ //update la position et l etat des ennemis
-        if(ennemiesleft == 0){
+        if(ennemies.size()==0){
             roundnbr++;
             for(Tower tower : player.getWeapons()) {
                 tower.setEnnemyinrange(0);
             }
         }
-        for(int i = 0; i < ennemies.length; i++){
-            if(ennemies[i] != null) {
-                ennemies[i].update(dt, game);
-                if(!ennemies[i].isAlive()){
-                    player.setMoney(player.getMoney() + ennemies[i].getPoint());
-                    ennemies[i] = null;
-                    ennemiesleft--;
+        else {
+            for (int i = 0; i < ennemies.size(); i++) {
+                ennemies.get(i).update(dt, game);
+                if (!ennemies.get(i).isAlive()) {
+                    player.setMoney(player.getMoney() + ennemies.get(i).getPoint());
+                    ennemies.remove(i);
+                    for(Tower tower : player.getWeapons()) {
+                        tower.setEnnemyinrange(0);
+                    }
                 }
             }
         }
     }
 
     public void draw(Batch batch){ // draw les ennemis du tableau
-        for(int i = 0; i < ennemies.length; i++){
-            if(ennemies[i] != null) {
-                batch.draw(ennemies[i].getTexture(), ennemies[i].getX(), ennemies[i].getY());
-            }
+        for(int i = 0; i < ennemies.size(); i++){
+            batch.draw(ennemies.get(i).getTexture(), ennemies.get(i).getX(), ennemies.get(i).getY());
         }
     }
 
 
     public void shoot(Tower tour, SpriteBatch batch, float delta, World world, Game game, Stage uiStage){ // Prend une arme et lui fait tirer sur le bon ennemi
-        if(ennemies[tour.getEnnemyinrange()] != null){
-            if(ennemies[tour.getEnnemyinrange()].isInRange(tour)){
-                tour.shoot(ennemies[tour.getEnnemyinrange()], batch, delta, world, game, uiStage);
-            }
-        }
-        else {
-            for (int i = 0; i < ennemies.length; i++) {
-                if (ennemies[i] != null) {
-                    if (ennemies[i].isInRange(tour)) {
-                        tour.shoot(ennemies[i], batch, delta, world, game, uiStage);
-                        tour.setEnnemyinrange(i);
-                        i = 1000;
+        if(ennemies.size() != 0) {
+            if (ennemies.get(tour.getEnnemyinrange()).isInRange(tour)) {
+                tour.shoot(ennemies.get(tour.getEnnemyinrange()), batch, delta, world, game, uiStage);
+            } else {
+                for (int i = 0; i < ennemies.size(); i++) {
+                    if (ennemies.get(i) != null) {
+                        if (ennemies.get(i).isInRange(tour)) {
+                            tour.shoot(ennemies.get(i), batch, delta, world, game, uiStage);
+                            tour.setEnnemyinrange(i);
+                            i = 1000;
+                        }
                     }
                 }
             }
@@ -90,15 +84,15 @@ public class Round {
     }
 
     public void updateLaser(float delta, SpriteBatch batch, Game game, Stage uiStage, Tower tour){ // Fait bouger le laser
-        if(ennemies[tour.getEnnemyinrange()] != null){
-            if(ennemies[tour.getEnnemyinrange()].isInRange(tour)){
-                tour.updateLaser(delta, batch, ennemies[tour.getEnnemyinrange()], game, uiStage);
+        if(ennemies.size()!=0) {
+            if (ennemies.get(tour.getEnnemyinrange()).isInRange(tour)) {
+                tour.updateLaser(delta, batch, ennemies.get(tour.getEnnemyinrange()), game, uiStage);
             }
-        }
-        else{
-            for(int i = 0; i < ennemies.length; i++){
-                if(ennemies[i] != null) {
-                    tour.updateLaser(delta, batch, ennemies[i], game, uiStage);
+            else {
+                for (int i = 0; i < ennemies.size(); i++) {
+                    if (ennemies.get(i) != null) {
+                        tour.updateLaser(delta, batch, ennemies.get(i), game, uiStage);
+                    }
                 }
             }
         }

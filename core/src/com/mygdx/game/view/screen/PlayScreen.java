@@ -310,9 +310,6 @@ public class PlayScreen implements Screen{
         if(round.getRoundnbr() != 0){ // met le round a jour
             round.update(dt, game, player);
         }
-        if(round.getRoundnbr() == 2 && ennemycount == 3 && temps1 > 125){
-            round.preRound2();
-        }
         if(round.getRoundnbr() == 2 && ennemycount < 8 && temps1 > 125){
             round.round2(temps, uiStage, world, ennemycount - 3);
             ennemycount++;
