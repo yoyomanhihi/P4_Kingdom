@@ -34,7 +34,7 @@ public class Round {
     } //Put the good size for the first wave
 
     public void round1(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
-        ennemies.add(new Ennemy(500, 100, 20, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY));
+        ennemies.add(new Ennemy(350, 100, 15, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY));
         ennemies.get(ennemynbr).defineEnnemy();
     }
 
@@ -47,7 +47,7 @@ public class Round {
             ennemiestransition.removeFirst();
         }
         else {
-            ennemies.add(new Ennemy(500, 100, 20, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY));
+            ennemies.add(new Ennemy(350, 100, 15, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY));
             ennemies.get(ennemynbr).defineEnnemy();
         }
     }

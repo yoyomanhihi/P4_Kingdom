@@ -306,7 +306,12 @@ public class PlayScreen implements Screen{
         if(player.getLife() == 0 ){
             this.gameOver = true;
             game.setScreen(new LoseScreen(game));
-        }else {
+        }
+        else if(round.getRoundnbr() == 4){
+            this.gameOver = true;
+            game.setScreen(new WinScreen(game));
+        }
+        else {
             handleInput(dt);
             if (ennemycount < 3 && temps1 > 125) { //demarre le premier round
                 round.setRoundnbr(1);
