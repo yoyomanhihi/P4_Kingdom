@@ -22,8 +22,7 @@ public class WinScreen implements Screen{
 
         public WinScreen(Game game){
             this.game = game;
-            viewport = new FitViewport(ProtectTheKingdom.V_WIDTH, ProtectTheKingdom.V_HEIGHT, new OrthographicCamera());
-            stage = new Stage(viewport, ((ProtectTheKingdom) game).batch);
+            stage = new Stage();
             //Gdx.input.setInputProcessor(stage);
 
             Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
@@ -32,12 +31,14 @@ public class WinScreen implements Screen{
             table.center();
             table.setFillParent(true);
 
-            Label gameOverLabel = new Label("YOU WIN", font);
+            Label gameWinLabel = new Label("YOU WIN", font);
             Label playAgainLabel = new Label("Click to Play Again", font);
+            gameWinLabel.setFontScale(5);
+            playAgainLabel.setFontScale(5);
 
-            table.add(gameOverLabel).expandX();
-            table.row();
-            table.add(playAgainLabel).expandX().padTop(10f);
+            table.add(gameWinLabel).fillX().uniformX();
+            table.row().pad(10, 0, 10, 0);
+            table.add(playAgainLabel).fillX().uniformX();
 
             stage.addActor(table);
         }
@@ -55,12 +56,13 @@ public class WinScreen implements Screen{
             }
             Gdx.gl.glClearColor(0, 0, 1, 1);
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+            Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
             stage.draw();
         }
 
         @Override
         public void resize(int width, int height) {
-
+            stage.getViewport().update(width, height, true);
         }
 
         @Override

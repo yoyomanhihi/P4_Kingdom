@@ -12,7 +12,7 @@ public class Player {
 
     public Player(){ //donne un budget et un nombre de vie au joueur au début de la partie
         this.money = 150;
-        this.life = 2;
+        this.life = 10;
         this.score = 0;
         weapons = new ArrayList<>();
     }
