@@ -303,7 +303,7 @@ public class PlayScreen implements Screen{
     }
 
     public void update(float dt){
-        if(player.getLife() == 0 ){
+        if(player.getLife() <= 0 ){
             this.gameOver = true;
             game.setScreen(new LoseScreen(game));
         }
