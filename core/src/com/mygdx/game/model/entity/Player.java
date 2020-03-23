@@ -1,7 +1,6 @@
 package com.mygdx.game.model.entity;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class Player {
@@ -55,5 +54,9 @@ public class Player {
 
     public void setMoney(int money) {
         this.money = money;
+    }
+
+    public void loseLife(int damage){
+        this.life = this.life - damage;
     }
 }

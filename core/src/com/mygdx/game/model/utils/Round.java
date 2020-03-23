@@ -4,13 +4,12 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.model.entity.Ennemy;
 import com.mygdx.game.model.entity.Player;
 import com.mygdx.game.model.entity.Tower;
-import com.mygdx.game.view.screen.PlayScreen;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -22,15 +21,16 @@ public class Round {
     private ArrayList<Direction> directionsEnemy;
     private final float startX;
     private final float startY;
-    private static final float pixel = 32/2;
+    private final Rectangle endRect;
 
-    public Round(ArrayList<Direction> directionsEnemy, float startX , float startY){
+    public Round(ArrayList<Direction> directionsEnemy, float startX , float startY, Rectangle endRect){
         roundnbr = 0;
         this.directionsEnemy = directionsEnemy;
         ennemies = new LinkedList<Ennemy>();
         ennemiestransition = new LinkedList<Ennemy>();
         this.startX = startX;
         this.startY = startY;
+        this.endRect = endRect;
     } //Put the good size for the first wave
 
     public void round1(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
@@ -66,8 +66,12 @@ public class Round {
         }
         else {
             for (int i = 0; i < ennemies.size(); i++) {
-                ennemies.get(i).update(dt, game);
-                if (!ennemies.get(i).isAlive()) {
+                ennemies.get(i).update(dt,this.endRect);
+                if(ennemies.get(i).getAttackPlayer()){
+                    player.loseLife(ennemies.get(i).getDamage());
+                    ennemies.remove(i);
+                }
+                if (0 < ennemies.size() && !ennemies.get(i).isAlive()) {
                     player.setMoney(player.getMoney() + ennemies.get(i).getPoint());
                     ennemiestransition.add(ennemies.get(i));
                     ennemies.remove(i);

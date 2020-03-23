@@ -1,20 +1,15 @@
 package com.mygdx.game.model.entity;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.model.utils.BaseActor;
 import com.mygdx.game.model.utils.Direction;
-import com.mygdx.game.view.screen.WinScreen;
 
 import java.util.ArrayList;
 
@@ -30,11 +25,12 @@ public class Ennemy extends BaseActor {
     private ArrayList<Direction> directions;
     private int target = 0;
     private ArrayList<Rectangle> directionsRectangle = new ArrayList<>();
+    private boolean attackPlayer = false;
+    private int damage;
 
     //public int damage;  Si on veut faire en sorte qu'un ennemy puisse attaquer une tour
 
     public Ennemy(int life, int speed, int point, Texture texture, Stage s, World world, ArrayList<Direction> directions, float startX, float startY){
-        //super(0, 888, s);
         super(startX,startY,s);
         this.life = life;
         this.point = point;
@@ -42,9 +38,7 @@ public class Ennemy extends BaseActor {
         this.direction = 0;
         this.speed = speed;
         this.directions = directions;
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fixtureDef = new FixtureDef();
+        this.damage = 1;
         this.world = world;
         initRectangleList();
     }
@@ -65,7 +59,7 @@ public class Ennemy extends BaseActor {
 
     private void initRectangleList(){
         for (Direction dir: directions) {
-            directionsRectangle.add(new Rectangle(dir.getPoint().getX(),dir.getPoint().getY(),5,5));
+            directionsRectangle.add(new Rectangle(dir.getPoint().getX(),dir.getPoint().getY(),10,10));
         }
     }
 
@@ -76,24 +70,34 @@ public class Ennemy extends BaseActor {
         return true;
     }
 
-    public void update(float dt, Game game) { // Fait bouger l ennemi
+    public boolean getAttackPlayer(){
+        return this.attackPlayer;
 
-        if(target < directionsRectangle.size() && directionsRectangle.get(target).contains(this.getX(), this.getY())){
-            direction = directions.get(target).getRotation();
-            target++;
-        }
+    }
 
-        if(direction == 0) {
-            setPosition(getX() + dt * speed, getY());
-        }
-        if(direction == 90) {
-            setPosition(getX(), getY() + dt * speed);
-        }
-        if(direction == 180){
-            setPosition(getX() - dt * speed, getY());
-        }
-        if(direction == 270){
-            setPosition(getX(), getY() - dt * speed);
+    public void update(float dt,Rectangle endRect) { // Fait bouger l ennemi
+
+        if(endRect.contains(this.getX(), this.getY())){
+            this.attackPlayer = true;
+        }else {
+
+            if (target < directionsRectangle.size() && directionsRectangle.get(target).contains(this.getX(), this.getY())) {
+                direction = directions.get(target).getRotation();
+                target++;
+            }
+
+            if (direction == 0) {
+                setPosition(getX() + dt * speed, getY());
+            }
+            if (direction == 90) {
+                setPosition(getX(), getY() + dt * speed);
+            }
+            if (direction == 180) {
+                setPosition(getX() - dt * speed, getY());
+            }
+            if (direction == 270) {
+                setPosition(getX(), getY() - dt * speed);
+            }
         }
     }
 
@@ -129,5 +133,9 @@ public class Ennemy extends BaseActor {
 
     public float getDirection(){
         return direction;
+    }
+
+    public int getDamage(){
+        return this.damage;
     }
 }

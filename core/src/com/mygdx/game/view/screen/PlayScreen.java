@@ -16,6 +16,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -48,8 +49,6 @@ import java.util.ArrayList;
 public class PlayScreen implements Screen{
 
     private ProtectTheKingdom game;
-    Texture texture;
-    private TmxMapLoader mapLoader;
     private Stage mainStage;
     private TiledMap map;
     private OrthogonalTiledMapRenderer renderer;
@@ -60,7 +59,6 @@ public class PlayScreen implements Screen{
     private Texture Tank;
     private int numTilesHorizontal;
     private int numTilesVertical;
-    //private Ennemy ennemylol;
     private World world;
     private Box2DDebugRenderer b2dr;
     private Texture Pistol1;
@@ -88,7 +86,6 @@ public class PlayScreen implements Screen{
     private final FitViewport menuAreaViewport;
     private Stage menuStage;
     private Texture Menu;
-    private InputMultiplexer multiplexer;
     private Label moneyLabel;
     private Label lifeLabel;
     private Player player;
@@ -105,9 +102,6 @@ public class PlayScreen implements Screen{
         mainStage = new Stage(new FitViewport(GAME_WIDTH, HEIGHT));
         menuStage = new Stage(new FitViewport(MENU_WIDTH, HEIGHT));
         map = new TmxMapLoader().load("Map 2.tmx");
-        //multiplexer = new InputMultiplexer();
-        //multiplexer.addProcessor(mainStage);
-        //multiplexer.addProcessor(menuStage);
         player = new Player();
         numTilesHorizontal = (int)map.getProperties().get("width");
         numTilesVertical = (int)map.getProperties().get("height");
@@ -133,11 +127,14 @@ public class PlayScreen implements Screen{
         temps = 61;
         ArrayList<MapObject> directions = getRectangleList("direction");
         MapObject start = getRectangleList("start").get(0);
+        MapObject end = getRectangleList("end").get(0);
         float startX = (float) start.getProperties().get("x");
-        //float startY = ((float) start.getProperties().get("y")-offsetPixel)*screenToMapOffset;
         float startY = translateOffsetPointY((float) start.getProperties().get("y"));
+        float endX = translateOffsetPointX((float) end.getProperties().get("x"));
+        float endY = translateOffsetPointX((float) end.getProperties().get("y"));
+        Rectangle endRect = new Rectangle(endX,endY, 10, 10);
         setDirectionList(directions);
-        round = new Round(directionList,startX,startY);
+        round = new Round(directionList,startX,startY,endRect);
         ennemycount = 0;
 
 
@@ -161,22 +158,8 @@ public class PlayScreen implements Screen{
         gameAreaCamera.setToOrtho(false, numTilesHorizontal, numTilesVertical);
         gameAreaCamera.update();
         b2dr = new Box2DDebugRenderer();
-        BodyDef bdef = new BodyDef();
-        PolygonShape shape = new PolygonShape();
-        FixtureDef fdef = new FixtureDef();
-        Body body;
         uiStage = new Stage();
         temps1 = 0;
-
-        for (MapObject mapObject : getRectangleList("direction") )
-        {
-            //final RectangleMapObject collisionObject = (RectangleMapObject) mapObject;
-            //final Rectangle rectangle = collisionObject.getRectangle();
-            MapProperties props = mapObject.getProperties();
-            System.out.println(props.get("type", String.class) + " x: "
-                    + props.get("x",Integer.class)+" y: "+ props.get("y",Integer.class)
-                    + " rotation: "+props.get("rotation", Integer.class));
-        }
 
         Drawable pistolImage1 = new TextureRegionDrawable(Pistol1);
         pistolImage1.setMinHeight(80);
@@ -257,7 +240,6 @@ public class PlayScreen implements Screen{
         table.add(Heart).expandX().right().size(60,60).colspan(1);
         table.add(lifeLabel).expandX().left().expandX().colspan(1);
 
-       // Gdx.input.setInputProcessor(multiplexer);
 
     }
 
@@ -275,7 +257,6 @@ public class PlayScreen implements Screen{
             float y = translateOffsetPointY((float) obj.getProperties().get("y"));
             int rotation = (int) obj.getProperties().get("rotation");
             Point point = new Point(x,y);
-            System.out.println("x: "+ x + " y: " + y + " rotation: "+rotation);
             directionList.add(new Direction(point,rotation));
         }
 
@@ -302,22 +283,13 @@ public class PlayScreen implements Screen{
 
     public void handleInput(float dt) {
         if (Gdx.input.justTouched()) {
-            System.out.println(Gdx.graphics.getWidth());
-            System.out.println(Gdx.graphics.getHeight());
-            Vector3 pos = gameAreaCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
             Vector3 pos3 = gameAreaCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0), 0, 0, (int) GAME_WIDTH, (int) HEIGHT);
-            TiledMapTileLayer tiledMapTileLayer = (TiledMapTileLayer) map.getLayers().get(1);
+            TiledMapTileLayer tiledMapTileLayer = (TiledMapTileLayer) map.getLayers().get(0);
             TiledMapTileLayer.Cell cell = tiledMapTileLayer.getCell((int) pos3.x, (int) pos3.y);
             if (cell != null) {
                 System.out.println("Cell id: " + cell.getTile().getId());
                 System.out.println("Pas placer sur le chemin");
             } else {
-                System.out.println(gameAreaViewport.getWorldWidth());
-                System.out.println("GAME WIDTH " + GAME_WIDTH);
-                System.out.println(pos.x + "  " + pos.y);
-                float y = HEIGHT - Gdx.input.getY();
-                System.out.println("click " + Gdx.input.getX() + " " + y);
-                System.out.println("pos3 " + pos3.x + "  " + pos3.y);
                 float offset = Gdx.graphics.getWidth() / 48;
                 float x = (pos3.x * offset);
                 if (pos3.x < numTilesHorizontal && pos3.y < numTilesVertical) {
@@ -331,30 +303,35 @@ public class PlayScreen implements Screen{
     }
 
     public void update(float dt){
-        handleInput(dt);
-        if(ennemycount < 3 && temps1 > 125) { //demarre le premier round
-            round.setRoundnbr(1);
-            round.round1(temps, uiStage, world, ennemycount);
-            ennemycount++;
-            temps1 = 0;
+        if(player.getLife() == 0 ){
+            this.gameOver = true;
+            game.setScreen(new LoseScreen(game));
+        }else {
+            handleInput(dt);
+            if (ennemycount < 3 && temps1 > 125) { //demarre le premier round
+                round.setRoundnbr(1);
+                round.round1(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            if (round.getRoundnbr() != 0) { // met le round a jour
+                round.update(dt, game, player);
+            }
+            if (round.getRoundnbr() == 2 && ennemycount < 8 && temps1 > 125) {
+                round.round2(temps, uiStage, world, ennemycount - 3);
+                ennemycount++;
+                temps1 = 0;
+            }
+            if (round.getRoundnbr() == 3 && ennemycount < 9 && temps1 > 125) {
+                round.round3(temps, uiStage, world, ennemycount - 8);
+                ennemycount++;
+                temps1 = 0;
+            }
+            temps1++;
+            world.step(1 / 60f, 6, 2);
+            moneyLabel.setText(String.format("%04d", player.getMoney()));
+            lifeLabel.setText(String.format("%01d", player.getLife()));
         }
-        if(round.getRoundnbr() != 0){ // met le round a jour
-            round.update(dt, game, player);
-        }
-        if(round.getRoundnbr() == 2 && ennemycount < 8 && temps1 > 125){
-            round.round2(temps, uiStage, world, ennemycount - 3);
-            ennemycount++;
-            temps1 = 0;
-        }
-        if(round.getRoundnbr() == 3 && ennemycount < 9 && temps1 > 125){
-            round.round3(temps, uiStage, world, ennemycount - 8);
-            ennemycount++;
-            temps1 = 0;
-        }
-        temps1++;
-        world.step(1/60f, 6, 2);
-        moneyLabel.setText(String.format("%04d", player.getMoney()));
-        lifeLabel.setText(String.format("%01d", player.getLife()));
     }
 
     @Override

@@ -10,20 +10,18 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.ProtectTheKingdom;
 
 public class LoseScreen implements Screen {
-    private Viewport viewport;
     private Stage stage;
 
     private Game game;
 
     public LoseScreen(Game game){
         this.game = game;
-        viewport = new FitViewport(ProtectTheKingdom.V_WIDTH, ProtectTheKingdom.V_HEIGHT, new OrthographicCamera());
-        stage = new Stage(viewport, ((ProtectTheKingdom) game).batch);
-        //Gdx.input.setInputProcessor(stage);
+        stage = new Stage();
 
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
 
@@ -33,11 +31,12 @@ public class LoseScreen implements Screen {
 
         Label gameOverLabel = new Label("GAME OVER", font);
         Label playAgainLabel = new Label("Click to Play Again", font);
+        gameOverLabel.setFontScale(5);
+        playAgainLabel.setFontScale(5);
 
-        table.add(gameOverLabel).expandX();
-        table.row();
-        table.add(playAgainLabel).expandX().padTop(10f);
-
+        table.add(gameOverLabel).fillX().uniformX();
+        table.row().pad(10, 0, 10, 0);
+        table.add(playAgainLabel).fillX().uniformX();
         stage.addActor(table);
     }
 
@@ -54,12 +53,13 @@ public class LoseScreen implements Screen {
         }
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        Gdx.gl.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
-
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
