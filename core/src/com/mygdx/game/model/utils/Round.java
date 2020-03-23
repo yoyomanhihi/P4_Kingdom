@@ -48,6 +48,7 @@ public class Round {
             //ennemiestransition.getFirst().setDirections(directionsEnemy);
             //ennemiestransition.getFirst().initRectangleList();
             ennemiestransition.getFirst().setTarget(0);
+            ennemiestransition.getFirst().setAttackPlayer(false);
             ennemies.add(ennemiestransition.getFirst());
             ennemiestransition.removeFirst();
         }
@@ -71,6 +72,8 @@ public class Round {
                 ennemies.get(i).update(dt,this.endRect);
                 if(ennemies.get(i).getAttackPlayer()){
                     player.loseLife(ennemies.get(i).getDamage());
+                    ennemiestransition.addLast(ennemies.get(i));
+                    deadennemies++;
                     ennemies.remove(i);
                 }
                 if (0 < ennemies.size() && !ennemies.get(i).isAlive()) {

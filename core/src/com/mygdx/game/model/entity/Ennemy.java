@@ -79,6 +79,10 @@ public class Ennemy extends BaseActor {
 
     }
 
+    public void setAttackPlayer(boolean attackPlayer){
+        this.attackPlayer = false;
+    }
+
     public void update(float dt,Rectangle endRect) { // Fait bouger l ennemi
 
         if(endRect.contains(this.getX(), this.getY())){
