@@ -22,6 +22,7 @@ public class Round {
     private final float startX;
     private final float startY;
     private final Rectangle endRect;
+    private int deadennemies;
 
     public Round(ArrayList<Direction> directionsEnemy, float startX , float startY, Rectangle endRect){
         roundnbr = 0;
@@ -31,16 +32,17 @@ public class Round {
         this.startX = startX;
         this.startY = startY;
         this.endRect = endRect;
+        this.deadennemies = 0;
     } //Put the good size for the first wave
 
     public void round1(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
-        ennemies.add(new Ennemy(350, 100, 15, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY));
+        ennemies.add(new Ennemy(500, 100, 15, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY));
         ennemies.get(ennemynbr).defineEnnemy();
     }
 
     public void round2(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
-        if(ennemiestransition.size() != 0){
-            ennemiestransition.getFirst().setLife(350);
+        if(ennemynbr < 3){
+            ennemiestransition.getFirst().setLife(500);
             ennemiestransition.getFirst().setPosition(startX, startY);
             ennemiestransition.getFirst().setDirection(0);
             ennemiestransition.getFirst().setDirections(directionsEnemy);
@@ -49,8 +51,8 @@ public class Round {
             ennemiestransition.removeFirst();
         }
         else {
-            ennemies.add(new Ennemy(350, 100, 15, new Texture("Tank.png"), stage, world, directionsEnemy, startX, startY));
-            ennemies.get(ennemynbr).defineEnnemy();
+            ennemies.add(new Ennemy(500, 100, 15, new Texture("Tank.png"), stage, world, directionsEnemy, startX, startY));
+            ennemies.get(ennemynbr-deadennemies+3).defineEnnemy();
         }
     }
 
@@ -62,9 +64,6 @@ public class Round {
     public void update(float dt, Game game, Player player){ //update la position et l etat des ennemis
         if(ennemies.size()==0){
             roundnbr++;
-            for(Tower tower : player.getWeapons()) {
-                tower.setEnnemyinrange(0);
-            }
         }
         else {
             for (int i = 0; i < ennemies.size(); i++) {
@@ -75,11 +74,9 @@ public class Round {
                 }
                 if (0 < ennemies.size() && !ennemies.get(i).isAlive()) {
                     player.setMoney(player.getMoney() + ennemies.get(i).getPoint());
-                    ennemiestransition.add(ennemies.get(i));
+                    ennemiestransition.addLast(ennemies.get(i));
+                    deadennemies++;
                     ennemies.remove(i);
-                    for(Tower tower : player.getWeapons()) {
-                        tower.setEnnemyinrange(0);
-                    }
                 }
             }
         }
@@ -94,16 +91,11 @@ public class Round {
 
     public void shoot(Tower tour, SpriteBatch batch, float delta, World world, Game game, Stage uiStage){ // Prend une arme et lui fait tirer sur le bon ennemi
         if(ennemies.size() != 0) {
-            if (ennemies.get(tour.getEnnemyinrange()).isInRange(tour)) {
-                tour.shoot(ennemies.get(tour.getEnnemyinrange()), batch, delta, world, game, uiStage);
-            } else {
-                for (int i = 0; i < ennemies.size(); i++) {
-                    if (ennemies.get(i) != null) {
-                        if (ennemies.get(i).isInRange(tour)) {
-                            tour.setEnnemyinrange(i);
-                            tour.shoot(ennemies.get(i), batch, delta, world, game, uiStage);
-                            i = 1000;
-                        }
+            for (int i = 0; i < ennemies.size(); i++) {
+                if (ennemies.get(i) != null) {
+                    if (ennemies.get(i).isInRange(tour)) {
+                        tour.shoot(ennemies.get(i), batch, delta, world, game, uiStage);
+                        i = 1000;
                     }
                 }
             }
@@ -112,11 +104,8 @@ public class Round {
 
     public void updateLaser(float delta, SpriteBatch batch, Game game, Stage uiStage, Tower tour){ // Fait bouger le laser
         if(ennemies.size()!=0) {
-            if (ennemies.get(tour.getEnnemyinrange()).isInRange(tour)) {
-                tour.updateLaser(delta, batch, ennemies.get(tour.getEnnemyinrange()), game, uiStage);
-            }
-            else {
-                for (int i = 0; i < ennemies.size(); i++) {
+            for (int i = 0; i < ennemies.size(); i++) {
+                if(ennemies.get(i).isInRange(tour)) {
                     tour.updateLaser(delta, batch, ennemies.get(i), game, uiStage);
                     i = 1000;
                 }
