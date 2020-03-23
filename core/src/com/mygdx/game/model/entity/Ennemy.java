@@ -30,7 +30,7 @@ public class Ennemy extends BaseActor {
 
     //public int damage;  Si on veut faire en sorte qu'un ennemy puisse attaquer une tour
 
-    public Ennemy(int life, int speed, int point, Texture texture, Stage s, World world, ArrayList<Direction> directions, float startX, float startY){
+    public Ennemy(int life, int speed, int point, Texture texture, Stage s, World world, ArrayList<Direction> directions, float startX, float startY, int damage){
         super(startX,startY,s);
         this.life = life;
         this.point = point;
@@ -38,7 +38,7 @@ public class Ennemy extends BaseActor {
         this.direction = 0;
         this.speed = speed;
         this.directions = directions;
-        this.damage = 1;
+        this.damage = damage;
         this.world = world;
         initRectangleList();
     }
