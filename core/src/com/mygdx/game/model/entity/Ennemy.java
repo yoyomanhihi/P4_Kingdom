@@ -57,7 +57,7 @@ public class Ennemy extends BaseActor {
         setBoundaryRectangle();
     }
 
-    private void initRectangleList(){
+    public void initRectangleList(){
         for (Direction dir: directions) {
             directionsRectangle.add(new Rectangle(dir.getPoint().getX(),dir.getPoint().getY(),10,10));
         }
@@ -101,6 +101,7 @@ public class Ennemy extends BaseActor {
         }
     }
 
+
     public void act(float dt){
         super.act( dt );
         boundToWorld();
@@ -137,5 +138,9 @@ public class Ennemy extends BaseActor {
 
     public int getDamage(){
         return this.damage;
+    }
+
+    public void setDirections(ArrayList<Direction> directions){
+        this.directions = directions;
     }
 }
