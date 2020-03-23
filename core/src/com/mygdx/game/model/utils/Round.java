@@ -37,7 +37,7 @@ public class Round {
 
     public void round1(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
         ennemies.add(new Ennemy(500, 100, 15, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY));
-        ennemies.get(ennemynbr).defineEnnemy();
+        ennemies.get(ennemynbr-deadennemies).defineEnnemy();
     }
 
     public void round2(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
