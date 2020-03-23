@@ -2,7 +2,6 @@ package com.mygdx.game.view.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,16 +11,11 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.MapProperties;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapTile;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.objects.TiledMapTileMapObject;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -43,9 +37,10 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.model.entity.Player;
 import com.mygdx.game.model.utils.BaseActor;
-import com.mygdx.game.model.entity.Ennemy;
 import com.mygdx.game.ProtectTheKingdom;
 import com.mygdx.game.model.entity.Tower;
+import com.mygdx.game.model.utils.Direction;
+import com.mygdx.game.model.utils.Point;
 import com.mygdx.game.model.utils.Round;
 
 import java.util.ArrayList;
@@ -78,6 +73,10 @@ public class PlayScreen implements Screen{
     private float GAME_WIDTH = Gdx.graphics.getWidth()*4.0f/5.0f;
     private float MENU_WIDTH = Gdx.graphics.getWidth()/5.0f;
     private float HEIGHT = Gdx.graphics.getHeight();
+    private final float offsetPixel;
+    private final float screenToMapOffsetWidth;
+    private final float screenToMapOffsetHeight;
+    private final float tileSize;
     private Texture laser;
     private boolean gameOver; // Verifie si la partie est terminee
     protected Stage uiStage;
@@ -96,11 +95,13 @@ public class PlayScreen implements Screen{
     private Image Coin;
     private Image Heart;
     private boolean [][] mapCollision;
+    private ArrayList<Direction> directionList = new ArrayList<>();
 
 
 
     public PlayScreen(final ProtectTheKingdom game){
 
+        System.out.println(Gdx.graphics.getWidth());
         mainStage = new Stage(new FitViewport(GAME_WIDTH, HEIGHT));
         menuStage = new Stage(new FitViewport(MENU_WIDTH, HEIGHT));
         map = new TmxMapLoader().load("Map 2.tmx");
@@ -110,6 +111,10 @@ public class PlayScreen implements Screen{
         player = new Player();
         numTilesHorizontal = (int)map.getProperties().get("width");
         numTilesVertical = (int)map.getProperties().get("height");
+        tileSize = (int)map.getProperties().get("tileheight");
+        offsetPixel = tileSize/2.0f;
+        this.screenToMapOffsetWidth = (float)  Gdx.graphics.getWidth()/(tileSize*numTilesHorizontal);
+        this.screenToMapOffsetHeight = (float) Gdx.graphics.getHeight()/(tileSize*numTilesVertical);
         gameOver = false;
         mapCollision = new boolean[numTilesHorizontal][numTilesVertical];
         world = new World(new Vector2(0, 0), true);
@@ -127,7 +132,12 @@ public class PlayScreen implements Screen{
         laser = new Texture("Bullet.png");
         temps = 61;
         ArrayList<MapObject> directions = getRectangleList("direction");
-        round = new Round(directions);
+        MapObject start = getRectangleList("start").get(0);
+        float startX = (float) start.getProperties().get("x");
+        //float startY = ((float) start.getProperties().get("y")-offsetPixel)*screenToMapOffset;
+        float startY = translateOffsetPointY((float) start.getProperties().get("y"));
+        setDirectionList(directions);
+        round = new Round(directionList,startX,startY);
         ennemycount = 0;
 
 
@@ -251,6 +261,26 @@ public class PlayScreen implements Screen{
 
     }
 
+    private float translateOffsetPointX(float x){
+        return (x-(this.offsetPixel/2))*this.screenToMapOffsetWidth;
+    }
+
+    private float translateOffsetPointY(float y){
+        return (y-this.offsetPixel)*this.screenToMapOffsetHeight;
+    }
+
+    private void setDirectionList(ArrayList<MapObject> directions){
+        for (MapObject obj:directions) {
+            float x = translateOffsetPointX((float) obj.getProperties().get("x"));
+            float y = translateOffsetPointY((float) obj.getProperties().get("y"));
+            int rotation = (int) obj.getProperties().get("rotation");
+            Point point = new Point(x,y);
+            System.out.println("x: "+ x + " y: " + y + " rotation: "+rotation);
+            directionList.add(new Direction(point,rotation));
+        }
+
+    }
+
     public ArrayList<MapObject> getRectangleList(String propertyName)
     {
         ArrayList<MapObject> list = new ArrayList<>();
@@ -273,6 +303,7 @@ public class PlayScreen implements Screen{
     public void handleInput(float dt) {
         if (Gdx.input.justTouched()) {
             System.out.println(Gdx.graphics.getWidth());
+            System.out.println(Gdx.graphics.getHeight());
             Vector3 pos = gameAreaCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
             Vector3 pos3 = gameAreaCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0), 0, 0, (int) GAME_WIDTH, (int) HEIGHT);
             TiledMapTileLayer tiledMapTileLayer = (TiledMapTileLayer) map.getLayers().get(1);
@@ -382,12 +413,12 @@ public class PlayScreen implements Screen{
         return gameOver;
     }
 
-    public void Wave1(float dt){
+    /*public void Wave1(float dt){
         if(temps == 59){
             Ennemy ennemy = new Ennemy(200, 125, 20, Tank, mainStage, world);
             ennemy.defineEnnemy();
         }
-    }
+    }*/
 
     private void drawGameArea(float delta) {
         update(delta);

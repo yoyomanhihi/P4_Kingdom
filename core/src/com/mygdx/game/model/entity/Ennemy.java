@@ -1,7 +1,10 @@
 package com.mygdx.game.model.entity;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -10,7 +13,10 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.model.utils.BaseActor;
+import com.mygdx.game.model.utils.Direction;
 import com.mygdx.game.view.screen.WinScreen;
+
+import java.util.ArrayList;
 
 public class Ennemy extends BaseActor {
 
@@ -21,21 +27,26 @@ public class Ennemy extends BaseActor {
     private Body b2body;
     private float direction;
     private World world;
-
+    private ArrayList<Direction> directions;
+    private int target = 0;
+    private ArrayList<Rectangle> directionsRectangle = new ArrayList<>();
 
     //public int damage;  Si on veut faire en sorte qu'un ennemy puisse attaquer une tour
 
-    public Ennemy(int life, int speed, int point, Texture texture, Stage s, World world){
-        super(0, 888, s);
+    public Ennemy(int life, int speed, int point, Texture texture, Stage s, World world, ArrayList<Direction> directions, float startX, float startY){
+        //super(0, 888, s);
+        super(startX,startY,s);
         this.life = life;
         this.point = point;
         this.texture = texture;
         this.direction = 0;
-        this.setSpeed(speed);
+        this.speed = speed;
+        this.directions = directions;
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fixtureDef = new FixtureDef();
         this.world = world;
+        initRectangleList();
     }
 
     public void defineEnnemy(){
@@ -52,6 +63,11 @@ public class Ennemy extends BaseActor {
         setBoundaryRectangle();
     }
 
+    private void initRectangleList(){
+        for (Direction dir: directions) {
+            directionsRectangle.add(new Rectangle(dir.getPoint().getX(),dir.getPoint().getY(),5,5));
+        }
+    }
 
 
     public boolean isAlive(){ // verifie si l'ennemi est vivant
@@ -61,27 +77,12 @@ public class Ennemy extends BaseActor {
     }
 
     public void update(float dt, Game game) { // Fait bouger l ennemi
-        if(this.getX() > 570 && getY() == 888){
-            direction = 270;
+
+        if(target < directionsRectangle.size() && directionsRectangle.get(target).contains(this.getX(), this.getY())){
+            direction = directions.get(target).getRotation();
+            target++;
         }
-        else if(this.getX() > 570 && getX() < 700 && getY() < 240){
-            direction = 0;
-        }
-        else if(this.getX() > 700 && this.getY() < 240 && getY() > 140 && getX() < 960){
-            direction = 270;
-        }
-        else if(this.getX() > 700 && getY() < 140 && this.getX() < 960){
-            direction = 0;
-        }
-        else if(this.getX() > 960 && this.getY() < 240 && this.getX() < 1080){
-            direction = 90;
-        }
-        else if(this.getX() > 960 && this.getY() > 240 && this.getX() < 1080){
-            direction = 0;
-        }
-        else if(this.getX() > 1100 && this.getY() < 888){
-            direction = 90;
-        }
+
         if(direction == 0) {
             setPosition(getX() + dt * speed, getY());
         }

@@ -19,17 +19,22 @@ public class Round {
     private LinkedList <Ennemy> ennemies; //le tableau d ennemis
     private LinkedList <Ennemy> ennemiestransition;
     private int roundnbr;
-    private ArrayList<MapObject> directionsEnemy;
+    private ArrayList<Direction> directionsEnemy;
+    private final float startX;
+    private final float startY;
+    private static final float pixel = 32/2;
 
-    public Round(ArrayList<MapObject> directionsEnemy){
+    public Round(ArrayList<Direction> directionsEnemy, float startX , float startY){
         roundnbr = 0;
         this.directionsEnemy = directionsEnemy;
         ennemies = new LinkedList<Ennemy>();
         ennemiestransition = new LinkedList<Ennemy>();
+        this.startX = startX;
+        this.startY = startY;
     } //Put the good size for the first wave
 
     public void round1(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
-        ennemies.add(new Ennemy(500, 100, 20, new Texture("Tank.png"), stage, world));
+        ennemies.add(new Ennemy(500, 100, 20, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY));
         ennemies.get(ennemynbr).defineEnnemy();
     }
 
@@ -42,13 +47,13 @@ public class Round {
             ennemiestransition.removeFirst();
         }
         else {
-            ennemies.add(new Ennemy(500, 100, 20, new Texture("Tank.png"), stage, world));
+            ennemies.add(new Ennemy(500, 100, 20, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY));
             ennemies.get(ennemynbr).defineEnnemy();
         }
     }
 
     public void round3(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
-        ennemies.add(new Ennemy(3000, 60, 100, new Texture("RedTank.png"), stage, world));
+        ennemies.add(new Ennemy(3000, 60, 100, new Texture("RedTank.png"), stage, world,directionsEnemy,startX,startY));
         ennemies.get(ennemynbr).defineEnnemy();
     }
 

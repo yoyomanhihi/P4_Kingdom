@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="48" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="33">
+<map version="1.2" tiledversion="1.3.2" orientation="orthogonal" renderorder="right-down" compressionlevel="0" width="48" height="30" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="38">
  <tileset firstgid="1" name="RPGpack_sheet" tilewidth="32" tileheight="32" tilecount="1040" columns="40">
   <image source="KenneyRPGpack/Spritesheet/RPGpack_sheet.png" width="1280" height="832"/>
   <tile id="411">
@@ -94,20 +94,45 @@
   </object>
   <object id="24" type="direction" x="416" y="128" width="32" height="32">
    <properties>
-    <property name="rotation" type="int" value="90"/>
+    <property name="rotation" type="int" value="270"/>
    </properties>
   </object>
   <object id="25" type="direction" x="416" y="704" width="32" height="32">
    <properties>
-    <property name="rotation" type="int" value="180"/>
+    <property name="rotation" type="int" value="0"/>
    </properties>
   </object>
   <object id="26" type="direction" x="512" y="704" width="32" height="32">
    <properties>
-    <property name="rotation" type="int" value="90"/>
+    <property name="rotation" type="int" value="270"/>
    </properties>
   </object>
   <object id="27" type="direction" x="512" y="800" width="32" height="32">
+   <properties>
+    <property name="rotation" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="33" type="direction" x="704" y="800" width="32" height="32">
+   <properties>
+    <property name="rotation" type="int" value="90"/>
+   </properties>
+  </object>
+  <object id="34" type="direction" x="704" y="704" width="32" height="32">
+   <properties>
+    <property name="rotation" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="35" type="direction" x="800" y="704" width="32" height="32">
+   <properties>
+    <property name="rotation" type="int" value="90"/>
+   </properties>
+  </object>
+  <object id="36" type="direction" x="800" y="128" width="32" height="32">
+   <properties>
+    <property name="rotation" type="int" value="0"/>
+   </properties>
+  </object>
+  <object id="37" type="direction" x="1280" y="128" width="32" height="32">
    <properties>
     <property name="rotation" type="int" value="270"/>
    </properties>
