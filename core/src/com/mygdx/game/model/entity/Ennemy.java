@@ -63,6 +63,10 @@ public class Ennemy extends BaseActor {
         }
     }
 
+    public void setTarget(int newTarget){
+        this.target = newTarget;
+
+    }
 
     public boolean isAlive(){ // verifie si l'ennemi est vivant
         if (this.getLife() <= 0)

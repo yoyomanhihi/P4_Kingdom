@@ -43,8 +43,9 @@ public class Round {
             ennemiestransition.getFirst().setLife(350);
             ennemiestransition.getFirst().setPosition(startX, startY);
             ennemiestransition.getFirst().setDirection(0);
-            ennemiestransition.getFirst().setDirections(directionsEnemy);
-            ennemiestransition.getFirst().initRectangleList();
+            //ennemiestransition.getFirst().setDirections(directionsEnemy);
+            //ennemiestransition.getFirst().initRectangleList();
+            ennemiestransition.getFirst().setTarget(0);
             ennemies.add(ennemiestransition.getFirst());
             ennemiestransition.removeFirst();
         }

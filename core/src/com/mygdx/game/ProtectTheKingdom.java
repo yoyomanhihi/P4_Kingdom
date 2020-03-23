@@ -5,6 +5,7 @@
 	import com.badlogic.gdx.scenes.scene2d.Stage;
 	import com.mygdx.game.view.screen.MenuScreen;
 	import com.mygdx.game.view.screen.PlayScreen;
+	import com.mygdx.game.view.screen.WinScreen;
 
 	public class ProtectTheKingdom extends Game {
 		public Stage mainStage;
