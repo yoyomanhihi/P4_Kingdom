@@ -1,5 +1,6 @@
 package com.mygdx.game.model.entity;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 
 public class Ennemy extends BaseActor {
 
-    private int life;
+    private float life;
     private int speed;
     private int point; // l argent qu il rapporte s il meurt
     private Texture texture;
@@ -27,12 +28,14 @@ public class Ennemy extends BaseActor {
     private ArrayList<Rectangle> directionsRectangle = new ArrayList<>();
     private boolean attackPlayer = false;
     private int damage;
+    private float initiallife;
 
     //public int damage;  Si on veut faire en sorte qu'un ennemy puisse attaquer une tour
 
     public Ennemy(int life, int speed, int point, Texture texture, Stage s, World world, ArrayList<Direction> directions, float startX, float startY, int damage){
         super(startX,startY,s);
         this.life = life;
+        this.initiallife = life;
         this.point = point;
         this.texture = texture;
         this.direction = 0;
@@ -109,6 +112,10 @@ public class Ennemy extends BaseActor {
         }
     }
 
+    public float getPercentageOfLife(){
+        return life/initiallife;
+    }
+
 
     public void act(float dt){
         super.act( dt );
@@ -116,7 +123,7 @@ public class Ennemy extends BaseActor {
     }
 
 
-    public int getLife(){
+    public float getLife(){
         return life;
     }
 
@@ -124,7 +131,7 @@ public class Ennemy extends BaseActor {
         return point;
     }
 
-    public void setLife(int life){
+    public void setLife(float life){
         this.life = life;
     }
 
@@ -151,4 +158,13 @@ public class Ennemy extends BaseActor {
     public void setDirections(ArrayList<Direction> directions){
         this.directions = directions;
     }
+
+    public void updateHealthbar(Game game){
+
+    }
+
+    public float getInitiallife(){
+        return initiallife;
+    }
+
 }

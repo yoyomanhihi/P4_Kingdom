@@ -1,6 +1,8 @@
 package com.mygdx.game.model.utils;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -23,6 +25,7 @@ public class Round {
     private final float startY;
     private final Rectangle endRect;
     private int deadennemies;
+    private Texture healthbar;
 
     public Round(ArrayList<Direction> directionsEnemy, float startX , float startY, Rectangle endRect){
         roundnbr = 0;
@@ -33,6 +36,7 @@ public class Round {
         this.startY = startY;
         this.endRect = endRect;
         this.deadennemies = 0;
+        healthbar = new Texture("Healthbar.png");
     } //Put the good size for the first wave
 
     public void round1(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
@@ -89,6 +93,14 @@ public class Round {
     public void draw(Batch batch){ // draw les ennemis du tableau
         for(int i = 0; i < ennemies.size(); i++){
             batch.draw(ennemies.get(i).getTexture(), ennemies.get(i).getX(), ennemies.get(i).getY());
+            if(ennemies.get(i).getPercentageOfLife() > 0.25){
+                batch.setColor(Color.GREEN);
+            }
+            else{
+                batch.setColor(Color.RED);
+            }
+            batch.draw(healthbar, ennemies.get(i).getX(), ennemies.get(i).getY() + 60, 60*ennemies.get(i).getPercentageOfLife(), 5);
+            batch.setColor(Color.WHITE);
         }
     }
 
