@@ -294,7 +294,7 @@ public class PlayScreen implements Screen{
                 float x = (pos3.x * offset);
                 if (pos3.x < numTilesHorizontal && pos3.y < numTilesVertical) {
                     System.out.println("in game screen");
-                    Tower tower = new Tower(40, 500, 40, 50, x, HEIGHT - Gdx.input.getY(), Pistol1, mainStage, world);
+                    Tower tower = new Tower(40, 500, 60, 50, x, HEIGHT - Gdx.input.getY(), Pistol1, mainStage, world);
                     System.out.println("tower: " + tower.getX() + " " + tower.getY());
                     player.buyWeapons(tower);
                 }
@@ -320,7 +320,7 @@ public class PlayScreen implements Screen{
                 temps1 = 0;
             }
             if (round.getRoundnbr() != 0) { // met le round a jour
-                round.update(dt, game, player);
+                round.update(dt, game, player, mainStage);
             }
             if (round.getRoundnbr() == 2 && ennemycount < 8 && temps1 > 125) {
                 round.round2(temps, uiStage, world, ennemycount - 3);
@@ -422,7 +422,7 @@ public class PlayScreen implements Screen{
                 batch.draw(tower.getTexture(), tower.getX(), tower.getY());
             }
         }
-        if (temps > 60 && round.getRoundnbr() != 0) {
+        if (round.getRoundnbr() != 0) {
             for(Tower tower : player.getWeapons()) {
                 round.shoot(tower, batch, delta, world, game, uiStage);
             }

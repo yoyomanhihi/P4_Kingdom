@@ -18,6 +18,7 @@ public class Tower extends BaseActor {
     private Laser [] laser1;
     private World world;
     private int ennemyinrange;
+    private float temps;
 
     public Tower(int degats, int portee, int cadence, int prix, float x, float y, Texture texture, Stage s, World world){
         super(x,y,s);
@@ -32,6 +33,7 @@ public class Tower extends BaseActor {
         laser1 = new Laser[1];
         laser1[0]= new Laser(50000, 50000, s, world);
         laser1[0].defineLaser();
+        temps = 0;
     }
 
     public float getDistance(Ennemy Ennemy){ //calcule la distance avec l ennemi
@@ -89,6 +91,7 @@ public class Tower extends BaseActor {
                 Ennemy.setLife(Ennemy.getLife() - 30);
                 laser1[0].setPosition(500000, 500000);
             }
+            temps++;
         }
     }
 
@@ -127,6 +130,14 @@ public class Tower extends BaseActor {
 
     public void setEnnemyinrange(int ennemynbr){
         this.ennemyinrange = ennemynbr;
+    }
+
+    public float getTemps(){
+        return temps;
+    }
+
+    public void setTemps(float temps){
+        this.temps = temps;
     }
 
 }

@@ -5,10 +5,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.mygdx.game.model.entity.Ennemy;
 import com.mygdx.game.model.entity.Player;
 import com.mygdx.game.model.entity.Tower;
@@ -26,6 +29,7 @@ public class Round {
     private final Rectangle endRect;
     private int deadennemies;
     private Texture healthbar;
+    private float temps;
 
     public Round(ArrayList<Direction> directionsEnemy, float startX , float startY, Rectangle endRect){
         roundnbr = 0;
@@ -37,6 +41,7 @@ public class Round {
         this.endRect = endRect;
         this.deadennemies = 0;
         healthbar = new Texture("Healthbar.png");
+        temps = 0;
     } //Put the good size for the first wave
 
     public void round1(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
@@ -67,9 +72,14 @@ public class Round {
         ennemies.get(ennemynbr).defineEnnemy();
     }
 
-    public void update(float dt, Game game, Player player){ //update la position et l etat des ennemis
+    public void update(float dt, Game game, Player player, Stage stage){ //update la position et l etat des ennemis
         if(ennemies.size()==0){
-            roundnbr++;
+            temps++;
+
+            if(temps > 10){
+                roundnbr++;
+                temps = 0;
+            }
         }
         else {
             for (int i = 0; i < ennemies.size(); i++) {
@@ -110,8 +120,11 @@ public class Round {
             for (int i = 0; i < ennemies.size(); i++) {
                 if (ennemies.get(i) != null) {
                     if (ennemies.get(i).isInRange(tour)) {
-                        tour.shoot(ennemies.get(i), batch, delta, world, game, uiStage);
-                        i = 1000;
+                        if(tour.getTemps() > tour.getFireRate()) {
+                            tour.shoot(ennemies.get(i), batch, delta, world, game, uiStage);
+                            tour.setTemps(0);
+                            i = 1000;
+                        }
                     }
                 }
             }
@@ -137,5 +150,12 @@ public class Round {
         return roundnbr;
     }
 
+    public float getTemps(){
+        return temps;
+    }
+
+    public void setTemps(float temps){
+        this.temps = temps;
+    }
 
 }
