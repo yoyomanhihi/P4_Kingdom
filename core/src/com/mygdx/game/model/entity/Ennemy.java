@@ -1,7 +1,9 @@
 package com.mygdx.game.model.entity;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -19,7 +21,7 @@ public class Ennemy extends BaseActor {
     private float life;
     private int speed;
     private int point; // l argent qu il rapporte s il meurt
-    private Texture texture;
+    //private Texture texture;
     private Body b2body;
     private float direction;
     private World world;
@@ -29,6 +31,7 @@ public class Ennemy extends BaseActor {
     private boolean attackPlayer = false;
     private int damage;
     private float initiallife;
+    private Sprite sprite;
 
     //public int damage;  Si on veut faire en sorte qu'un ennemy puisse attaquer une tour
 
@@ -37,7 +40,8 @@ public class Ennemy extends BaseActor {
         this.life = life;
         this.initiallife = life;
         this.point = point;
-        this.texture = texture;
+        //this.texture = texture;
+        this.sprite = new Sprite(texture);
         this.direction = 0;
         this.speed = speed;
         this.directions = directions;
@@ -139,12 +143,19 @@ public class Ennemy extends BaseActor {
         this.speed = speed;
     }
 
+    /*
     public Texture getTexture(){
         return texture;
     }
 
+     */
+
     public void setDirection(float direction){
         this.direction = direction;
+    }
+
+    public Sprite getSprite(){
+        return sprite;
     }
 
     public float getDirection(){
@@ -159,9 +170,6 @@ public class Ennemy extends BaseActor {
         this.directions = directions;
     }
 
-    public void updateHealthbar(Game game){
-
-    }
 
     public float getInitiallife(){
         return initiallife;

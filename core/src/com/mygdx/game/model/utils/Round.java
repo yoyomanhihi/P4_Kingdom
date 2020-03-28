@@ -102,7 +102,7 @@ public class Round {
 
     public void draw(Batch batch){ // draw les ennemis du tableau
         for(int i = 0; i < ennemies.size(); i++){
-            batch.draw(ennemies.get(i).getTexture(), ennemies.get(i).getX(), ennemies.get(i).getY());
+            batch.draw(ennemies.get(i).getSprite(), ennemies.get(i).getX(), ennemies.get(i).getY());
             if(ennemies.get(i).getPercentageOfLife() > 0.25){
                 batch.setColor(Color.GREEN);
             }

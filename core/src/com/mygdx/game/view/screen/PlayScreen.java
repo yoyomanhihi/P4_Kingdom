@@ -419,7 +419,7 @@ public class PlayScreen implements Screen{
         }
         if(!player.isEmptyWeapons()) {
             for (Tower tower : player.getWeapons()) {
-                batch.draw(tower.getTexture(), tower.getX(), tower.getY());
+                batch.draw(tower.getSprite(), tower.getX(), tower.getY());
             }
         }
         if (round.getRoundnbr() != 0) {

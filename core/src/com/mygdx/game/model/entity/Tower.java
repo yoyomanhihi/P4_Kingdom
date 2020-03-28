@@ -2,6 +2,7 @@ package com.mygdx.game.model.entity;
 import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -14,7 +15,8 @@ public class Tower extends BaseActor {
     private int fireRate;
     private int price;
     private boolean locked;
-    private Texture texture;
+    //private Texture texture;
+    private Sprite sprite;
     private Laser [] laser1;
     private World world;
     private int ennemyinrange;
@@ -27,7 +29,9 @@ public class Tower extends BaseActor {
         this.fireRate = cadence;
         this.price = prix;
         this.locked = true;
-        this.texture = texture;
+        //this.texture = texture;
+        sprite = new Sprite(texture);
+        sprite.rotate(180);
         this.world = world;
         this.ennemyinrange = 0;
         laser1 = new Laser[1];
@@ -112,9 +116,11 @@ public class Tower extends BaseActor {
         return damage;
     }
 
+    /*
     public Texture getTexture(){
         return this.texture;
     }
+    */
 
     public boolean isLocked(){
         return this.locked;
@@ -138,6 +144,10 @@ public class Tower extends BaseActor {
 
     public void setTemps(float temps){
         this.temps = temps;
+    }
+
+    public Sprite getSprite(){
+        return sprite;
     }
 
 }
