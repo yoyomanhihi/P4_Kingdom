@@ -1,6 +1,8 @@
 	package com.mygdx.game;
 
 	import com.badlogic.gdx.Game;
+	import com.badlogic.gdx.Gdx;
+	import com.badlogic.gdx.audio.Music;
 	import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 	import com.badlogic.gdx.scenes.scene2d.Stage;
 	import com.mygdx.game.view.screen.MenuScreen;
@@ -14,6 +16,7 @@
 		private PlayScreen playScreen;
 		public static final int V_WIDTH = 400;
 		public static final int V_HEIGHT = 208;
+		private Music music;
 
 		public final static int MENU = 0;
 		public final static int PLAY = 1;
@@ -23,6 +26,10 @@
 		public void create () {
 			mainStage = new Stage();
 			batch = new SpriteBatch();
+			music = Gdx.audio.newMusic(Gdx.files.internal("Actofwar.mp3"));
+			music.setLooping(true);
+			music.setVolume(0.5f);
+			music.play();
 			menuScreen = new MenuScreen(this);
 			setScreen(menuScreen);
 		}
@@ -35,6 +42,7 @@
 		@Override
 		public void dispose () {
 			batch.dispose();
+			music.dispose();
 		}
 
 		public void changeScreen(int screen){

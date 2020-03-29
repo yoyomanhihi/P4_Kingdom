@@ -38,6 +38,7 @@ public class Tower extends BaseActor {
         laser1[0]= new Laser(50000, 50000, s, world);
         laser1[0].defineLaser();
         temps = 0;
+        long soundId;
     }
 
     public float getDistance(Ennemy Ennemy){ //calcule la distance avec l ennemi
@@ -81,7 +82,7 @@ public class Tower extends BaseActor {
         if (getStage() == null) {
             return;
         }
-        laser1[0].getSound().play();
+        laser1[0].getSound().play(0.15f);
         laser1[0].centerAtActor(this);
         laser1[0].update(dt, batch, ennemy, game, stage);
     }
