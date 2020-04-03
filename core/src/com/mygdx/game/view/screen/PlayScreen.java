@@ -294,7 +294,7 @@ public class PlayScreen implements Screen{
                 float x = (pos3.x * offset);
                 if (pos3.x < numTilesHorizontal && pos3.y < numTilesVertical) {
                     System.out.println("in game screen");
-                    Tower tower = new Tower(40, 500, 60, 50, x, HEIGHT - Gdx.input.getY(), Pistol1, mainStage, world);
+                    Tower tower = new Tower(10, 400, 60, 50, x, HEIGHT - Gdx.input.getY(), Pistol1, mainStage, world);
                     System.out.println("tower: " + tower.getX() + " " + tower.getY());
                     player.buyWeapons(tower);
                 }
@@ -307,7 +307,7 @@ public class PlayScreen implements Screen{
             this.gameOver = true;
             game.setScreen(new LoseScreen(game));
         }
-        else if(round.getRoundnbr() == 4){
+        else if(round.getRoundnbr() == 5){
             this.gameOver = true;
             game.setScreen(new WinScreen(game));
         }
@@ -323,12 +323,17 @@ public class PlayScreen implements Screen{
                 round.update(dt, game, player, mainStage);
             }
             if (round.getRoundnbr() == 2 && ennemycount < 8 && temps1 > 125) {
-                round.round2(temps, uiStage, world, ennemycount - 3);
+                round.round2(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            if (round.getRoundnbr() == 3 && ennemycount < 9 && temps1 > 125) {
-                round.round3(temps, uiStage, world, ennemycount - 8);
+            if (round.getRoundnbr() == 3 && ennemycount < 10 && temps1 > 125) {
+                round.round3(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            if (round.getRoundnbr() == 4 && ennemycount < 14 && temps1 > 125) {
+                round.round4(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }

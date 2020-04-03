@@ -21,7 +21,8 @@ import java.util.LinkedList;
 
 public class Round {
     private LinkedList <Ennemy> ennemies; //le tableau d ennemis
-    private LinkedList <Ennemy> ennemiestransition;
+    private LinkedList <Ennemy> ennemies1transition;
+    private LinkedList <Ennemy> ennemies2transition;
     private int roundnbr;
     private ArrayList<Direction> directionsEnemy;
     private final float startX;
@@ -35,7 +36,8 @@ public class Round {
         roundnbr = 0;
         this.directionsEnemy = directionsEnemy;
         ennemies = new LinkedList<Ennemy>();
-        ennemiestransition = new LinkedList<Ennemy>();
+        ennemies1transition = new LinkedList<Ennemy>();
+        ennemies2transition = new LinkedList<Ennemy>();
         this.startX = startX;
         this.startY = startY;
         this.endRect = endRect;
@@ -45,32 +47,52 @@ public class Round {
     } //Put the good size for the first wave
 
     public void round1(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
-        ennemies.add(new Ennemy(500, 100, 15, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY, 1));
+        ennemies.add(new Ennemy(80, 100, 15, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY, 1));
         ennemies.get(ennemynbr-deadennemies).defineEnnemy();
     }
 
     public void round2(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
-        if(ennemynbr < 3){
-            ennemiestransition.getFirst().setLife(500);
-            ennemiestransition.getFirst().setPosition(startX, startY);
-            ennemiestransition.getFirst().setDirection(0);
-            //ennemiestransition.getFirst().setDirections(directionsEnemy);
-            //ennemiestransition.getFirst().initRectangleList();
-            ennemiestransition.getFirst().setTarget(0);
-            ennemiestransition.getFirst().setAttackPlayer(false);
-            ennemies.add(ennemiestransition.getFirst());
-            ennemiestransition.removeFirst();
+        if(ennemynbr < 6){
+            ennemies1transition.getFirst().setLife(80);
+            ennemies1transition.getFirst().setPosition(startX, startY);
+            ennemies1transition.getFirst().setDirection(0);
+            ennemies1transition.getFirst().setTarget(0);
+            ennemies1transition.getFirst().setAttackPlayer(false);
+            ennemies.add(ennemies1transition.getFirst());
+            ennemies1transition.removeFirst();
         }
         else {
-            ennemies.add(new Ennemy(500, 100, 15, new Texture("Tank.png"), stage, world, directionsEnemy, startX, startY, 1));
-            ennemies.get(ennemynbr-deadennemies+3).defineEnnemy();
+            ennemies.add(new Ennemy(80, 100, 15, new Texture("Tank.png"), stage, world, directionsEnemy, startX, startY, 1));
+            ennemies.get(ennemynbr - deadennemies).defineEnnemy();
         }
     }
 
     public void round3(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
-        ennemies.add(new Ennemy(3000, 60, 100, new Texture("RedTank.png"), stage, world,directionsEnemy,startX,startY, 2));
-        ennemies.get(ennemynbr).defineEnnemy();
+        ennemies.add(new Ennemy(300, 60, 100, new Texture("RedTank.png"), stage, world,directionsEnemy,startX,startY, 2));
+        ennemies.get(ennemynbr - deadennemies).defineEnnemy();
     }
+
+    public void round4(int temps, Stage stagee, World world, int ennemynbr) {
+        if(ennemynbr < 13){
+            ennemies1transition.getFirst().setLife(80);
+            ennemies1transition.getFirst().setPosition(startX, startY);
+            ennemies1transition.getFirst().setDirection(0);
+            ennemies1transition.getFirst().setTarget(0);
+            ennemies1transition.getFirst().setAttackPlayer(false);
+            ennemies.add(ennemies1transition.getFirst());
+            ennemies1transition.removeFirst();
+        }
+        else{
+            ennemies2transition.getFirst().setLife(300);
+            ennemies2transition.getFirst().setPosition(startX, startY);
+            ennemies2transition.getFirst().setDirection(0);
+            ennemies2transition.getFirst().setTarget(0);
+            ennemies2transition.getFirst().setAttackPlayer(false);
+            ennemies.add(ennemies2transition.getFirst());
+            ennemies2transition.removeFirst();
+        }
+    }
+
 
     public void update(float dt, Game game, Player player, Stage stage){ //update la position et l etat des ennemis
         if(ennemies.size()==0){
@@ -86,13 +108,23 @@ public class Round {
                 ennemies.get(i).update(dt,this.endRect);
                 if(ennemies.get(i).getAttackPlayer()){
                     player.loseLife(ennemies.get(i).getDamage());
-                    ennemiestransition.addLast(ennemies.get(i));
+                    if(ennemies.get(i).getInitiallife() == 80){
+                        ennemies1transition.addLast(ennemies.get(i));
+                    }
+                    else if(ennemies.get(i).getInitiallife() == 300){
+                        ennemies2transition.addLast(ennemies.get(i));
+                    }
                     deadennemies++;
                     ennemies.remove(i);
                 }
                 if (0 < ennemies.size() && !ennemies.get(i).isAlive()) {
                     player.setMoney(player.getMoney() + ennemies.get(i).getPoint());
-                    ennemiestransition.addLast(ennemies.get(i));
+                    if(ennemies.get(i).getInitiallife() == 80){
+                        ennemies1transition.addLast(ennemies.get(i));
+                    }
+                    else if(ennemies.get(i).getInitiallife() == 300){
+                        ennemies2transition.addLast(ennemies.get(i));
+                    }
                     deadennemies++;
                     ennemies.remove(i);
                 }
