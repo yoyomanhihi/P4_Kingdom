@@ -45,6 +45,7 @@ import com.mygdx.game.model.utils.Point;
 import com.mygdx.game.model.utils.Round;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class PlayScreen implements Screen{
 
@@ -91,7 +92,7 @@ public class PlayScreen implements Screen{
     private Player player;
     private Image Coin;
     private Image Heart;
-    private boolean [][] mapCollision;
+    private boolean [][] mapCollision ;
     private ArrayList<Direction> directionList = new ArrayList<>();
 
 
@@ -111,6 +112,7 @@ public class PlayScreen implements Screen{
         this.screenToMapOffsetHeight = (float) Gdx.graphics.getHeight()/(tileSize*numTilesVertical);
         gameOver = false;
         mapCollision = new boolean[numTilesHorizontal][numTilesVertical];
+        initMapCollision();
         world = new World(new Vector2(0, 0), true);
         Tank = new Texture("Tank.png");
         Pistol1 = new Texture("Pistol.png");
@@ -243,6 +245,14 @@ public class PlayScreen implements Screen{
 
     }
 
+    private void initMapCollision(){
+        for (int i = 0 ; i<mapCollision.length;i++){
+            for (int j = 0 ; j<mapCollision[i].length;j++){
+                mapCollision[i][j] = false;
+            }
+        }
+    }
+
     private float translateOffsetPointX(float x){
         return (x-(this.offsetPixel/2))*this.screenToMapOffsetWidth;
     }
@@ -281,23 +291,89 @@ public class PlayScreen implements Screen{
         return list;
     }
 
+    private void putTowerMapCol(Vector3 position){
+        int x = (int) position.x;
+        int y = numTilesVertical - (int) position.y;
+        System.out.println("tower: "+ x + " "+ y);
+        trueTowerPosition(x, y);
+    }
+
+    private void trueTowerPosition(int x, int y){
+        mapCollision[x][y] = true;
+        if(x!= mapCollision.length-1){
+            mapCollision[x+1][y] = true;
+        }
+        if(x != 0) {
+            mapCollision[x - 1][y] = true;
+        }
+        mapCollision[x][y+1] = true;
+        mapCollision[x][y-1] = true;
+        mapCollision[x+1][y+1] = true;
+        mapCollision[x-1][y-1] = true;
+        mapCollision[x+1][y-1] = true;
+        mapCollision[x-1][y+1] = true;
+    }
+
+    private boolean checkPosTower(Vector3 position){
+        int x = (int) position.x;
+        int y = numTilesVertical - (int) position.y;
+
+        if (x == numTilesHorizontal) {
+            x = numTilesHorizontal - 1;
+        }
+
+        if(y == numTilesVertical){
+            y = numTilesVertical - 1;
+        }
+
+        return !mapCollision[x][y] && checkPosTowerX(x, y) && checkPosTowerY(x, y);
+                //&& checkPosTowerDiagonal(x, y);
+    }
+
+    private boolean checkPosTowerX(int x, int y){
+        boolean ok;
+        if(x == mapCollision.length-1){
+            ok = !mapCollision[x - 1][y];
+        }else if (x == 0){
+            ok = !mapCollision[x + 1][y];
+        }else{
+            ok = !mapCollision[x + 1][y] && !mapCollision[x - 1][y];
+        }
+        return ok;
+    }
+
+    private boolean checkPosTowerY(int x, int y){
+        return !mapCollision[x][y + 1] && !mapCollision[x][y - 1];
+    }
+
+    private boolean checkPosTowerDiagonal(int x, int y){
+        return !mapCollision[x + 1][y + 1] && !mapCollision[x - 1][y - 1]
+                && !mapCollision[x + 1][y - 1] && !mapCollision[x - 1][y + 1];
+    }
+
     public void handleInput(float dt) {
         if (Gdx.input.justTouched()) {
             Vector3 pos3 = gameAreaCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0), 0, 0, (int) GAME_WIDTH, (int) HEIGHT);
+            System.out.println("click "+pos3.x +" "+ pos3.y);
             TiledMapTileLayer tiledMapTileLayer = (TiledMapTileLayer) map.getLayers().get(0);
             TiledMapTileLayer.Cell cell = tiledMapTileLayer.getCell((int) pos3.x, (int) pos3.y);
             if (cell != null) {
                 System.out.println("Cell id: " + cell.getTile().getId());
                 System.out.println("Pas placer sur le chemin");
             } else {
-                float offset = Gdx.graphics.getWidth() / 48;
-                float x = (pos3.x * offset);
-                if (pos3.x < numTilesHorizontal && pos3.y < numTilesVertical) {
-                    System.out.println("in game screen");
-                    Tower tower = new Tower(10, 400, 60, 50, x, HEIGHT - Gdx.input.getY(), Pistol1, mainStage, world);
-                    System.out.println("tower: " + tower.getX() + " " + tower.getY());
-                    player.buyWeapons(tower);
-                }
+                    float offset = Gdx.graphics.getWidth() / 48;
+                    float x = (pos3.x * offset);
+                    if (pos3.x < numTilesHorizontal && pos3.y < numTilesVertical) {
+                        if(checkPosTower(pos3)) {
+                            putTowerMapCol(pos3);
+                            System.out.println("in game screen");
+                            Tower tower = new Tower(10, 400, 60, 50, x, HEIGHT - Gdx.input.getY(), Pistol1, mainStage, world);
+                            System.out.println("tower: " + tower.getX() + " " + tower.getY());
+                            player.buyWeapons(tower);
+                        }else {
+                            System.out.println("trop proche !!");
+                        }
+                    }
             }
         }
     }
