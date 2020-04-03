@@ -24,6 +24,7 @@ public class Ennemy extends BaseActor {
     //private Texture texture;
     private Body b2body;
     private float direction;
+    private float old_direction = 0;
     private World world;
     private ArrayList<Direction> directions;
     private int target = 0;
@@ -102,17 +103,22 @@ public class Ennemy extends BaseActor {
             }
 
             if (direction == 0) {
+                this.sprite.rotate(direction-old_direction);
                 setPosition(getX() + dt * speed, getY());
             }
             if (direction == 90) {
+                this.sprite.rotate(direction-old_direction);
                 setPosition(getX(), getY() + dt * speed);
             }
             if (direction == 180) {
+                this.sprite.rotate(direction-old_direction);
                 setPosition(getX() - dt * speed, getY());
             }
             if (direction == 270) {
+                this.sprite.rotate(direction-old_direction);
                 setPosition(getX(), getY() - dt * speed);
             }
+            old_direction = direction;
         }
     }
 
