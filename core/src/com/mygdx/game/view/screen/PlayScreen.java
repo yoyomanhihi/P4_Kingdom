@@ -19,11 +19,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -36,17 +32,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.ProtectTheKingdom;
 import com.mygdx.game.model.entity.Player;
 import com.mygdx.game.model.entity.ShopCell;
-import com.mygdx.game.model.utils.BaseActor;
-import com.mygdx.game.ProtectTheKingdom;
 import com.mygdx.game.model.entity.Tower;
+import com.mygdx.game.model.utils.BaseActor;
 import com.mygdx.game.model.utils.Direction;
 import com.mygdx.game.model.utils.Point;
 import com.mygdx.game.model.utils.Round;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class PlayScreen implements Screen{
 
@@ -187,7 +182,6 @@ public class PlayScreen implements Screen{
 
         Table table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
         menuStage.addActor(table);
 
         table.add(menuButton).right().colspan(2);
