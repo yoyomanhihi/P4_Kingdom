@@ -37,6 +37,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.model.entity.Player;
+import com.mygdx.game.model.entity.ShopCell;
 import com.mygdx.game.model.utils.BaseActor;
 import com.mygdx.game.ProtectTheKingdom;
 import com.mygdx.game.model.entity.Tower;
@@ -163,42 +164,6 @@ public class PlayScreen implements Screen{
         uiStage = new Stage();
         temps1 = 0;
 
-        Drawable pistolImage1 = new TextureRegionDrawable(Pistol1);
-        pistolImage1.setMinHeight(80);
-        pistolImage1.setMinWidth(80);
-        ImageButton newGun1 = new ImageButton(pistolImage1);
-        //newGun1.addListener(); FIXME
-
-        Drawable pistolImage2 = new TextureRegionDrawable(Pistol2);
-        pistolImage2.setMinHeight(80);
-        pistolImage2.setMinWidth(80);
-        ImageButton newGun2 = new ImageButton(pistolImage2);
-        //newGun2.addListener(); FIXME
-
-        Drawable pistolImage3 = new TextureRegionDrawable(Pistol3);
-        pistolImage3.setMinHeight(80);
-        pistolImage3.setMinWidth(80);
-        ImageButton newGun3 = new ImageButton(pistolImage3);
-        //newGun3.addListener(); FIXME
-
-        Drawable pistolImage4 = new TextureRegionDrawable(Pistol4);
-        pistolImage4.setMinHeight(80);
-        pistolImage4.setMinWidth(80);
-        ImageButton newGun4 = new ImageButton(pistolImage4);
-        //newGun4.addListener(); FIXME
-
-        Drawable pistolImage5 = new TextureRegionDrawable(Pistol5);
-        pistolImage5.setMinHeight(80);
-        pistolImage5.setMinWidth(80);
-        ImageButton newGun5 = new ImageButton(pistolImage5);
-        //newGun5.addListener(); FIXME
-
-        Drawable pistolImage6 = new TextureRegionDrawable(Pistol6);
-        pistolImage6.setMinHeight(80);
-        pistolImage6.setMinWidth(80);
-        ImageButton newGun6 = new ImageButton(pistolImage6);
-        //newGun6.addListener(); FIXME
-
         Drawable exitImage = new TextureRegionDrawable(Exit);
         ImageButton exitButton = new ImageButton(exitImage);
         exitButton.addListener(new ChangeListener() {
@@ -228,14 +193,14 @@ public class PlayScreen implements Screen{
         table.add(menuButton).right().colspan(2);
         table.add(exitButton).right().colspan(2);
         table.row();
-        table.add(newGun1).expandX().expandY().size(80,80).colspan(2);
-        table.add(newGun2).expandX().expandY().size(80,80).colspan(2);
+        table.add(new ShopCell(new Tower("Gun",10, 400, 60, 50, 24, HEIGHT - Gdx.input.getY(), Pistol1, mainStage, world), font)).expandX().expandY().colspan(2);
+        table.add(new ShopCell(new Tower("Item",0, 0, 0, 200, 0, 0, Pistol2, mainStage, world), font)).expandX().expandY().colspan(2);
         table.row();
-        table.add(newGun3).expandX().expandY().size(80,80).colspan(2);
-        table.add(newGun4).expandX().expandY().size(80,80).colspan(2);
+        table.add(new ShopCell(new Tower("Item",0, 0, 0, 150, 0, 0, Pistol3, mainStage, world), font)).expandX().expandY().colspan(2);
+        table.add(new ShopCell(new Tower("Item",0, 0, 0, 75, 0, 0, Pistol4, mainStage, world), font)).expandX().expandY().colspan(2);
         table.row();
-        table.add(newGun5).expandX().expandY().size(80,80).colspan(2);
-        table.add(newGun6).expandX().expandY().size(80,80).colspan(2);
+        table.add(new ShopCell(new Tower("Item",0, 0, 0, 40, 0, 0, Pistol5, mainStage, world), font)).expandX().expandY().colspan(2);
+        table.add(new ShopCell(new Tower("Item",0, 0, 0, 200, 0, 0, Pistol6, mainStage, world), font)).expandX().expandY().colspan(2);
         table.row();
         table.add(Coin).expandX().right().size(60, 60).colspan(1);
         table.add(moneyLabel).expandX().left().expandX().colspan(1);
@@ -367,7 +332,7 @@ public class PlayScreen implements Screen{
                         if(checkPosTower(pos3)) {
                             putTowerMapCol(pos3);
                             System.out.println("in game screen");
-                            Tower tower = new Tower(10, 400, 60, 50, x, HEIGHT - Gdx.input.getY(), Pistol1, mainStage, world);
+                            Tower tower = new Tower("Gun",10, 400, 60, 50, x, HEIGHT - Gdx.input.getY(), Pistol1, mainStage, world);
                             System.out.println("tower: " + tower.getX() + " " + tower.getY());
                             player.buyWeapons(tower);
                         }else {

@@ -10,26 +10,28 @@ import com.mygdx.game.model.utils.BaseActor;
 
 public class Tower extends BaseActor {
 
+    public static String name;
     private int damage;
     private int range;
     private int fireRate;
     private int price;
     private boolean locked;
-    //private Texture texture;
+    private Texture texture;
     private Sprite sprite;
     private Laser [] laser1;
     private World world;
     private int ennemyinrange;
     private float temps;
 
-    public Tower(int degats, int portee, int cadence, int prix, float x, float y, Texture texture, Stage s, World world){
+    public Tower(String nom, int degats, int portee, int cadence, int prix, float x, float y, Texture texture, Stage s, World world){
         super(x,y,s);
+        this.name = nom;
         this.damage = degats;
         this.range = portee;
         this.fireRate = cadence;
         this.price = prix;
         this.locked = true;
-        //this.texture = texture;
+        this.texture = texture;
         sprite = new Sprite(texture);
         sprite.rotate(180);
         this.world = world;
@@ -100,6 +102,7 @@ public class Tower extends BaseActor {
         }
     }
 
+    public String getName() {return name; }
 
     public int getPrice(){
         return price;
@@ -151,4 +154,5 @@ public class Tower extends BaseActor {
         return sprite;
     }
 
+    public Texture getTexture() { return texture; }
 }
