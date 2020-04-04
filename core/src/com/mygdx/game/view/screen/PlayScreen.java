@@ -342,33 +342,48 @@ public class PlayScreen implements Screen{
             this.gameOver = true;
             game.setScreen(new LoseScreen(game));
         }
-        else if(round.getRoundnbr() == 5){
+        else if(round.getRoundnbr() == 7){
             this.gameOver = true;
             game.setScreen(new WinScreen(game));
         }
         else {
             handleInput(dt);
+            if (round.getRoundnbr() != 0) { // met le round a jour
+                round.update(dt, game, player, mainStage);
+            }
             if (ennemycount < 3 && temps1 > 125) { //demarre le premier round
                 round.setRoundnbr(1);
                 round.round1(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            if (round.getRoundnbr() != 0) { // met le round a jour
-                round.update(dt, game, player, mainStage);
-            }
-            if (round.getRoundnbr() == 2 && ennemycount < 8 && temps1 > 125) {
+            else if (round.getRoundnbr() == 2 && ennemycount < 8 && temps1 > 125) {
                 round.round2(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            if (round.getRoundnbr() == 3 && ennemycount < 10 && temps1 > 125) {
+            else if (round.getRoundnbr() == 3 && ennemycount < 10 && temps1 > 125) {
                 round.round3(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            if (round.getRoundnbr() == 4 && ennemycount < 14 && temps1 > 125) {
+            else if (round.getRoundnbr() == 4 && ennemycount < 14 && temps1 > 125) {
                 round.round4(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 5 && ennemycount < 21 && temps1 > 125) {
+                round.round5(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 6 && ennemycount < 22 && temps1 > 125) {
+                round.round6(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 7 && ennemycount < 27 && temps1 > 125) {
+                round.round7(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
