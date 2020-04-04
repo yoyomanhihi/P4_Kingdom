@@ -180,26 +180,26 @@ public class PlayScreen implements Screen{
         moneyLabel = new Label("MONEY", new Label.LabelStyle(font, Color.WHITE));
         lifeLabel = new Label("LIFE", new Label.LabelStyle(font, Color.WHITE));
 
-        Table table = new Table();
-        table.setFillParent(true);
-        menuStage.addActor(table);
+        Table menu = new Table();
+        menu.setFillParent(true);
+        menuStage.addActor(menu);
 
-        table.add(menuButton).right().colspan(2);
-        table.add(exitButton).right().colspan(2);
-        table.row();
-        table.add(new ShopCell(new Tower("Gun",10, 400, 60, 50, 24, HEIGHT - Gdx.input.getY(), Pistol1, mainStage, world), font)).expandX().expandY().colspan(2);
-        table.add(new ShopCell(new Tower("Item",0, 0, 0, 200, 0, 0, Pistol2, mainStage, world), font)).expandX().expandY().colspan(2);
-        table.row();
-        table.add(new ShopCell(new Tower("Item",0, 0, 0, 150, 0, 0, Pistol3, mainStage, world), font)).expandX().expandY().colspan(2);
-        table.add(new ShopCell(new Tower("Item",0, 0, 0, 75, 0, 0, Pistol4, mainStage, world), font)).expandX().expandY().colspan(2);
-        table.row();
-        table.add(new ShopCell(new Tower("Item",0, 0, 0, 40, 0, 0, Pistol5, mainStage, world), font)).expandX().expandY().colspan(2);
-        table.add(new ShopCell(new Tower("Item",0, 0, 0, 200, 0, 0, Pistol6, mainStage, world), font)).expandX().expandY().colspan(2);
-        table.row();
-        table.add(Coin).expandX().right().size(60, 60).colspan(1);
-        table.add(moneyLabel).expandX().left().expandX().colspan(1);
-        table.add(Heart).expandX().right().size(60,60).colspan(1);
-        table.add(lifeLabel).expandX().left().expandX().colspan(1);
+        menu.add(menuButton).right().colspan(2);
+        menu.add(exitButton).right().colspan(2);
+        menu.row();
+        menu.add(new ShopCell(new Tower("Gun",10, 400, 60, 50, 24, HEIGHT - Gdx.input.getY(), Pistol1, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 200, 0, 0, Pistol2, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.row();
+        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 150, 0, 0, Pistol3, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 75, 0, 0, Pistol4, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.row();
+        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 40, 0, 0, Pistol5, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 200, 0, 0, Pistol6, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.row();
+        menu.add(Coin).expandX().right().size(60, 60).colspan(1);
+        menu.add(moneyLabel).expandX().left().expandX().colspan(1);
+        menu.add(Heart).expandX().right().size(60,60).colspan(1);
+        menu.add(lifeLabel).expandX().left().expandX().colspan(1);
 
 
     }
