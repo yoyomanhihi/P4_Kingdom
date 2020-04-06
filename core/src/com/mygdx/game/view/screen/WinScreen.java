@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.ProtectTheKingdom;
+import com.mygdx.game.model.entity.Player;
 
 public class WinScreen implements Screen{
 
@@ -20,7 +21,7 @@ public class WinScreen implements Screen{
     private Stage stage;
     private Game game;
 
-        public WinScreen(Game game){
+        public WinScreen(Game game, Player player){
             this.game = game;
             stage = new Stage();
             //Gdx.input.setInputProcessor(stage);
@@ -33,12 +34,21 @@ public class WinScreen implements Screen{
 
             Label gameWinLabel = new Label("YOU WIN", font);
             Label playAgainLabel = new Label("Click to Play Again", font);
+            Label score_Label = new Label("Score : ", font);
+            String score = (String) Integer.toString(player.getScore());
+            Label scoreLabel = new Label(score, font);
+
             gameWinLabel.setFontScale(5);
             playAgainLabel.setFontScale(5);
+            score_Label.setFontScale(5);
+            scoreLabel.setFontScale(5);
 
             table.add(gameWinLabel).fillX().uniformX();
             table.row().pad(10, 0, 10, 0);
             table.add(playAgainLabel).fillX().uniformX();
+            table.row().pad(10, 0, 10, 0);
+            table.add(score_Label).fillX().uniformX();
+            table.add(scoreLabel).fillX().uniformX();
 
             stage.addActor(table);
         }

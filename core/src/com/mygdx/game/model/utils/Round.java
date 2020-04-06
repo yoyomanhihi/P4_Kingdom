@@ -187,6 +187,7 @@ public class Round {
                 }
                 if (0 < ennemies.size() && !ennemies.get(i).isAlive()) {
                     player.setMoney(player.getMoney() + ennemies.get(i).getPoint());
+                    player.setScore(player.getScore() + ennemies.get(i).getPoint());
                     if(ennemies.get(i).getInitiallife() == 80){
                         ennemies1transition.addLast(ennemies.get(i));
                     }

@@ -378,11 +378,11 @@ public class PlayScreen implements Screen{
     public void update(float dt){
         if(player.getLife() <= 0 ){
             this.gameOver = true;
-            game.setScreen(new LoseScreen(game));
+            game.setScreen(new LoseScreen(game, player));
         }
-        else if(round.getRoundnbr() == 7){
+        else if(round.getRoundnbr() == 8){
             this.gameOver = true;
-            game.setScreen(new WinScreen(game));
+            game.setScreen(new WinScreen(game, player));
         }
         else {
             handleInput(dt);

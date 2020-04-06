@@ -13,13 +13,14 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.ProtectTheKingdom;
+import com.mygdx.game.model.entity.Player;
 
 public class LoseScreen implements Screen {
     private Stage stage;
 
     private Game game;
 
-    public LoseScreen(Game game){
+    public LoseScreen(Game game, Player player){
         this.game = game;
         stage = new Stage();
 
@@ -31,12 +32,23 @@ public class LoseScreen implements Screen {
 
         Label gameOverLabel = new Label("GAME OVER", font);
         Label playAgainLabel = new Label("Click to Play Again", font);
+        Label score_Label = new Label("Score : ", font);
+        String score = (String) Integer.toString(player.getScore());
+        Label scoreLabel = new Label(score, font);
+
+
         gameOverLabel.setFontScale(5);
         playAgainLabel.setFontScale(5);
+        score_Label.setFontScale(5);
+        scoreLabel.setFontScale(5);
 
         table.add(gameOverLabel).fillX().uniformX();
         table.row().pad(10, 0, 10, 0);
         table.add(playAgainLabel).fillX().uniformX();
+        table.row().pad(10, 0, 10, 0);
+        table.add(score_Label).fillX().uniformX();
+        table.add(scoreLabel).fillX().uniformX();
+
         stage.addActor(table);
     }
 
