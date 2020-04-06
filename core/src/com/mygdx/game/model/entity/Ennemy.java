@@ -33,6 +33,9 @@ public class Ennemy extends BaseActor {
     private int damage;
     private float initiallife;
     private Sprite sprite;
+    private int timefreezed;
+    private int normalspeed;
+    private boolean isfreezed;
 
     //public int damage;  Si on veut faire en sorte qu'un ennemy puisse attaquer une tour
 
@@ -41,10 +44,11 @@ public class Ennemy extends BaseActor {
         this.life = life;
         this.initiallife = life;
         this.point = point;
-        //this.texture = texture;
         this.sprite = new Sprite(texture);
         this.direction = 0;
+        this.isfreezed = false;
         this.speed = speed;
+        this.normalspeed = speed;
         this.directions = directions;
         this.damage = damage;
         this.world = world;
@@ -95,12 +99,21 @@ public class Ennemy extends BaseActor {
 
         if(endRect.contains(this.getX(), this.getY())){
             this.attackPlayer = true;
-        }else {
+        }
+        else {
+            if(isfreezed){
+                timefreezed++;
+                if(timefreezed > 60){
+                    speed = normalspeed;
+                    isfreezed = false;
+                }
+            }
 
             if (target < directionsRectangle.size() && directionsRectangle.get(target).contains(this.getX(), this.getY())) {
                 direction = directions.get(target).getRotation();
                 target++;
             }
+
 
             if (direction == 0) {
                 this.sprite.rotate(direction-old_direction);
@@ -176,6 +189,11 @@ public class Ennemy extends BaseActor {
         this.directions = directions;
     }
 
+    public void beFreezed(int divider){
+        isfreezed = true;
+        this.speed = normalspeed/divider;
+        timefreezed = 0;
+    }
 
     public float getInitiallife(){
         return initiallife;

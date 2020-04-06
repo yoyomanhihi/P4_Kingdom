@@ -33,6 +33,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.ProtectTheKingdom;
+import com.mygdx.game.model.entity.FreezeTower;
 import com.mygdx.game.model.entity.Player;
 import com.mygdx.game.model.entity.ShopCell;
 import com.mygdx.game.model.entity.Tower;
@@ -365,7 +366,7 @@ public class PlayScreen implements Screen{
                     if (pos3.x < numTilesHorizontal && pos3.y < numTilesVertical) {
                         if(checkPosTower(pos3)) {
                             putTowerMapCol(pos3);
-                            Tower tower = new Tower("Gun",10, 400, 60, 50, x, HEIGHT - Gdx.input.getY(), Pistol1, mainStage, world);
+                            Tower tower = new FreezeTower("Gun",0, 500, 80, 75, x, HEIGHT - Gdx.input.getY(), Pistol1, mainStage, world, 2);
                             player.buyWeapons(tower);
                         }else {
                             System.out.println("trop proche !!");

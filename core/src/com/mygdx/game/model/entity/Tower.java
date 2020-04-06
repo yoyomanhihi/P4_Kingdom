@@ -18,10 +18,10 @@ public class Tower extends BaseActor {
     private boolean locked;
     private Texture texture;
     private Sprite sprite;
-    private Laser [] laser1;
+    public Laser laser;
     private World world;
     private int ennemyinrange;
-    private float temps;
+    public float temps;
 
     public Tower(String nom, int degats, int portee, int cadence, int prix, float x, float y, Texture texture, Stage s, World world){
         super(x,y,s);
@@ -36,9 +36,8 @@ public class Tower extends BaseActor {
         sprite.rotate(180);
         this.world = world;
         this.ennemyinrange = 0;
-        laser1 = new Laser[1];
-        laser1[0]= new Laser(50000, 50000, s, world);
-        laser1[0].defineLaser();
+        laser = new Laser(50000, 50000, s, world);
+        laser.defineLaser();
         temps = 0;
         long soundId;
     }
@@ -84,19 +83,19 @@ public class Tower extends BaseActor {
         if (getStage() == null) {
             return;
         }
-        laser1[0].getSound().play(0.15f);
-        laser1[0].centerAtActor(this);
-        laser1[0].update(dt, batch, ennemy, game, stage);
+        laser.getSound().play(0.15f);
+        laser.centerAtActor(this);
+        laser.update(dt, batch, ennemy, game, stage);
     }
 
     public void updateLaser(float dt, SpriteBatch batch, Ennemy Ennemy, Game game, Stage stage){ // fait que le laser suit l ennemi
-        if(laser1[0] != null) {
-            if (laser1[0].getX() != this.getX() && laser1[0].getY() != this.getY()) {
-                laser1[0].update(dt, batch, Ennemy, game, stage);
+        if(laser != null) {
+            if (laser.getX() != this.getX() && laser.getY() != this.getY()) {
+                laser.update(dt, batch, Ennemy, game, stage);
             }
-            if (laser1[0].overlaps(Ennemy)) { //verifie si le laser touche l ennemi
+            if (laser.overlaps(Ennemy)) { //verifie si le laser touche l ennemi
                 Ennemy.setLife(Ennemy.getLife() - getDamage());
-                laser1[0].setPosition(500000, 500000);
+                laser.setPosition(500000, 500000);
             }
             temps++;
         }
