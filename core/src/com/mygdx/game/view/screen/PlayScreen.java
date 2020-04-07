@@ -366,7 +366,8 @@ public class PlayScreen implements Screen{
                     if (pos3.x < numTilesHorizontal && pos3.y < numTilesVertical) {
                         if(checkPosTower(pos3)) {
                             putTowerMapCol(pos3);
-                            Tower tower = new FreezeTower("Gun",0, 500, 80, 75, x, HEIGHT - Gdx.input.getY(), Pistol1, mainStage, world, 2);
+                            Tower tower = new Tower("Gun",10, 400, 60, 50, x, HEIGHT - Gdx.input.getY(), Pistol1, mainStage, world);
+                            //FreezeTower tower = new FreezeTower("Gun",0, 500, 80, 75, x, HEIGHT - Gdx.input.getY(), Pistol1, mainStage, world, 2);
                             player.buyWeapons(tower);
                         }else {
                             System.out.println("trop proche !!");
@@ -381,7 +382,7 @@ public class PlayScreen implements Screen{
             this.gameOver = true;
             game.setScreen(new LoseScreen(game, player));
         }
-        else if(round.getRoundnbr() == 8){
+        else if(round.getRoundnbr() == 11){
             this.gameOver = true;
             game.setScreen(new WinScreen(game, player));
         }
@@ -401,7 +402,7 @@ public class PlayScreen implements Screen{
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 3 && ennemycount < 10 && temps1 > 125) {
+            else if (round.getRoundnbr() == 3 && ennemycount < 12 && temps1 > 125) {
                 round.round3(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
@@ -421,8 +422,23 @@ public class PlayScreen implements Screen{
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 7 && ennemycount < 27 && temps1 > 125) {
+            else if (round.getRoundnbr() == 7 && ennemycount < 37 && temps1 > 80) {
                 round.round7(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 8 && ennemycount < 42 && temps1 > 125) {
+                round.round8(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 9 && ennemycount < 46 && temps1 > 125) {
+                round.round9(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 10 && ennemycount < 48 && temps1 > 125) {
+                round.round10(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }

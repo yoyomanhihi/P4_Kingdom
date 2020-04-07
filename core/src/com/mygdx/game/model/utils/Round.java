@@ -49,7 +49,7 @@ public class Round {
     } //Put the good size for the first wave
 
     public void round1(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
-        ennemies.add(new Ennemy(80, 120, 10, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY, 1));
+        ennemies.add(new Ennemy(80, 120, 8, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY, 1));
         ennemies.get(ennemynbr-deadennemies).defineEnnemy();
     }
 
@@ -64,19 +64,13 @@ public class Round {
             ennemies1transition.removeFirst();
         }
         else {
-            ennemies.add(new Ennemy(80, 120, 10, new Texture("Tank.png"), stage, world, directionsEnemy, startX, startY, 1));
+            ennemies.add(new Ennemy(80, 120, 8, new Texture("Tank.png"), stage, world, directionsEnemy, startX, startY, 1));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
         }
     }
 
     public void round3(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
-        ennemies.add(new Ennemy(300, 80, 40, new Texture("RedTank.png"), stage, world,directionsEnemy,startX,startY, 2));
-        ennemies.get(ennemynbr - deadennemies).defineEnnemy();
-        ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2);
-    }
-
-    public void round4(int temps, Stage stage, World world, int ennemynbr) {
-        if(ennemynbr < 13){
+        if(ennemynbr < 11){
             ennemies1transition.getFirst().setLife(80);
             ennemies1transition.getFirst().setPosition(startX, startY);
             ennemies1transition.getFirst().setDirection(0);
@@ -84,6 +78,19 @@ public class Round {
             ennemies1transition.getFirst().setAttackPlayer(false);
             ennemies.add(ennemies1transition.getFirst());
             ennemies1transition.removeFirst();
+        }
+        else{
+            ennemies.add(new Ennemy(300, 80, 30, new Texture("RedTank.png"), stage, world,directionsEnemy,startX,startY, 2));
+            ennemies.get(ennemynbr - deadennemies).defineEnnemy();
+            ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2);
+        }
+    }
+
+    public void round4(int temps, Stage stage, World world, int ennemynbr) {
+        if(ennemynbr < 13) {
+            ennemies.add(new Ennemy(300, 80, 30, new Texture("RedTank.png"), stage, world, directionsEnemy, startX, startY, 2));
+            ennemies.get(ennemynbr - deadennemies).defineEnnemy();
+            ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2);
         }
         else{
             ennemies2transition.getFirst().setLife(300);
@@ -95,6 +102,8 @@ public class Round {
             ennemies2transition.removeFirst();
         }
     }
+
+
 
     public void round5(int temps, Stage stage, World world, int ennemynbr) {
         if(ennemynbr < 19){
@@ -116,20 +125,20 @@ public class Round {
             ennemies2transition.removeFirst();
         }
         else{
-            ennemies.add(new Ennemy(300, 80, 40, new Texture("RedTank.png"), stage, world,directionsEnemy,startX,startY, 3));
+            ennemies.add(new Ennemy(300, 80, 30, new Texture("RedTank.png"), stage, world,directionsEnemy,startX,startY, 3));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
             ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2);
         }
     }
 
     public void round6(int temps, Stage stage, World world, int ennemynbr){ //met les ennemis dans le tableau
-        ennemies.add(new Ennemy(1000, 60, 100, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY, 2));
+        ennemies.add(new Ennemy(1000, 60, 80, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY, 2));
         ennemies.get(ennemynbr - deadennemies).defineEnnemy();
         ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2);
     }
 
     public void round7(int temps, Stage stage, World world, int ennemynbr) {
-        if(ennemynbr < 24){
+        if(ennemynbr < 27){
             ennemies1transition.getFirst().setLife(80);
             ennemies1transition.getFirst().setPosition(startX, startY);
             ennemies1transition.getFirst().setDirection(0);
@@ -138,7 +147,31 @@ public class Round {
             ennemies.add(ennemies1transition.getFirst());
             ennemies1transition.removeFirst();
         }
-        else if(ennemynbr < 26){
+        else{
+            ennemies.add(new Ennemy(80, 120, 8, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY, 1));
+            ennemies.get(ennemynbr-deadennemies).defineEnnemy();
+        }
+    }
+
+    public void round8(int temps, Stage stage, World world, int ennemynbr) {
+        if(ennemynbr < 39){
+            ennemies2transition.getFirst().setLife(300);
+            ennemies2transition.getFirst().setPosition(startX, startY);
+            ennemies2transition.getFirst().setDirection(0);
+            ennemies2transition.getFirst().setTarget(0);
+            ennemies2transition.getFirst().setAttackPlayer(false);
+            ennemies.add(ennemies2transition.getFirst());
+            ennemies2transition.removeFirst();
+        }
+        else{
+            ennemies.add(new Ennemy(300, 80, 30, new Texture("RedTank.png"), stage, world,directionsEnemy,startX,startY, 2));
+            ennemies.get(ennemynbr - deadennemies).defineEnnemy();
+            ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2);
+        }
+    }
+
+    public void round9(int temps, Stage stage, World world, int ennemynbr) {
+        if(ennemynbr < 45){
             ennemies2transition.getFirst().setLife(300);
             ennemies2transition.getFirst().setPosition(startX, startY);
             ennemies2transition.getFirst().setDirection(0);
@@ -155,6 +188,23 @@ public class Round {
             ennemies3transition.getFirst().setAttackPlayer(false);
             ennemies.add(ennemies3transition.getFirst());
             ennemies3transition.removeFirst();
+        }
+    }
+
+    public void round10(int temps, Stage stage, World world, int ennemynbr) {
+        if(ennemynbr < 45){
+            ennemies3transition.getFirst().setLife(1000);
+            ennemies3transition.getFirst().setPosition(startX, startY);
+            ennemies3transition.getFirst().setDirection(0);
+            ennemies3transition.getFirst().setTarget(0);
+            ennemies3transition.getFirst().setAttackPlayer(false);
+            ennemies.add(ennemies3transition.getFirst());
+            ennemies3transition.removeFirst();
+        }
+        else{
+            ennemies.add(new Ennemy(1000, 60, 80, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY, 2));
+            ennemies.get(ennemynbr - deadennemies).defineEnnemy();
+            ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2);
         }
     }
 

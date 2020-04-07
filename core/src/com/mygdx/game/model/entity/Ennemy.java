@@ -106,6 +106,7 @@ public class Ennemy extends BaseActor {
                 if(timefreezed > 60){
                     speed = normalspeed;
                     isfreezed = false;
+                    sprite.setColor(Color.WHITE);
                 }
             }
 
@@ -192,7 +193,12 @@ public class Ennemy extends BaseActor {
     public void beFreezed(int divider){
         isfreezed = true;
         this.speed = normalspeed/divider;
+        sprite.setColor(Color.BLUE);
         timefreezed = 0;
+    }
+
+    public boolean isIsfreezed(){
+        return isfreezed;
     }
 
     public float getInitiallife(){
