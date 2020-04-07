@@ -23,7 +23,7 @@ public class Tower extends BaseActor {
     private int ennemyinrange;
     public float temps;
 
-    public Tower(String nom, int degats, int portee, int cadence, int prix, float x, float y, Texture texture, Stage s, World world){
+    public Tower(String nom, int degats, int portee, int cadence, int prix, float x, float y, Texture texture, Texture texture2, float lasersize, Stage s, World world){
         super(x,y,s);
         this.name = nom;
         this.damage = degats;
@@ -36,7 +36,7 @@ public class Tower extends BaseActor {
         sprite.rotate(180);
         this.world = world;
         this.ennemyinrange = 0;
-        laser = new Laser(50000, 50000, s, world);
+        laser = new Laser(50000, 50000, lasersize, texture2, s, world);
         laser.defineLaser();
         temps = 0;
         long soundId;

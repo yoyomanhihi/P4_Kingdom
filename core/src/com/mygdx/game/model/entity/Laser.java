@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.loaders.SoundLoader;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -18,17 +19,18 @@ public class Laser extends BaseActor
 {
 
     private int speed;
-    private Texture texture;
+    private Sprite sprite;
     private Body b2body;
     public World world;
     private float angle;
     private Sound sound;
 
 
-    public Laser(float x, float y, Stage s, World world)
+    public Laser(float x, float y, float lasersize, Texture texture, Stage s, World world)
     {
         super(x,y,s);
-        this.texture = new Texture("Bullet.png");
+        this.sprite = new Sprite(texture);
+        sprite.setScale(lasersize);
         addAction( Actions.delay(1) );
         addAction( Actions.after( Actions.fadeOut(0.5f) ) );
         addAction( Actions.after( Actions.removeActor() ) );
@@ -57,7 +59,8 @@ public class Laser extends BaseActor
         if(this.getX() < 4500)
         angle = this.getOrientation(Ennemy); //calcule ou le laser doit aller
         move(angle, dt); // fait bouger le laser
-        batch.draw(texture, this.getX(), this.getY()); //dessine le laser
+        sprite.setPosition(this.getX(), this.getY());
+        sprite.draw(batch);
     }
 
     public void move(float angle, float dt){ //permet la gestion de deplacement du laser
@@ -78,7 +81,7 @@ public class Laser extends BaseActor
         super.act(dt);
     }
 
-    public Texture getTexture(){
-        return texture;
+    public Sprite getSprite(){
+        return sprite;
     }
 }
