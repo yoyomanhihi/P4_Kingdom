@@ -382,7 +382,7 @@ public class PlayScreen implements Screen{
             this.gameOver = true;
             game.setScreen(new LoseScreen(game, player));
         }
-        else if(round.getRoundnbr() == 11){
+        else if(round.getRoundnbr() == 13){
             this.gameOver = true;
             game.setScreen(new WinScreen(game, player));
         }
@@ -439,6 +439,16 @@ public class PlayScreen implements Screen{
             }
             else if (round.getRoundnbr() == 10 && ennemycount < 48 && temps1 > 125) {
                 round.round10(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 11 && ennemycount < 51 && temps1 > 125) {
+                round.round11(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 12 && ennemycount < 54 && temps1 > 125) {
+                round.round12(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }

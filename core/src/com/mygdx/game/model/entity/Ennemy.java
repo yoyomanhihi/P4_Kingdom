@@ -36,6 +36,8 @@ public class Ennemy extends BaseActor {
     private int timefreezed;
     private int normalspeed;
     private boolean isfreezed;
+    private boolean isfast;
+    private boolean doreload;
 
     //public int damage;  Si on veut faire en sorte qu'un ennemy puisse attaquer une tour
 
@@ -47,6 +49,8 @@ public class Ennemy extends BaseActor {
         this.sprite = new Sprite(texture);
         this.direction = 0;
         this.isfreezed = false;
+        this.isfast = false;
+        this.doreload = false;
         this.speed = speed;
         this.normalspeed = speed;
         this.directions = directions;
@@ -101,12 +105,15 @@ public class Ennemy extends BaseActor {
             this.attackPlayer = true;
         }
         else {
+            if(doreload && life < initiallife){
+                life = life+(initiallife/750);
+            }
             if(isfreezed){
                 timefreezed++;
                 if(timefreezed > 60){
                     speed = normalspeed;
                     isfreezed = false;
-                    sprite.setColor(Color.WHITE);
+                    //sprite.setColor(Color.WHITE);
                 }
             }
 
@@ -193,7 +200,7 @@ public class Ennemy extends BaseActor {
     public void beFreezed(int divider){
         isfreezed = true;
         this.speed = normalspeed/divider;
-        sprite.setColor(Color.BLUE);
+        //sprite.setColor(Color.BLUE);
         timefreezed = 0;
     }
 
@@ -203,6 +210,28 @@ public class Ennemy extends BaseActor {
 
     public float getInitiallife(){
         return initiallife;
+    }
+
+    public void beFast(){
+        this.speed = normalspeed*2;
+        sprite.setColor(Color.RED);
+    }
+
+    public int getNormalspeed(){
+        return normalspeed;
+    }
+
+    public boolean isDoreload(){
+        return doreload;
+    }
+
+    public void setDoreload(boolean doreload){
+        this.doreload = doreload;
+    }
+
+    public void beReload(){
+        doreload = true;
+        sprite.setColor(Color.GREEN);
     }
 
 }
