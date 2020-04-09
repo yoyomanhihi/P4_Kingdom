@@ -23,9 +23,11 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -94,7 +96,11 @@ public class PlayScreen implements Screen{
     private Image Coin;
     private Image Heart;
     private boolean [][] mapCollision ;
+    private Tower [][] towersMap;
     private ArrayList<Direction> directionList = new ArrayList<>();
+    private ArrayList<Point> towerPositionList = new ArrayList<>();
+    private int IDTower;
+    private Dialog dialogSell;
 
 
 
@@ -113,6 +119,7 @@ public class PlayScreen implements Screen{
         this.screenToMapOffsetHeight = (float) Gdx.graphics.getHeight()/(tileSize*numTilesVertical);
         gameOver = false;
         mapCollision = new boolean[numTilesVertical][numTilesHorizontal];
+        towersMap = new Tower[numTilesVertical][numTilesHorizontal];
         initMapCollision();
         world = new World(new Vector2(0, 0), true);
         Tank = new Texture("Tank.png");
@@ -143,6 +150,9 @@ public class PlayScreen implements Screen{
         round = new Round(directionList,startX,startY,endRect);
         ennemycount = 0;
 
+        dialogSell = new Dialog("Sell",new Skin(Gdx.files.internal("skin2/glassy-ui.json")));
+        dialogSell.text("Sell the tower?");
+        dialogSell.button("Yes", true);
 
         this.game = game;
 
@@ -195,14 +205,15 @@ public class PlayScreen implements Screen{
         menu.add(menuButton).right().colspan(2);
         menu.add(exitButton).right().colspan(2);
         menu.row();
-        menu.add(new ShopCell(new Tower("Gun",10, 400, 60, 50, 24, HEIGHT - Gdx.input.getY(), Pistol1, snowlaser, laser,1, mainStage, world), font)).expandX().expandY().colspan(2);
-        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 200, 0, 0, Pistol2, snowlaser, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(new Tower(0,"Gun",10, 400, 60,
+                50, 24, HEIGHT - Gdx.input.getY(), Pistol1, snowlaser, laser,1, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(new Tower(0,"Item",0, 0, 0, 200, 0, 0, Pistol2, snowlaser, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
         menu.row();
-        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 150, 0, 0, Pistol3, snowlaser, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
-        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 75, 0, 0, Pistol4, snowlaser, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(new Tower(0,"Item",0, 0, 0, 150, 0, 0, Pistol3, snowlaser, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(new Tower(0,"Item",0, 0, 0, 75, 0, 0, Pistol4, snowlaser, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
         menu.row();
-        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 40, 0, 0, Pistol5, snowlaser, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
-        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 200, 0, 0, Pistol6, snowlaser, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(new Tower(0,"Item",0, 0, 0, 40, 0, 0, Pistol5, snowlaser, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(new Tower(0,"Item",0, 0, 0, 200, 0, 0, Pistol6, snowlaser, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
         menu.row();
         menu.add(Coin).expandX().right().size(60, 60).colspan(1);
         menu.add(moneyLabel).expandX().left().expandX().colspan(1);
@@ -358,6 +369,9 @@ public class PlayScreen implements Screen{
 
     public void handleInput(float dt) {
         if (Gdx.input.justTouched()) {
+            if(Gdx.input.getPressure()>0){
+                System.out.println("Pression: "+ Gdx.input.getPressure());
+            }
             Vector3 pos3 = gameAreaCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0), 0, 0, (int) GAME_WIDTH, (int) HEIGHT);
             //System.out.println("click "+(int)pos3.x +" "+ (int)pos3.y);
             System.out.println("click "+(int)pos3.x +" "+ (29 - (int)pos3.y));
@@ -370,11 +384,18 @@ public class PlayScreen implements Screen{
                     float offset = Gdx.graphics.getWidth() / 48;
                     float x = (pos3.x * offset);
                     if (pos3.x < numTilesHorizontal && pos3.y < numTilesVertical) {
-                        if(checkPosTower(pos3)) {
+                        if(towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x] != null){
+                            System.out.println("vendre");
+                            System.out.println(towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x].getName());
+                            dialogSell.show(mainStage);
+                            mainStage.addActor(dialogSell);
+                        }else if(checkPosTower(pos3)) {
                             putTowerMapCol(pos3);
-                            Tower tower = new Tower("Gun",10, 400, 60, 50, x, HEIGHT - Gdx.input.getY(), Base1, Weapon1, laser, .6f, mainStage, world);
+                            Tower tower = new Tower(0,"Gun",10, 400, 60, 50, x, HEIGHT - Gdx.input.getY(), Base1, Weapon1, laser, .6f, mainStage, world);
                             //FreezeTower tower = new FreezeTower("Gun",0, 500, 60, 75, x, HEIGHT - Gdx.input.getY(), Pistol1, snowlaser, snowlaser, .2f, mainStage, world, 2);
                             player.buyWeapons(tower);
+                            towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x] = tower;
+
                         }else {
                             System.out.println("trop proche !!");
                         }
@@ -537,6 +558,7 @@ public class PlayScreen implements Screen{
         b2dr.render(world, gameAreaCamera.combined);
 
         batch.begin();
+        //dialogSell.draw(batch, 1.0f);
         font.setColor(Color.BLACK);
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 1680, 30);
         font.getData().setScale(1.8f);

@@ -10,6 +10,7 @@ import com.mygdx.game.model.utils.BaseActor;
 
 public class Tower extends BaseActor {
 
+    private int ID;
     public static String name;
     private int damage;
     private int range;
@@ -25,8 +26,9 @@ public class Tower extends BaseActor {
     private int ennemyinrange;
     public float temps;
 
-    public Tower(String nom, int degats, int portee, int cadence, int prix, float x, float y, Texture base_texture, Texture gun_texture, Texture texture2, float lasersize, Stage s, World world){
+    public Tower(int ID ,String nom, int degats, int portee, int cadence, int prix, float x, float y, Texture base_texture, Texture gun_texture, Texture texture2, float lasersize, Stage s, World world){
         super(x,y,s);
+        this.ID = ID;
         this.name = nom;
         this.damage = degats;
         this.range = portee;
