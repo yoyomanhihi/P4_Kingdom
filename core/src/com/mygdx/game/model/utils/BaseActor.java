@@ -27,6 +27,7 @@ public class BaseActor extends Animations
     private Rectangle rectangle;
     private static Rectangle worldBounds;
     private Polygon boundaryPolygon;
+    private float conversion = 57.2958f;
 
     public BaseActor(float x, float y, Stage s)
     {
@@ -115,10 +116,13 @@ public class BaseActor extends Animations
         return false;
     }
 
+    /*
     public float getOrientation(BaseActor BA){
         float diff_x = this.getX()-BA.getX();
         float diff_y = this.getY()-BA.getY();
+        double degre2 = Math.atan(diff_y/diff_x);
         float degre = (float)Math.atan(diff_y/diff_x);
+        System.out.println(degre2);
 
         if (this.getX() < BA.getX() && this.getY() > BA.getY()) { //L'ennemi est en bas à droite de la tour
             degre -= 0;
@@ -131,6 +135,28 @@ public class BaseActor extends Animations
         }
         else{
             degre += 135;
+        }
+        return degre;
+    }
+
+     */
+
+    public float getOrientation(BaseActor BA){
+        float diff_x = this.getX()-BA.getX();
+        float diff_y = this.getY()-BA.getY();
+        float degre = (float)Math.atan(diff_y/diff_x)*conversion;
+
+        if (this.getX() < BA.getX() && this.getY() > BA.getY()) { //L'ennemi est en bas à droite de la tour
+            degre -= 0;
+        }
+        else if (this.getX() < BA.getX() && this.getY() <= BA.getY()){ //L'ennemi est en haut à droite de la tour
+            degre -= 0;
+        }
+        else if (this.getX() > BA.getX() && this.getY() < BA.getY()){ //L'ennemi est en haut à gauche
+            degre +=180;
+        }
+        else{
+            degre +=180;
         }
         return degre;
     }
@@ -209,8 +235,8 @@ public class BaseActor extends Animations
 
     public void setBoundaryRectangle()
     {
-        float w = getWidth()+15;
-        float h = getHeight()+15;
+        float w = getWidth()+20;
+        float h = getHeight()+20;
         float[] vertices = {0,0, w,0, w,h, 0,h};
         boundaryPolygon = new Polygon(vertices);
     }

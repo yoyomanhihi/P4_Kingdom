@@ -372,7 +372,7 @@ public class PlayScreen implements Screen{
                     if (pos3.x < numTilesHorizontal && pos3.y < numTilesVertical) {
                         if(checkPosTower(pos3)) {
                             putTowerMapCol(pos3);
-                            Tower tower = new Tower("Gun",10, 400, 60, 50, x, HEIGHT - Gdx.input.getY(), Pistol1, snowlaser, laser, .6f, mainStage, world);
+                            Tower tower = new Tower("Gun",10, 400, 60, 50, x, HEIGHT - Gdx.input.getY(), Base1, Weapon1, laser, .6f, mainStage, world);
                             //FreezeTower tower = new FreezeTower("Gun",0, 500, 60, 75, x, HEIGHT - Gdx.input.getY(), Pistol1, snowlaser, snowlaser, .2f, mainStage, world, 2);
                             player.buyWeapons(tower);
                         }else {
@@ -545,8 +545,10 @@ public class PlayScreen implements Screen{
         }
         if(!player.isEmptyWeapons()) {
             for (Tower tower : player.getWeapons()) {
-                batch.draw(tower.getBase_sprite(), tower.getX(), tower.getY()-25);
-                batch.draw(tower.getWeapon_sprite(), tower.getX()-29, tower.getY()-27);
+                tower.getBase_sprite().setPosition(tower.getX(), tower.getY()-25);
+                tower.getBase_sprite().draw(batch);
+                tower.getWeapon_sprite().setPosition(tower.getX()-29, tower.getY()-27);
+                tower.getWeapon_sprite().draw(batch);
             }
         }
         if (round.getRoundnbr() != 0) {

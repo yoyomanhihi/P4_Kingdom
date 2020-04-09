@@ -54,7 +54,7 @@ public class Tower extends BaseActor {
         return false;
     }
 
-    public float getOrientation(Ennemy Ennemy){ // s oriente vers l ennemi mais on utiliser autre chose
+    /*public float getOrientation(Ennemy Ennemy){ // s oriente vers l ennemi mais on utiliser autre chose
         float hypotenuse = this.getDistance(Ennemy);
         float diff_x = this.getX()-Ennemy.getX();
         float degre = (float)Math.acos(diff_x/hypotenuse);
@@ -76,6 +76,8 @@ public class Tower extends BaseActor {
         }
         return degre;
     }
+    */
+
 
     //First checks if there is a Stage
     //Then checks if the ennemy is in range
@@ -103,7 +105,7 @@ public class Tower extends BaseActor {
     }
 
     public void updateTower(float dt, SpriteBatch batch, Ennemy ennemy, Game game, Stage stage){
-        this.getWeapon_sprite().rotate(this.getOrientation(ennemy));
+        this.getWeapon_sprite().setRotation(getOrientation(ennemy)-90);
     }
 
     public String getName() {return name; }

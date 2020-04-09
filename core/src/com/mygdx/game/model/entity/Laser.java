@@ -24,6 +24,7 @@ public class Laser extends BaseActor
     public World world;
     private float angle;
     private Sound sound;
+    private float conversion2 = 0.0174533f;
 
 
     public Laser(float x, float y, float lasersize, Texture texture, Stage s, World world)
@@ -64,10 +65,10 @@ public class Laser extends BaseActor
     }
 
     public void move(float angle, float dt){ //permet la gestion de deplacement du laser
-        float a = (float) this.getX() ;
-        float b = (float) Math.cos(angle);
+        float a = (float) this.getX();
+        float b = (float) Math.cos(angle*conversion2);
         float c = (float) this.getY();
-        float d = (float) Math.sin(angle);
+        float d = (float) Math.sin(angle*conversion2);
         this.setPosition(a + b * speed *dt ,c + d * speed * dt);
     }
 
