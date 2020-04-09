@@ -8,15 +8,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class FreezeTower extends Tower{
 
-    private int slower;
+    private float slower;
 
     public FreezeTower(String nom, int degats, int portee, int cadence, int prix, float x, float y, Texture
-            texture, Texture texture2, float lasersize, Stage s, World world, int slower) {
+            texture, Texture texture2, float lasersize, Stage s, World world, float slower) {
         super(nom, degats, portee, cadence, prix, x, y, texture, texture2, lasersize, s, world);
         this.slower = slower;
     }
 
-    public int getSlower(){
+    public float getSlower(){
         return this.slower;
     }
 

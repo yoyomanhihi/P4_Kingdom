@@ -9,11 +9,13 @@ public class Player {
     private int life;
     private List<Tower> weapons;
     private int score;
+    private float moneyboost;
 
     public Player(){ //donne un budget et un nombre de vie au joueur au début de la partie
         this.money = 150;
         this.life = 3;
         this.score = 0;
+        this.moneyboost = 1;
         weapons = new ArrayList<>();
     }
 
@@ -58,5 +60,13 @@ public class Player {
 
     public void loseLife(int damage){
         this.life = this.life - damage;
+    }
+
+    public float getMoneyboost(){
+        return moneyboost;
+    }
+
+    public void boostMoney(float moneyboost){
+        this.moneyboost = this.moneyboost*moneyboost;
     }
 }

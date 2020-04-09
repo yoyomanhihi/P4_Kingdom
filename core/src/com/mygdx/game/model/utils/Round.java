@@ -32,6 +32,7 @@ public class Round {
     private int deadennemies;
     private Texture healthbar;
     private float temps;
+    int transition;
 
     public Round(ArrayList<Direction> directionsEnemy, float startX , float startY, Rectangle endRect){
         roundnbr = 0;
@@ -289,7 +290,8 @@ public class Round {
                     ennemies.remove(i);
                 }
                 if (0 < ennemies.size() && !ennemies.get(i).isAlive()) {
-                    player.setMoney(player.getMoney() + ennemies.get(i).getPoint());
+                    transition = (int) (ennemies.get(i).getPoint() * player.getMoneyboost());
+                    player.setMoney(player.getMoney() + transition);
                     player.setScore(player.getScore() + ennemies.get(i).getPoint());
                     if(ennemies.get(i).getInitiallife() == 80){
                         ennemies1transition.addLast(ennemies.get(i));
