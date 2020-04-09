@@ -16,6 +16,8 @@ public class Tower extends BaseActor {
     private int fireRate;
     private int price;
     private boolean locked;
+    private Sprite base_sprite;
+    private Sprite weapon_sprite;
     private Texture texture;
     private Sprite sprite;
     public Laser laser;
@@ -23,7 +25,7 @@ public class Tower extends BaseActor {
     private int ennemyinrange;
     public float temps;
 
-    public Tower(String nom, int degats, int portee, int cadence, int prix, float x, float y, Texture texture, Texture texture2, float lasersize, Stage s, World world){
+    public Tower(String nom, int degats, int portee, int cadence, int prix, float x, float y, Texture base_texture, Texture gun_texture, Texture texture2, float lasersize, Stage s, World world){
         super(x,y,s);
         this.name = nom;
         this.damage = degats;
@@ -31,9 +33,8 @@ public class Tower extends BaseActor {
         this.fireRate = cadence;
         this.price = prix;
         this.locked = true;
-        this.texture = texture;
-        sprite = new Sprite(texture);
-        sprite.rotate(180);
+        base_sprite = new Sprite(base_texture);
+        weapon_sprite = new Sprite(gun_texture);
         this.world = world;
         this.ennemyinrange = 0;
         laser = new Laser(50000, 50000, lasersize, texture2, s, world);
@@ -101,6 +102,10 @@ public class Tower extends BaseActor {
         }
     }
 
+    public void updateTower(float dt, SpriteBatch batch, Ennemy ennemy, Game game, Stage stage){
+        this.getWeapon_sprite().rotate(this.getOrientation(ennemy));
+    }
+
     public String getName() {return name; }
 
     public int getPrice(){
@@ -118,12 +123,6 @@ public class Tower extends BaseActor {
     public int getDamage(){
         return damage;
     }
-
-    /*
-    public Texture getTexture(){
-        return this.texture;
-    }
-    */
 
     public boolean isLocked(){
         return this.locked;
@@ -149,9 +148,9 @@ public class Tower extends BaseActor {
         this.temps = temps;
     }
 
-    public Sprite getSprite(){
-        return sprite;
-    }
+    public Sprite getBase_sprite() { return base_sprite;}
+
+    public Sprite getWeapon_sprite() { return weapon_sprite;}
 
     public Texture getTexture() { return texture; }
 }

@@ -68,6 +68,8 @@ public class PlayScreen implements Screen{
     private Texture Pistol6;
     private Texture snowlaser;
     private Texture Exit;
+    private Texture Base1;
+    private Texture Weapon1;
     private float GAME_WIDTH = Gdx.graphics.getWidth()*4.0f/5.0f;
     private float MENU_WIDTH = Gdx.graphics.getWidth()/5.0f;
     private float HEIGHT = Gdx.graphics.getHeight();
@@ -120,6 +122,8 @@ public class PlayScreen implements Screen{
         Pistol4 = new Texture("tiny_gun_icons/pow9.png");
         Pistol5 = new Texture("tiny_gun_icons/desert_hawk.png");
         Pistol6 = new Texture("tiny_gun_icons/snp6plus.png");
+        Base1 = new Texture("Base1.png");
+        Weapon1 = new Texture("Arme1.png");
         snowlaser = new Texture("snowflake.png");
         Exit = new Texture("x.png");
         Menu = new Texture("levelsel.png");
@@ -191,14 +195,14 @@ public class PlayScreen implements Screen{
         menu.add(menuButton).right().colspan(2);
         menu.add(exitButton).right().colspan(2);
         menu.row();
-        menu.add(new ShopCell(new Tower("Gun",10, 400, 60, 50, 24, HEIGHT - Gdx.input.getY(), Pistol1, laser,1, mainStage, world), font)).expandX().expandY().colspan(2);
-        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 200, 0, 0, Pistol2, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(new Tower("Gun",10, 400, 60, 50, 24, HEIGHT - Gdx.input.getY(), Base1, Weapon1, laser,1, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 200, 0, 0, Pistol2, null, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
         menu.row();
-        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 150, 0, 0, Pistol3, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
-        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 75, 0, 0, Pistol4, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 150, 0, 0, Pistol3, null, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 75, 0, 0, Pistol4, null, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
         menu.row();
-        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 40, 0, 0, Pistol5, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
-        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 200, 0, 0, Pistol6, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 40, 0, 0, Pistol5, null, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 200, 0, 0, Pistol6, null, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
         menu.row();
         menu.add(Coin).expandX().right().size(60, 60).colspan(1);
         menu.add(moneyLabel).expandX().left().expandX().colspan(1);
@@ -369,7 +373,7 @@ public class PlayScreen implements Screen{
                         if(checkPosTower(pos3)) {
                             putTowerMapCol(pos3);
                             //Tower tower = new Tower("Gun",10, 400, 60, 50, x, HEIGHT - Gdx.input.getY(), Pistol1, laser, .6f, mainStage, world);
-                            FreezeTower tower = new FreezeTower("Gun",0, 500, 60, 75, x, HEIGHT - Gdx.input.getY(), Pistol1, snowlaser, .2f, mainStage, world, 2);
+                            FreezeTower tower = new FreezeTower("Gun",0, 500, 60, 75, x, HEIGHT - Gdx.input.getY(), Pistol1, null, snowlaser, .2f, mainStage, world, 2);
                             player.buyWeapons(tower);
                         }else {
                             System.out.println("trop proche !!");
@@ -541,7 +545,8 @@ public class PlayScreen implements Screen{
         }
         if(!player.isEmptyWeapons()) {
             for (Tower tower : player.getWeapons()) {
-                batch.draw(tower.getSprite(), tower.getX(), tower.getY());
+                batch.draw(tower.getBase_sprite(), tower.getX(), tower.getY()-25);
+                batch.draw(tower.getWeapon_sprite(), tower.getX()-29, tower.getY()-27);
             }
         }
         if (round.getRoundnbr() != 0) {
@@ -553,6 +558,11 @@ public class PlayScreen implements Screen{
         if(round.getRoundnbr() != 0) {
             for(Tower tower : player.getWeapons()) {
                 round.updateLaser(delta, batch, game, uiStage, tower);
+            }
+        }
+        if(round.getRoundnbr() != 0){
+            for(Tower tower : player.getWeapons()){
+                round.updateTower(delta, batch, game, uiStage, tower);
             }
         }
         temps++;

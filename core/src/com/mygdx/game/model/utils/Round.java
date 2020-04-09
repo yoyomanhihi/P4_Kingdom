@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.World;
@@ -353,6 +354,16 @@ public class Round {
             }
         }
     }
+
+    public void updateTower(float delta, SpriteBatch batch, Game game, Stage uiStage, Tower tour) {
+        if(ennemies.size() != 0){
+            for (int i = 0; i < ennemies.size(); i++){
+                tour.updateTower(delta,batch,ennemies.get(i),game,uiStage);
+                i = 1000;
+            }
+        }
+    }
+
 
     public void setRoundnbr(int n){
         roundnbr = n;
