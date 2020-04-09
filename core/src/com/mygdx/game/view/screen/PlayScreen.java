@@ -195,14 +195,14 @@ public class PlayScreen implements Screen{
         menu.add(menuButton).right().colspan(2);
         menu.add(exitButton).right().colspan(2);
         menu.row();
-        menu.add(new ShopCell(new Tower("Gun",10, 400, 60, 50, 24, HEIGHT - Gdx.input.getY(), Base1, Weapon1, laser,1, mainStage, world), font)).expandX().expandY().colspan(2);
-        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 200, 0, 0, Pistol2, null, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(new Tower("Gun",10, 400, 60, 50, 24, HEIGHT - Gdx.input.getY(), Pistol1, snowlaser, laser,1, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 200, 0, 0, Pistol2, snowlaser, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
         menu.row();
-        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 150, 0, 0, Pistol3, null, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
-        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 75, 0, 0, Pistol4, null, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 150, 0, 0, Pistol3, snowlaser, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 75, 0, 0, Pistol4, snowlaser, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
         menu.row();
-        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 40, 0, 0, Pistol5, null, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
-        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 200, 0, 0, Pistol6, null, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 40, 0, 0, Pistol5, snowlaser, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(new Tower("Item",0, 0, 0, 200, 0, 0, Pistol6, snowlaser, laser, 1, mainStage, world), font)).expandX().expandY().colspan(2);
         menu.row();
         menu.add(Coin).expandX().right().size(60, 60).colspan(1);
         menu.add(moneyLabel).expandX().left().expandX().colspan(1);
@@ -372,8 +372,8 @@ public class PlayScreen implements Screen{
                     if (pos3.x < numTilesHorizontal && pos3.y < numTilesVertical) {
                         if(checkPosTower(pos3)) {
                             putTowerMapCol(pos3);
-                            //Tower tower = new Tower("Gun",10, 400, 60, 50, x, HEIGHT - Gdx.input.getY(), Pistol1, laser, .6f, mainStage, world);
-                            FreezeTower tower = new FreezeTower("Gun",0, 500, 60, 75, x, HEIGHT - Gdx.input.getY(), Pistol1, null, snowlaser, .2f, mainStage, world, 2);
+                            Tower tower = new Tower("Gun",10, 400, 60, 50, x, HEIGHT - Gdx.input.getY(), Pistol1, snowlaser, laser, .6f, mainStage, world);
+                            //FreezeTower tower = new FreezeTower("Gun",0, 500, 60, 75, x, HEIGHT - Gdx.input.getY(), Pistol1, snowlaser, snowlaser, .2f, mainStage, world, 2);
                             player.buyWeapons(tower);
                         }else {
                             System.out.println("trop proche !!");

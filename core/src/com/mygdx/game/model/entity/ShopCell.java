@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -15,7 +16,7 @@ public class ShopCell extends Group {
     private Label nameLabel;
     private int cost;
     private Label costLabel;
-    private Texture texture;
+    private Sprite base_sprite;
     private ImageButton btn;
     private BitmapFont font;
 
@@ -24,14 +25,14 @@ public class ShopCell extends Group {
     public ShopCell(Tower tw, BitmapFont fnt){
         this.tower = tw;
         cost = tower.getPrice();
-        texture = tower.getTexture();
+        base_sprite = tower.getBase_sprite();
         font = fnt;
         font.getData().setScale(2f);
 
         this.setWidth(MENU_WIDTH / 2.2f);
         this.setHeight(this.getWidth()*4/3f);
 
-        Drawable image = new TextureRegionDrawable(texture);
+        Drawable image = new TextureRegionDrawable(base_sprite);
         image.setMinHeight(100);
         image.setMinWidth(100);
         btn = new ImageButton(image);
