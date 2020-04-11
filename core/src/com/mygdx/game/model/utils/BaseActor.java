@@ -116,31 +116,6 @@ public class BaseActor extends Animations
         return false;
     }
 
-    /*
-    public float getOrientation(BaseActor BA){
-        float diff_x = this.getX()-BA.getX();
-        float diff_y = this.getY()-BA.getY();
-        double degre2 = Math.atan(diff_y/diff_x);
-        float degre = (float)Math.atan(diff_y/diff_x);
-        System.out.println(degre2);
-
-        if (this.getX() < BA.getX() && this.getY() > BA.getY()) { //L'ennemi est en bas à droite de la tour
-            degre -= 0;
-        }
-        else if (this.getX() < BA.getX() && this.getY() <= BA.getY()){ //L'ennemi est en haut à droite de la tour
-            degre -= 0;
-        }
-        else if (this.getX() > BA.getX() && this.getY() < BA.getY()){ //L'ennemi est en haut à gauche
-            degre += 135;
-        }
-        else{
-            degre += 135;
-        }
-        return degre;
-    }
-
-     */
-
     public float getOrientation(BaseActor BA){
         float diff_x = this.getX()-BA.getX();
         float diff_y = this.getY()-BA.getY();
