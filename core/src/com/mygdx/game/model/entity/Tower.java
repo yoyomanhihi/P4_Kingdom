@@ -11,7 +11,7 @@ import com.mygdx.game.model.utils.BaseActor;
 public class Tower extends BaseActor {
 
     private int ID;
-    public static String name;
+    private String name;
     private int damage;
     private int range;
     private int fireRate;
@@ -19,9 +19,11 @@ public class Tower extends BaseActor {
     private boolean locked;
     private Sprite base_sprite;
     private Sprite weapon_sprite;
-    private Texture texture;
+    private Texture base_texture;
+    private Texture weapon_texture;
+    private Texture laserTexture;
     private Sprite sprite;
-    public Laser laser;
+    Laser laser;
     private World world;
     private int ennemyinrange;
     public float temps;
@@ -35,10 +37,13 @@ public class Tower extends BaseActor {
         this.fireRate = cadence;
         this.price = prix;
         this.locked = true;
+        this.base_texture = base_texture;
+        this.weapon_texture = gun_texture;
         base_sprite = new Sprite(base_texture);
         weapon_sprite = new Sprite(gun_texture);
         this.world = world;
         this.ennemyinrange = 0;
+        this.laserTexture = texture2;
         laser = new Laser(50000, 50000, lasersize, texture2, s, world);
         laser.defineLaser();
         temps = 0;
@@ -120,5 +125,9 @@ public class Tower extends BaseActor {
 
     public Sprite getWeapon_sprite() { return weapon_sprite;}
 
-    public Texture getTexture() { return texture; }
+    public Texture getBase_texture() { return base_texture;}
+
+    public Texture getWeapon_texture() {return weapon_texture;}
+
+    public Texture getLaserTexture() { return laserTexture;}
 }

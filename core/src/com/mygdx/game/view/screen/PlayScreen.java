@@ -36,7 +36,10 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.ProtectTheKingdom;
+import com.mygdx.game.model.entity.FreezeTower;
+import com.mygdx.game.model.entity.MoneyTower;
 import com.mygdx.game.model.entity.Player;
+import com.mygdx.game.model.entity.ShopCell;
 import com.mygdx.game.model.entity.Tower;
 import com.mygdx.game.model.utils.BaseActor;
 import com.mygdx.game.model.utils.Direction;
@@ -88,7 +91,7 @@ public class PlayScreen implements Screen{
     private int temps1; //Permet la gestion d apparition des ennemis
     private Viewport gameAreaViewport;
     private final FitViewport menuAreaViewport;
-    private Stage menuStage;
+    private MenuStage menuStage;
     private Texture Menu;
     private Label moneyLabel;
     private Label lifeLabel;
@@ -102,6 +105,13 @@ public class PlayScreen implements Screen{
     private int IDTower;
     private Dialog dialogSell;
     private boolean dialogSellOrNot = false;
+    private Tower tower1;
+    private Tower tower2;
+    private Tower tower3;
+    private Tower tower4;
+    private FreezeTower tower5;
+    private MoneyTower tower6;
+    private Tower selectedTower = null;
 
 
 
@@ -169,13 +179,12 @@ public class PlayScreen implements Screen{
         menuAreaCamera.update();
         menuAreaViewport = new FitViewport(MENU_WIDTH, HEIGHT, menuAreaCamera);
 
-        Tower tower1 = new Tower(0,"Gun",10, 400, 60,
-                50, 24, HEIGHT - Gdx.input.getY(), Pistol1, snowlaser, laser,1, mainStage, world);
-        Tower tower2 = new Tower(0,"Item",0, 0, 0, 200, 0, 0, Pistol2, snowlaser, laser, 1, mainStage, world);
-        Tower tower3 = new Tower(0,"Item",0, 0, 0, 150, 0, 0, Pistol3, snowlaser, laser, 1, mainStage, world);
-        Tower tower4 = new Tower(0,"Item",0, 0, 0, 75, 0, 0, Pistol4, snowlaser, laser, 1, mainStage, world);
-        Tower tower5 = new Tower(0,"Item",0, 0, 0, 40, 0, 0, Pistol5, snowlaser, laser, 1, mainStage, world);
-        Tower tower6 = new Tower(0,"Item",0, 0, 0, 200, 0, 0, Pistol6, snowlaser, laser, 1, mainStage, world);
+        tower1 = new Tower(0,"Classic",10, 400, 60, 50, 0, 0, Base1, Weapon1, laser, .6f, mainStage, world);
+        tower2 = new Tower(0,"Degat",30, 150, 20, 100, 0, 0, Pistol2, snowlaser, laser, 1, mainStage, world);
+        tower3 = new Tower(0,"Cadence",5, 300, 150, 80, 0, 0, Pistol3, snowlaser, laser, 1, mainStage, world);
+        tower4 = new Tower(0,"Portée",10, 600, 30, 75, 0, 0, Pistol4, snowlaser, laser, 1, mainStage, world);
+        tower5 = new FreezeTower("Freeze",0, 0, 0, 40, 0, 0, Pistol5, snowlaser, laser, 1, mainStage, world, 3);
+        tower6 = new MoneyTower("Money",0, 0, 0, 200, 0, 0, Pistol6, snowlaser, laser, 1, mainStage, world, 2.0f, player);
 
         menuStage = new MenuStage(menuAreaViewport, game, tower1, tower2, tower3, tower4, tower5, tower6);
 
@@ -387,7 +396,32 @@ public class PlayScreen implements Screen{
             System.out.println("click "+(int)pos3.x +" "+ (29 - (int)pos3.y));
             TiledMapTileLayer tiledMapTileLayer = (TiledMapTileLayer) map.getLayers().get(0);
             TiledMapTileLayer.Cell cell = tiledMapTileLayer.getCell((int) pos3.x, (int) pos3.y);
-            if (cell != null) {
+            System.out.println("x "+pos3.x+" & y "+pos3.y);
+            if (pos3.x >49.5 && pos3.x <53 && pos3.y>20.5 && pos3.y<25.5) {
+                System.out.println("Button 1 detected");
+                selectedTower = tower1;
+            }
+            else if (pos3.x >49.5 && pos3.x <53 && pos3.y>11.5 && pos3.y<16.5) {
+                System.out.println("Button 2 detected");
+                selectedTower = tower3;
+            }
+            else if (pos3.x >49.5 && pos3.x <53 && pos3.y>3 && pos3.y<8) {
+                System.out.println("Button 3 detected");
+                selectedTower = tower5;
+            }
+            else if (pos3.x >55.5 && pos3.x <59 && pos3.y>20.5 && pos3.y<25.5) {
+                System.out.println("Button 4 detected");
+                selectedTower = tower2;
+            }
+            else if (pos3.x >55.5 && pos3.x <59 && pos3.y>11.5 && pos3.y<16.5) {
+                System.out.println("Button 5 detected");
+                selectedTower = tower4;
+            }
+            else if (pos3.x >55.5 && pos3.x <59 && pos3.y>3 && pos3.y<8) {
+                System.out.println("Button 6 detected");
+                selectedTower = tower6;
+            }
+            else if (cell != null) {
                 System.out.println("Cell id: " + cell.getTile().getId());
                 System.out.println("Pas placer sur le chemin");
             } else {
@@ -399,9 +433,9 @@ public class PlayScreen implements Screen{
                             System.out.println(towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x].getName());
                             dialogSellOrNot = true;
                             drawDialogSell();
-                        }else if(checkPosTower(pos3)) {
+                        }else if(checkPosTower(pos3) && selectedTower != null) {
                             putTowerMapCol(pos3);
-                            Tower tower = new Tower(0,"Gun",10, 400, 60, 50, x, HEIGHT - Gdx.input.getY(), Base1, Weapon1, laser, .6f, mainStage, world);
+                            Tower tower = new Tower(0,selectedTower.getName(),selectedTower.getDamage(), selectedTower.getEnnemyinrange(), selectedTower.getFireRate(), selectedTower.getPrice(), x, HEIGHT - Gdx.input.getY(), selectedTower.getBase_texture(), selectedTower.getWeapon_texture(), selectedTower.getLaserTexture(), .6f, mainStage, world);
                             //FreezeTower tower = new FreezeTower("Gun",0, 500, 60, 75, x, HEIGHT - Gdx.input.getY(), Pistol1, snowlaser, snowlaser, .2f, mainStage, world, 2);
                             player.buyWeapons(tower);
                             towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x] = tower;

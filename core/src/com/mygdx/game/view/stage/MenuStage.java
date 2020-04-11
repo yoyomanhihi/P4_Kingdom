@@ -29,6 +29,13 @@ public class MenuStage extends Stage {
     private Label lifeLabel;
     private Player player;
 
+    private ShopCell item1;
+    private ShopCell item2;
+    private ShopCell item3;
+    private ShopCell item4;
+    private ShopCell item5;
+    private ShopCell item6;
+
     public MenuStage(Viewport viewport, final ProtectTheKingdom game, Tower tower1, Tower tower2, Tower tower3, Tower tower4, Tower tower5, Tower tower6){
         super(viewport, game.batch);
 
@@ -62,26 +69,34 @@ public class MenuStage extends Stage {
         moneyLabel = new Label("MONEY", new Label.LabelStyle(font, Color.WHITE));
         lifeLabel = new Label("LIFE", new Label.LabelStyle(font, Color.WHITE));
 
+        item1 = new ShopCell(tower1, font);
+        item2 = new ShopCell(tower2, font);
+        item3 = new ShopCell(tower3, font);
+        item4 = new ShopCell(tower4, font);
+        item5 = new ShopCell(tower5, font);
+        item6 = new ShopCell(tower6, font);
+
         Table menu = new Table();
         menu.setFillParent(true);
-        this.addActor(menu);
 
         menu.add(menuButton).right().colspan(2);
         menu.add(exitButton).right().colspan(2);
         menu.row();
-        menu.add(new ShopCell(tower1, font)).expandX().expandY().colspan(2);
-        menu.add(new ShopCell(tower2, font)).expandX().expandY().colspan(2);
+        menu.add(item1).expandX().expandY().colspan(2);
+        menu.add(item2).expandX().expandY().colspan(2);
         menu.row();
-        menu.add(new ShopCell(tower3, font)).expandX().expandY().colspan(2);
-        menu.add(new ShopCell(tower4, font)).expandX().expandY().colspan(2);
+        menu.add(item3).expandX().expandY().colspan(2);
+        menu.add(item4).expandX().expandY().colspan(2);
         menu.row();
-        menu.add(new ShopCell(tower5, font)).expandX().expandY().colspan(2);
-        menu.add(new ShopCell(tower6, font)).expandX().expandY().colspan(2);
+        menu.add(item5).expandX().expandY().colspan(2);
+        menu.add(item6).expandX().expandY().colspan(2);
         menu.row();
         menu.add(Coin).expandX().right().size(60, 60).colspan(1);
         menu.add(moneyLabel).expandX().left().expandX().colspan(1);
         menu.add(Heart).expandX().right().size(60,60).colspan(1);
         menu.add(lifeLabel).expandX().left().expandX().colspan(1);
+
+        this.addActor(menu);
     }
 
     @Override

@@ -41,7 +41,6 @@ public class MenuScreen implements Screen {
     public void show() {
         Table table = new Table();
         table.setFillParent(true);
-        table.setDebug(true);
         stage.addActor(table);
 
         Skin skin = new Skin(Gdx.files.internal("skin2/glassy-ui.json"));
@@ -68,7 +67,7 @@ public class MenuScreen implements Screen {
         });
 
         //Test dialog box dans le menu screen
-
+/*
         Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.BLACK);
         Label label = new Label("Sell or not?",font);
         Dialog dialogSell = new Dialog("Sell",new Skin(Gdx.files.internal("skin2/default/skin/uiskin.json")));
@@ -80,6 +79,8 @@ public class MenuScreen implements Screen {
         dialogSell.button("Yes", true).button("No", false);
         //stage.addActor(dialogSell);
         dialogSell.show(stage);
+
+ */
     }
 
     @Override
