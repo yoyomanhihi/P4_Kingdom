@@ -179,12 +179,13 @@ public class PlayScreen implements Screen{
         menuAreaCamera.update();
         menuAreaViewport = new FitViewport(MENU_WIDTH, HEIGHT, menuAreaCamera);
 
-        tower1 = new Tower(0,"Classic",10, 400, 60, 50, 0, 0, Base1, Weapon1, laser, .6f, mainStage, world);
-        tower2 = new Tower(0,"Degat",30, 150, 20, 100, 0, 0, Pistol2, snowlaser, laser, 1, mainStage, world);
-        tower3 = new Tower(0,"Cadence",5, 300, 150, 80, 0, 0, Pistol3, snowlaser, laser, 1, mainStage, world);
-        tower4 = new Tower(0,"Portée",10, 600, 30, 75, 0, 0, Pistol4, snowlaser, laser, 1, mainStage, world);
-        tower5 = new FreezeTower("Freeze",0, 0, 0, 40, 0, 0, Pistol5, snowlaser, laser, 1, mainStage, world, 3);
-        tower6 = new MoneyTower("Money",0, 0, 0, 200, 0, 0, Pistol6, snowlaser, laser, 1, mainStage, world, 2.0f, player);
+        tower1 = new Tower(1,"Classic",10, 450, 70, 50, 0, 0, Base1, Weapon1, laser, .6f, mainStage, world);
+        tower2 = new Tower(2,"Degat",30, 500, 80, 125, 0, 0, Pistol2, snowlaser, laser, 1, mainStage, world);
+        tower3 = new Tower(3,"Cadence",8, 300, 25, 200, 0, 0, Pistol3, snowlaser, laser, 1, mainStage, world);
+        tower4 = new Tower(4,"Portée",80, 1000, 400, 250, 0, 0, Pistol4, snowlaser, laser, 1, mainStage, world);
+        tower5 = new FreezeTower(5, "Freeze",0, 500, 80, 200, 0, 0, Pistol5, snowlaser, laser, 1, mainStage, world, 2);
+        tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 300, 0, 0, Pistol6, snowlaser, laser, 1, mainStage, world, 1.2f, player);
+        player.setMoneyboost(1);
 
         menuStage = new MenuStage(menuAreaViewport, game, tower1, tower2, tower3, tower4, tower5, tower6);
 
@@ -435,10 +436,21 @@ public class PlayScreen implements Screen{
                             drawDialogSell();
                         }else if(checkPosTower(pos3) && selectedTower != null) {
                             putTowerMapCol(pos3);
-                            Tower tower = new Tower(0,selectedTower.getName(),selectedTower.getDamage(), selectedTower.getEnnemyinrange(), selectedTower.getFireRate(), selectedTower.getPrice(), x, HEIGHT - Gdx.input.getY(), selectedTower.getBase_texture(), selectedTower.getWeapon_texture(), selectedTower.getLaserTexture(), .6f, mainStage, world);
-                            //FreezeTower tower = new FreezeTower("Gun",0, 500, 60, 75, x, HEIGHT - Gdx.input.getY(), Pistol1, snowlaser, snowlaser, .2f, mainStage, world, 2);
-                            player.buyWeapons(tower);
-                            towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x] = tower;
+                            if(selectedTower.getID() < 5) {
+                                Tower tower = new Tower(selectedTower.getID(), selectedTower.getName(), selectedTower.getDamage(), selectedTower.getRange(), selectedTower.getFireRate(), selectedTower.getPrice(), x, HEIGHT - Gdx.input.getY(), selectedTower.getBase_texture(), selectedTower.getWeapon_texture(), selectedTower.getLaserTexture(), .6f, mainStage, world);
+                                player.buyWeapons(tower);
+                                towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x] = tower;
+                            }
+                            else if(selectedTower.getID() == 5) {
+                                FreezeTower tower = new FreezeTower(selectedTower.getID(), selectedTower.getName(), selectedTower.getDamage(), selectedTower.getRange(), selectedTower.getFireRate(), selectedTower.getPrice(), x, HEIGHT - Gdx.input.getY(), selectedTower.getBase_texture(), selectedTower.getWeapon_texture(), selectedTower.getLaserTexture(), .6f, mainStage, world, 2);
+                                player.buyWeapons(tower);
+                                towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x] = tower;
+                            }
+                            else{
+                                MoneyTower tower = new MoneyTower(selectedTower.getID(), selectedTower.getName(), selectedTower.getDamage(), selectedTower.getRange(), selectedTower.getFireRate(), selectedTower.getPrice(), x, HEIGHT - Gdx.input.getY(), selectedTower.getBase_texture(), selectedTower.getWeapon_texture(), selectedTower.getLaserTexture(), .6f, mainStage, world, 1.2f, player);
+                                player.buyWeapons(tower);
+                                towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x] = tower;
+                            }
 
                         }else {
                             System.out.println("trop proche !!");

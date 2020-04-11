@@ -12,7 +12,7 @@ public class Player {
     private float moneyboost;
 
     public Player(){ //donne un budget et un nombre de vie au joueur au début de la partie
-        this.money = 150;
+        this.money = 100000;
         this.life = 3;
         this.score = 0;
         this.moneyboost = 1;
@@ -34,6 +34,7 @@ public class Player {
     public List<Tower> getWeapons() {
         return weapons;
     }
+
     public void sellWeapon(Tower tour){
         setMoney(getMoney() + tour.getPrice()/2);
     }
@@ -69,4 +70,6 @@ public class Player {
     public void boostMoney(float moneyboost){
         this.moneyboost = this.moneyboost*moneyboost;
     }
+
+    public void setMoneyboost(float moneyboost){ this.moneyboost = moneyboost; }
 }

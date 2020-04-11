@@ -42,7 +42,6 @@ public class Tower extends BaseActor {
         base_sprite = new Sprite(base_texture);
         weapon_sprite = new Sprite(gun_texture);
         this.world = world;
-        this.ennemyinrange = 0;
         this.laserTexture = texture2;
         laser = new Laser(50000, 50000, lasersize, texture2, s, world);
         laser.defineLaser();
@@ -54,9 +53,9 @@ public class Tower extends BaseActor {
     //Then checks if the ennemy is in range
     public void shoot(Ennemy ennemy, SpriteBatch batch, float dt, World world, Game game, Stage stage) //tire sur l ennemi
     {
-        if (getStage() == null) {
-            return;
-        }
+        //if (getStage() == null) {
+        //    return;
+        //}
         laser.getSound().play(0.15f);
         laser.centerAtActor(this);
         laser.update(dt, batch, ennemy, game, stage);
@@ -105,14 +104,6 @@ public class Tower extends BaseActor {
         this.locked = locked;
     }
 
-    public int getEnnemyinrange(){
-        return ennemyinrange;
-    }
-
-    public void setEnnemyinrange(int ennemynbr){
-        this.ennemyinrange = ennemynbr;
-    }
-
     public float getTemps(){
         return temps;
     }
@@ -130,4 +121,8 @@ public class Tower extends BaseActor {
     public Texture getWeapon_texture() {return weapon_texture;}
 
     public Texture getLaserTexture() { return laserTexture;}
+
+    public int getID(){
+        return ID;
+    }
 }
