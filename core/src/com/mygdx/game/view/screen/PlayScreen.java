@@ -23,15 +23,18 @@ import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.ProtectTheKingdom;
@@ -87,7 +90,7 @@ public class PlayScreen implements Screen{
     private int ennemycount; // Permet la gestion des ennemis
     private int temps1; //Permet la gestion d apparition des ennemis
     private Viewport gameAreaViewport;
-    private final FitViewport menuAreaViewport;
+    private FitViewport menuAreaViewport;
     private Stage menuStage;
     private Texture Menu;
     private Label moneyLabel;
@@ -101,6 +104,7 @@ public class PlayScreen implements Screen{
     private ArrayList<Point> towerPositionList = new ArrayList<>();
     private int IDTower;
     private Dialog dialogSell;
+    private boolean dialogSellOrNot = false;
 
 
 
@@ -150,21 +154,23 @@ public class PlayScreen implements Screen{
         round = new Round(directionList,startX,startY,endRect);
         ennemycount = 0;
 
+        /*Label.LabelStyle font2 = new Label.LabelStyle(new BitmapFont(), Color.BLACK);
+        Label label = new Label("Sell or not?",font2);
         dialogSell = new Dialog("Sell",new Skin(Gdx.files.internal("skin2/glassy-ui.json")));
-        dialogSell.text("Sell the tower?");
-        dialogSell.button("Yes", true);
+        dialogSell.getContentTable().add(label);
+        dialogSell.button("OK", true).button("Cancel", false);*/
 
         this.game = game;
 
         gameAreaCamera = new OrthographicCamera();
         gameAreaCamera.setToOrtho(false, GAME_WIDTH, HEIGHT);
         gameAreaCamera.update();
-        gameAreaViewport = new FitViewport(GAME_WIDTH, HEIGHT, gameAreaCamera);
+        //gameAreaViewport = new FitViewport(GAME_WIDTH, HEIGHT, gameAreaCamera);
 
-        menuAreaCamera = new OrthographicCamera();
+       /* menuAreaCamera = new OrthographicCamera();
         menuAreaCamera.setToOrtho(false, MENU_WIDTH, HEIGHT);
         menuAreaCamera.update();
-        menuAreaViewport = new FitViewport(MENU_WIDTH, HEIGHT, menuAreaCamera);
+        menuAreaViewport = new FitViewport(MENU_WIDTH, HEIGHT, menuAreaCamera);*/
 
 
         font = new BitmapFont();
@@ -182,6 +188,7 @@ public class PlayScreen implements Screen{
         exitButton.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("dddddd");
                 Gdx.app.exit();
             }
         });
@@ -204,6 +211,12 @@ public class PlayScreen implements Screen{
 
         menu.add(menuButton).right().colspan(2);
         menu.add(exitButton).right().colspan(2);
+        exitButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                Gdx.app.exit();
+            }
+        });
         menu.row();
         menu.add(new ShopCell(new Tower(0,"Gun",10, 400, 60,
                 50, 24, HEIGHT - Gdx.input.getY(), Pistol1, snowlaser, laser,1, mainStage, world), font)).expandX().expandY().colspan(2);
@@ -219,7 +232,6 @@ public class PlayScreen implements Screen{
         menu.add(moneyLabel).expandX().left().expandX().colspan(1);
         menu.add(Heart).expandX().right().size(60,60).colspan(1);
         menu.add(lifeLabel).expandX().left().expandX().colspan(1);
-
 
     }
 
@@ -369,9 +381,6 @@ public class PlayScreen implements Screen{
 
     public void handleInput(float dt) {
         if (Gdx.input.justTouched()) {
-            if(Gdx.input.getPressure()>0){
-                System.out.println("Pression: "+ Gdx.input.getPressure());
-            }
             Vector3 pos3 = gameAreaCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0), 0, 0, (int) GAME_WIDTH, (int) HEIGHT);
             //System.out.println("click "+(int)pos3.x +" "+ (int)pos3.y);
             System.out.println("click "+(int)pos3.x +" "+ (29 - (int)pos3.y));
@@ -387,8 +396,8 @@ public class PlayScreen implements Screen{
                         if(towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x] != null){
                             System.out.println("vendre");
                             System.out.println(towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x].getName());
-                            dialogSell.show(mainStage);
-                            mainStage.addActor(dialogSell);
+                            dialogSellOrNot = true;
+                            drawDialogSell();
                         }else if(checkPosTower(pos3)) {
                             putTowerMapCol(pos3);
                             Tower tower = new Tower(0,"Gun",10, 400, 60, 50, x, HEIGHT - Gdx.input.getY(), Base1, Weapon1, laser, .6f, mainStage, world);
@@ -489,9 +498,11 @@ public class PlayScreen implements Screen{
     @Override
     public void show() {
         InputMultiplexer im = new InputMultiplexer();
+        im.addProcessor(menuStage);
         im.addProcessor(uiStage);
         im.addProcessor(mainStage);
         Gdx.input.setInputProcessor(im);
+       // drawDialogSell();
     }
 
     @Override
@@ -502,7 +513,7 @@ public class PlayScreen implements Screen{
         Gdx.gl.glViewport(0, 0, (int) GAME_WIDTH, (int) HEIGHT);
         drawGameArea(delta);
         Gdx.gl.glViewport((int) GAME_WIDTH, 0, (int) MENU_WIDTH, (int) HEIGHT);
-        drawMenuArea(delta);
+        drawMenuArea();
 
     }
 
@@ -549,6 +560,25 @@ public class PlayScreen implements Screen{
         }
     }*/
 
+    private void drawDialogSell(){
+        Label.LabelStyle font2 = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
+        Label label = new Label("Sell or not?",font2);
+        Skin skin = new Skin(Gdx.files.internal("skin2/default/skin/uiskin.json"));
+        dialogSell = new Dialog("Sell",skin){
+            @Override
+            public float getPrefWidth() {
+                // force dialog width
+                return 250f;
+            }
+        };
+        dialogSell.padTop(80);
+        dialogSell.getContentTable().add(label).fillX().uniformX();
+        dialogSell.text("ddddddddddd");
+        dialogSell.button("OK", true).button("Cancel", false);
+        //menuStage.addActor(dialogSell);
+        dialogSell.show(menuStage);
+    }
+
     private void drawGameArea(float delta) {
         update(delta);
         gameAreaCamera.update();
@@ -558,7 +588,6 @@ public class PlayScreen implements Screen{
         b2dr.render(world, gameAreaCamera.combined);
 
         batch.begin();
-        //dialogSell.draw(batch, 1.0f);
         font.setColor(Color.BLACK);
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 1680, 30);
         font.getData().setScale(1.8f);
@@ -593,14 +622,14 @@ public class PlayScreen implements Screen{
         batch.end();
     }
 
-    private void drawMenuArea(float delta) {
+    private void drawMenuArea() {
         //update(delta);
-        menuAreaCamera.update();
+        //menuAreaCamera.update();
 
-        batch.begin();
+        //batch.begin();
         menuStage.act(Math.min(Gdx.graphics.getDeltaTime(),1/30f));
         menuStage.draw();
-        batch.end();
+        //batch.end();
     }
 }
 

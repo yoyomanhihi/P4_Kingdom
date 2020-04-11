@@ -3,10 +3,14 @@ package com.mygdx.game.view.screen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -62,6 +66,20 @@ public class MenuScreen implements Screen {
                 game.changeScreen(ProtectTheKingdom.PLAY);
             }
         });
+
+        //Test dialog box dans le menu screen
+
+        Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.BLACK);
+        Label label = new Label("Sell or not?",font);
+        Dialog dialogSell = new Dialog("Sell",new Skin(Gdx.files.internal("skin2/default/skin/uiskin.json")));
+        dialogSell.setMovable(true);
+        dialogSell.padTop(50).padBottom(50);
+        //dialogSell.getContentTable().add(label).row();
+        dialogSell.text("Sell or not?");
+        dialogSell.text("????");
+        dialogSell.button("Yes", true).button("No", false);
+        //stage.addActor(dialogSell);
+        dialogSell.show(stage);
     }
 
     @Override
