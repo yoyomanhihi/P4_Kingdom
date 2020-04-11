@@ -21,12 +21,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -38,14 +36,13 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.ProtectTheKingdom;
-import com.mygdx.game.model.entity.FreezeTower;
 import com.mygdx.game.model.entity.Player;
-import com.mygdx.game.model.entity.ShopCell;
 import com.mygdx.game.model.entity.Tower;
 import com.mygdx.game.model.utils.BaseActor;
 import com.mygdx.game.model.utils.Direction;
 import com.mygdx.game.model.utils.Point;
 import com.mygdx.game.model.utils.Round;
+import com.mygdx.game.view.stage.MenuStage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -75,9 +72,9 @@ public class PlayScreen implements Screen{
     private Texture Exit;
     private Texture Base1;
     private Texture Weapon1;
-    private float GAME_WIDTH = Gdx.graphics.getWidth()*4.0f/5.0f;
-    private float MENU_WIDTH = Gdx.graphics.getWidth()/5.0f;
-    private float HEIGHT = Gdx.graphics.getHeight();
+    public static final float GAME_WIDTH = Gdx.graphics.getWidth()*4.0f/5.0f;
+    public static final float MENU_WIDTH = Gdx.graphics.getWidth()/5.0f;
+    public static final float HEIGHT = Gdx.graphics.getHeight();
     private final float offsetPixel;
     private final float screenToMapOffsetWidth;
     private final float screenToMapOffsetHeight;
@@ -90,7 +87,7 @@ public class PlayScreen implements Screen{
     private int ennemycount; // Permet la gestion des ennemis
     private int temps1; //Permet la gestion d apparition des ennemis
     private Viewport gameAreaViewport;
-    private FitViewport menuAreaViewport;
+    private final FitViewport menuAreaViewport;
     private Stage menuStage;
     private Texture Menu;
     private Label moneyLabel;
@@ -112,9 +109,8 @@ public class PlayScreen implements Screen{
 
         System.out.println(Gdx.graphics.getWidth());
         mainStage = new Stage(new FitViewport(GAME_WIDTH, HEIGHT));
-        menuStage = new Stage(new FitViewport(MENU_WIDTH, HEIGHT));
+
         map = new TmxMapLoader().load("Map 2.tmx");
-        player = new Player();
         numTilesHorizontal = (int)map.getProperties().get("width");
         numTilesVertical = (int)map.getProperties().get("height");
         tileSize = (int)map.getProperties().get("tileheight");
@@ -161,17 +157,27 @@ public class PlayScreen implements Screen{
         dialogSell.button("OK", true).button("Cancel", false);*/
 
         this.game = game;
+        this.player = this.game.player;
 
         gameAreaCamera = new OrthographicCamera();
         gameAreaCamera.setToOrtho(false, GAME_WIDTH, HEIGHT);
         gameAreaCamera.update();
-        //gameAreaViewport = new FitViewport(GAME_WIDTH, HEIGHT, gameAreaCamera);
+        gameAreaViewport = new FitViewport(GAME_WIDTH, HEIGHT, gameAreaCamera);
 
-       /* menuAreaCamera = new OrthographicCamera();
+        menuAreaCamera = new OrthographicCamera();
         menuAreaCamera.setToOrtho(false, MENU_WIDTH, HEIGHT);
         menuAreaCamera.update();
-        menuAreaViewport = new FitViewport(MENU_WIDTH, HEIGHT, menuAreaCamera);*/
+        menuAreaViewport = new FitViewport(MENU_WIDTH, HEIGHT, menuAreaCamera);
 
+        Tower tower1 = new Tower(0,"Gun",10, 400, 60,
+                50, 24, HEIGHT - Gdx.input.getY(), Pistol1, snowlaser, laser,1, mainStage, world);
+        Tower tower2 = new Tower(0,"Item",0, 0, 0, 200, 0, 0, Pistol2, snowlaser, laser, 1, mainStage, world);
+        Tower tower3 = new Tower(0,"Item",0, 0, 0, 150, 0, 0, Pistol3, snowlaser, laser, 1, mainStage, world);
+        Tower tower4 = new Tower(0,"Item",0, 0, 0, 75, 0, 0, Pistol4, snowlaser, laser, 1, mainStage, world);
+        Tower tower5 = new Tower(0,"Item",0, 0, 0, 40, 0, 0, Pistol5, snowlaser, laser, 1, mainStage, world);
+        Tower tower6 = new Tower(0,"Item",0, 0, 0, 200, 0, 0, Pistol6, snowlaser, laser, 1, mainStage, world);
+
+        menuStage = new MenuStage(menuAreaViewport, game, tower1, tower2, tower3, tower4, tower5, tower6);
 
         font = new BitmapFont();
         font.getData().setScale(5.0f);
@@ -182,14 +188,16 @@ public class PlayScreen implements Screen{
         b2dr = new Box2DDebugRenderer();
         uiStage = new Stage();
         temps1 = 0;
-
+/*
         Drawable exitImage = new TextureRegionDrawable(Exit);
         ImageButton exitButton = new ImageButton(exitImage);
-        exitButton.addListener(new ChangeListener() {
+        exitButton.addListener(new InputListener() {
             @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
             public void changed(ChangeEvent event, Actor actor) {
                 System.out.println("dddddd");
                 Gdx.app.exit();
+                return true;
             }
         });
 
@@ -211,12 +219,6 @@ public class PlayScreen implements Screen{
 
         menu.add(menuButton).right().colspan(2);
         menu.add(exitButton).right().colspan(2);
-        exitButton.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                Gdx.app.exit();
-            }
-        });
         menu.row();
         menu.add(new ShopCell(new Tower(0,"Gun",10, 400, 60,
                 50, 24, HEIGHT - Gdx.input.getY(), Pistol1, snowlaser, laser,1, mainStage, world), font)).expandX().expandY().colspan(2);
@@ -231,8 +233,7 @@ public class PlayScreen implements Screen{
         menu.add(Coin).expandX().right().size(60, 60).colspan(1);
         menu.add(moneyLabel).expandX().left().expandX().colspan(1);
         menu.add(Heart).expandX().right().size(60,60).colspan(1);
-        menu.add(lifeLabel).expandX().left().expandX().colspan(1);
-
+        menu.add(lifeLabel).expandX().left().expandX().colspan(1);*/
     }
 
     private void initMapCollision(){
@@ -490,8 +491,7 @@ public class PlayScreen implements Screen{
             }
             temps1++;
             world.step(1 / 60f, 6, 2);
-            moneyLabel.setText(String.format("%04d", player.getMoney()));
-            lifeLabel.setText(String.format("%01d", player.getLife()));
+
         }
     }
 
@@ -512,8 +512,10 @@ public class PlayScreen implements Screen{
 
         Gdx.gl.glViewport(0, 0, (int) GAME_WIDTH, (int) HEIGHT);
         drawGameArea(delta);
+
         Gdx.gl.glViewport((int) GAME_WIDTH, 0, (int) MENU_WIDTH, (int) HEIGHT);
-        drawMenuArea();
+        menuStage.act();
+        menuStage.draw();
 
     }
 
@@ -622,13 +624,4 @@ public class PlayScreen implements Screen{
         batch.end();
     }
 
-    private void drawMenuArea() {
-        //update(delta);
-        //menuAreaCamera.update();
-
-        //batch.begin();
-        menuStage.act(Math.min(Gdx.graphics.getDeltaTime(),1/30f));
-        menuStage.draw();
-        //batch.end();
-    }
 }

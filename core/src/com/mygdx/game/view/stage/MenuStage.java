@@ -1,0 +1,93 @@
+package com.mygdx.game.view.stage;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.mygdx.game.ProtectTheKingdom;
+import com.mygdx.game.model.entity.Player;
+import com.mygdx.game.model.entity.ShopCell;
+import com.mygdx.game.model.entity.Tower;
+import com.mygdx.game.view.screen.MenuScreen;
+
+
+public class MenuStage extends Stage {
+
+    private Label moneyLabel;
+    private Label lifeLabel;
+    private Player player;
+
+    public MenuStage(Viewport viewport, final ProtectTheKingdom game, Tower tower1, Tower tower2, Tower tower3, Tower tower4, Tower tower5, Tower tower6){
+        super(viewport, game.batch);
+
+        this.player = game.player;
+        BitmapFont font = new BitmapFont();
+
+        Texture Exit = new Texture("x.png");
+        Drawable exitImage = new TextureRegionDrawable(Exit);
+        Texture Menu = new Texture("levelsel.png");
+        Drawable menuImage = new TextureRegionDrawable(Menu);
+        Image Coin = new Image(new Texture("coin.png"));
+        Image Heart = new Image(new Texture("heart.png"));
+
+        ImageButton exitButton = new ImageButton(exitImage);
+        exitButton.addListener(new InputListener() {
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                Gdx.app.exit();
+                return true;
+            }
+        });
+
+        ImageButton menuButton = new ImageButton(menuImage);
+        menuButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(new MenuScreen(game));
+            }
+        });
+
+        moneyLabel = new Label("MONEY", new Label.LabelStyle(font, Color.WHITE));
+        lifeLabel = new Label("LIFE", new Label.LabelStyle(font, Color.WHITE));
+
+        Table menu = new Table();
+        menu.setFillParent(true);
+        this.addActor(menu);
+
+        menu.add(menuButton).right().colspan(2);
+        menu.add(exitButton).right().colspan(2);
+        menu.row();
+        menu.add(new ShopCell(tower1, font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(tower2, font)).expandX().expandY().colspan(2);
+        menu.row();
+        menu.add(new ShopCell(tower3, font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(tower4, font)).expandX().expandY().colspan(2);
+        menu.row();
+        menu.add(new ShopCell(tower5, font)).expandX().expandY().colspan(2);
+        menu.add(new ShopCell(tower6, font)).expandX().expandY().colspan(2);
+        menu.row();
+        menu.add(Coin).expandX().right().size(60, 60).colspan(1);
+        menu.add(moneyLabel).expandX().left().expandX().colspan(1);
+        menu.add(Heart).expandX().right().size(60,60).colspan(1);
+        menu.add(lifeLabel).expandX().left().expandX().colspan(1);
+    }
+
+    @Override
+    public void act(){
+        moneyLabel.setText(String.format("%04d", player.getMoney()));
+        lifeLabel.setText(String.format("%01d", player.getLife()));
+        super.act();
+    }
+}

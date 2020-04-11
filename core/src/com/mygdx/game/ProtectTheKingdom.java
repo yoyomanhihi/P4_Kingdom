@@ -5,6 +5,7 @@
 	import com.badlogic.gdx.audio.Music;
 	import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 	import com.badlogic.gdx.scenes.scene2d.Stage;
+	import com.mygdx.game.model.entity.Player;
 	import com.mygdx.game.view.screen.MenuScreen;
 	import com.mygdx.game.view.screen.PlayScreen;
 	import com.mygdx.game.view.screen.WinScreen;
@@ -12,6 +13,7 @@
 	public class ProtectTheKingdom extends Game {
 		public Stage mainStage;
 		public SpriteBatch batch;
+		public Player player;
 		private MenuScreen menuScreen;
 		private PlayScreen playScreen;
 		public static final int V_WIDTH = 400;
@@ -26,6 +28,7 @@
 		public void create () {
 			mainStage = new Stage();
 			batch = new SpriteBatch();
+			player = new Player();
 			music = Gdx.audio.newMusic(Gdx.files.internal("Actofwar.mp3"));
 			music.setLooping(true);
 			music.setVolume(0.5f);
