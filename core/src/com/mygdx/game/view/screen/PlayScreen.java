@@ -438,7 +438,7 @@ public class PlayScreen implements Screen{
                 System.out.println("Cell id: " + cell.getTile().getId());
                 System.out.println("Pas placer sur le chemin");
                 if(dialogSellOrNot){
-                    if(pos3.x>1 && pos3.x<4.8 && pos3.y>2.7 && pos3.y<3.7){
+                    if(pos3.x>0.93 && pos3.x<4.7 && pos3.y>3.8 && pos3.y<4.8){
                         System.out.println("SELL");
                         player.sellWeapon(towerToSell);
                         dialogSellOrNot = false;
