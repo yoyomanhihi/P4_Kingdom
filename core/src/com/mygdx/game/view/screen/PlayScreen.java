@@ -22,7 +22,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -47,6 +46,7 @@ import com.mygdx.game.model.utils.Point;
 import com.mygdx.game.model.utils.Round;
 import com.mygdx.game.view.stage.MenuStage;
 
+import java.awt.Button;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -112,6 +112,8 @@ public class PlayScreen implements Screen{
     private FreezeTower tower5;
     private MoneyTower tower6;
     private Tower selectedTower = null;
+    private Tower towerToSell;
+    private TextButton sellButton;
 
 
 
@@ -119,6 +121,7 @@ public class PlayScreen implements Screen{
 
         System.out.println(Gdx.graphics.getWidth());
         mainStage = new Stage(new FitViewport(GAME_WIDTH, HEIGHT));
+        Gdx.input.setInputProcessor(mainStage);
 
         map = new TmxMapLoader().load("Map 2.tmx");
         numTilesHorizontal = (int)map.getProperties().get("width");
@@ -159,6 +162,9 @@ public class PlayScreen implements Screen{
         setDirectionList(directions);
         round = new Round(directionList,startX,startY,endRect);
         ennemycount = 0;
+        Skin skin = new Skin(Gdx.files.internal("skin2/skin/star-soldier-ui.json"));
+        sellButton =  new TextButton("Sell", skin);
+        propertiesButtonSell();
 
         /*Label.LabelStyle font2 = new Label.LabelStyle(new BitmapFont(), Color.BLACK);
         Label label = new Label("Sell or not?",font2);
@@ -431,6 +437,13 @@ public class PlayScreen implements Screen{
             else if (cell != null) {
                 System.out.println("Cell id: " + cell.getTile().getId());
                 System.out.println("Pas placer sur le chemin");
+                if(dialogSellOrNot){
+                    if(pos3.x>1 && pos3.x<4.8 && pos3.y>2.7 && pos3.y<3.7){
+                        System.out.println("SELL");
+                        player.sellWeapon(towerToSell);
+                        dialogSellOrNot = false;
+                    }
+                }
             } else {
                     float offset = Gdx.graphics.getWidth() / 48;
                     float x = (pos3.x * offset);
@@ -439,7 +452,7 @@ public class PlayScreen implements Screen{
                             System.out.println("vendre");
                             System.out.println(towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x].getName());
                             dialogSellOrNot = true;
-                            drawDialogSell();
+                            towerToSell = towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x];
                         }else if(checkPosTower(pos3) && selectedTower != null) {
                             putTowerMapCol(pos3);
                             if(selectedTower.getID() < 5) {
@@ -554,7 +567,6 @@ public class PlayScreen implements Screen{
         im.addProcessor(uiStage);
         im.addProcessor(mainStage);
         Gdx.input.setInputProcessor(im);
-       // drawDialogSell();
     }
 
     @Override
@@ -614,23 +626,10 @@ public class PlayScreen implements Screen{
         }
     }*/
 
-    private void drawDialogSell(){
-        Label.LabelStyle font2 = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
-        Label label = new Label("Sell or not?",font2);
-        Skin skin = new Skin(Gdx.files.internal("skin2/default/skin/uiskin.json"));
-        dialogSell = new Dialog("Sell",skin){
-            @Override
-            public float getPrefWidth() {
-                // force dialog width
-                return 250f;
-            }
-        };
-        dialogSell.padTop(80);
-        dialogSell.getContentTable().add(label).fillX().uniformX();
-        dialogSell.text("ddddddddddd");
-        dialogSell.button("OK", true).button("Cancel", false);
-        //menuStage.addActor(dialogSell);
-        dialogSell.show(menuStage);
+    private void propertiesButtonSell(){
+        sellButton.setPosition(-20, 90);
+        sellButton.setTransform(true);
+        sellButton.setScale(2.0f);
     }
 
     private void drawGameArea(float delta) {
@@ -642,6 +641,9 @@ public class PlayScreen implements Screen{
         b2dr.render(world, gameAreaCamera.combined);
 
         batch.begin();
+        if(dialogSellOrNot){
+            sellButton.draw(batch, 1);
+        }
         font.setColor(Color.BLACK);
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 1680, 30);
         font.getData().setScale(1.8f);

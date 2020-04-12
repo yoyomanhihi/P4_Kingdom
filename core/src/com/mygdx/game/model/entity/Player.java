@@ -36,7 +36,9 @@ public class Player {
     }
 
     public void sellWeapon(Tower tour){
+
         setMoney(getMoney() + tour.getPrice()/2);
+        weapons.remove(tour);
     }
 
     public int getScore() {
