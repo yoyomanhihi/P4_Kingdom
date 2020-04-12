@@ -14,8 +14,8 @@
 		public Stage mainStage;
 		public SpriteBatch batch;
 		public Player player;
-		private MenuScreen menuScreen;
-		private PlayScreen playScreen;
+		public MenuScreen menuScreen;
+		public PlayScreen playScreen;
 		public static final int V_WIDTH = 400;
 		public static final int V_HEIGHT = 208;
 		private Music music;

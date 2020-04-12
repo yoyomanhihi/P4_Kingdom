@@ -45,9 +45,14 @@ public class MenuScreen implements Screen {
 
         Skin skin = new Skin(Gdx.files.internal("skin2/glassy-ui.json"));
 
-        TextButton newGame = new TextButton("New Game", skin);
+        final TextButton newGame = new TextButton("New Game", skin);
+        TextButton resume = new TextButton("Resume", skin);
         TextButton exit = new TextButton("Exit", skin);
 
+        if (game.playScreen != null){
+            table.add(resume).fillX().uniformX();
+            table.row().pad(10, 0, 10, 0);
+        }
         table.add(newGame).fillX().uniformX();
         table.row().pad(10, 0, 10, 0);
         table.add(exit).fillX().uniformX();
@@ -62,7 +67,19 @@ public class MenuScreen implements Screen {
         newGame.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                game.changeScreen(ProtectTheKingdom.PLAY);
+                if (game.playScreen != null) {
+                    game.playScreen.dispose();
+                }
+                PlayScreen playScreen = new PlayScreen(game);
+                game.playScreen = playScreen;
+                game.setScreen(playScreen);
+            }
+        });
+
+        resume.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                game.setScreen(game.playScreen);
             }
         });
 
@@ -85,6 +102,7 @@ public class MenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        Gdx.gl.glViewport(0,0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(),1/30f));

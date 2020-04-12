@@ -398,7 +398,13 @@ public class PlayScreen implements Screen{
             TiledMapTileLayer tiledMapTileLayer = (TiledMapTileLayer) map.getLayers().get(0);
             TiledMapTileLayer.Cell cell = tiledMapTileLayer.getCell((int) pos3.x, (int) pos3.y);
             System.out.println("x "+pos3.x+" & y "+pos3.y);
-            if (pos3.x >49.5 && pos3.x <53 && pos3.y>20.5 && pos3.y<25.5) {
+            if (pos3.x >52 && pos3.x <55 && pos3.y>28 && pos3.y<30) {
+                game.setScreen(new MenuScreen(game));
+            }
+            else if (pos3.x >58 && pos3.x <60 && pos3.y>28 && pos3.y<30) {
+                Gdx.app.exit();
+            }
+            else if (pos3.x >49.5 && pos3.x <53 && pos3.y>20.5 && pos3.y<25.5) {
                 System.out.println("Button 1 detected");
                 selectedTower = tower1;
             }
