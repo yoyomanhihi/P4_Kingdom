@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.ProtectTheKingdom;
+import com.mygdx.game.model.entity.Player;
 
 public class MenuScreen implements Screen {
 
@@ -69,6 +70,9 @@ public class MenuScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 if (game.playScreen != null) {
                     game.playScreen.dispose();
+                }
+                if (game.player != null) {
+                    game.player = new Player();
                 }
                 PlayScreen playScreen = new PlayScreen(game);
                 game.playScreen = playScreen;
