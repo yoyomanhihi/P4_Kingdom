@@ -114,6 +114,8 @@ public class PlayScreen implements Screen{
     private Tower selectedTower = null;
     private Tower towerToSell;
     private TextButton sellButton;
+    private TextButton cancelButton;
+    private Vector3 posTowerSell;
 
 
 
@@ -163,8 +165,10 @@ public class PlayScreen implements Screen{
         round = new Round(directionList,startX,startY,endRect);
         ennemycount = 0;
         Skin skin = new Skin(Gdx.files.internal("skin2/skin/star-soldier-ui.json"));
-        sellButton =  new TextButton("Sell", skin);
-        propertiesButtonSell();
+        sellButton = new TextButton("Sell", skin);
+        cancelButton = new TextButton("Cancel", skin);
+        propertiesButton(sellButton,-15,90);
+        propertiesButton(cancelButton,-50,10);
 
         /*Label.LabelStyle font2 = new Label.LabelStyle(new BitmapFont(), Color.BLACK);
         Label label = new Label("Sell or not?",font2);
@@ -305,30 +309,9 @@ public class PlayScreen implements Screen{
             col = numTilesHorizontal - 1;
         }
 
-        /*if(y == numTilesVertical){
-            y = numTilesVertical - 1;
-        }*/
-
         System.out.println("tower in map: "+ col + " "+ row);
         System.out.println("tower in tab: "+ row + " "+ col);
         trueTowerPosition(col, row);
-        /*for (int i = 0 ; i<mapCollision.length;i++){
-            for (int j = 0 ; j<mapCollision[i].length;j++){
-                System.out.print(i + " ; "+ j + " | ");
-            }
-            System.out.println();
-        }*/
-       /* for (int i = 0 ; i<mapCollision.length;i++){
-            for (int j = 0 ; j<mapCollision[i].length;j++){
-                if(mapCollision[i][j]){
-                    System.out.print("T" + " | ");
-                }else{
-                    System.out.print("F" + " | ");
-                }
-            }
-            System.out.println();
-        }*/
-        //print2D(mapCollision);
     }
 
     private void trueTowerPosition(int x, int y){
@@ -344,6 +327,38 @@ public class PlayScreen implements Screen{
         }
         if(y != 0) {
             mapCollision[y-1][x] = true;
+        }
+       /* mapCollision[x+1][y+1] = true;
+        mapCollision[x-1][y-1] = true;
+        mapCollision[x+1][y-1] = true;
+        mapCollision[x-1][y+1] = true;*/
+    }
+
+    private void deleteTowerMapCol(Vector3 position){
+        int col = (int) position.x;
+        int row = (numTilesVertical-1) - (int) position.y;
+        if (col == numTilesHorizontal) {
+            col = numTilesHorizontal - 1;
+        }
+
+        System.out.println("tower in map: "+ col + " "+ row);
+        System.out.println("tower in tab: "+ row + " "+ col);
+        falseTowerPosition(col, row);
+    }
+
+    private void falseTowerPosition(int x, int y){
+        mapCollision[y][x] = false;
+        if(x != mapCollision[0].length-1){
+            mapCollision[y][x+1] = false;
+        }
+        if(x != 0) {
+            mapCollision[y][x-1] = false;
+        }
+        if(y != mapCollision.length-1){
+            mapCollision[y+1][x] = false;
+        }
+        if(y != 0) {
+            mapCollision[y-1][x] = false;
         }
        /* mapCollision[x+1][y+1] = true;
         mapCollision[x-1][y-1] = true;
@@ -441,7 +456,14 @@ public class PlayScreen implements Screen{
                     if(pos3.x>0.93 && pos3.x<4.7 && pos3.y>3.8 && pos3.y<4.8){
                         System.out.println("SELL");
                         player.sellWeapon(towerToSell);
+                        deleteTowerMapCol(posTowerSell);
+                        towersMap[(numTilesVertical-1) - (int)posTowerSell.y][(int)posTowerSell.x] = null;
                         dialogSellOrNot = false;
+                    }else if(pos3.x>0.1 && pos3.x<5.8 && pos3.y>1.5 && pos3.y<2.5){
+                        System.out.println("CANCEL");
+                        dialogSellOrNot = false;
+                        towerToSell = null;
+                        posTowerSell = null;
                     }
                 }
             } else {
@@ -453,6 +475,7 @@ public class PlayScreen implements Screen{
                             System.out.println(towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x].getName());
                             dialogSellOrNot = true;
                             towerToSell = towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x];
+                            posTowerSell = pos3;
                         }else if(checkPosTower(pos3) && selectedTower != null) {
                             putTowerMapCol(pos3);
                             if(selectedTower.getID() < 5) {
@@ -626,10 +649,10 @@ public class PlayScreen implements Screen{
         }
     }*/
 
-    private void propertiesButtonSell(){
-        sellButton.setPosition(-20, 90);
-        sellButton.setTransform(true);
-        sellButton.setScale(2.0f);
+    private void propertiesButton(TextButton button,int x, int y){
+        button.setPosition(x, y);
+        button.setTransform(true);
+        button.setScale(2.0f);
     }
 
     private void drawGameArea(float delta) {
@@ -643,6 +666,7 @@ public class PlayScreen implements Screen{
         batch.begin();
         if(dialogSellOrNot){
             sellButton.draw(batch, 1);
+            cancelButton.draw(batch, 1);
         }
         font.setColor(Color.BLACK);
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 1680, 30);
