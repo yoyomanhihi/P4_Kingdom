@@ -38,6 +38,7 @@ public class Ennemy extends BaseActor {
     private boolean isfreezed;
     private boolean isfast;
     private boolean doreload;
+    private int normalpoint;
 
     //public int damage;  Si on veut faire en sorte qu'un ennemy puisse attaquer une tour
 
@@ -46,6 +47,7 @@ public class Ennemy extends BaseActor {
         this.life = life;
         this.initiallife = life;
         this.point = point;
+        this.normalpoint = point;
         this.sprite = new Sprite(texture);
         this.direction = 0;
         this.isfreezed = false;
@@ -232,6 +234,14 @@ public class Ennemy extends BaseActor {
     public void beReload(){
         doreload = true;
         sprite.setColor(Color.GREEN);
+    }
+
+    public void setPoint(int point){
+        this.point = point;
+    }
+
+    public int getNormalpoint(){
+        return normalpoint;
     }
 
 }

@@ -189,12 +189,12 @@ public class PlayScreen implements Screen{
         menuAreaCamera.update();
         menuAreaViewport = new FitViewport(MENU_WIDTH, HEIGHT, menuAreaCamera);
 
-        tower1 = new Tower(1,"Classic",10, 450, 70, 50, 0, 0, Base1, Weapon1, laser, .6f, mainStage, world);
-        tower2 = new Tower(2,"Degat",30, 500, 80, 125, 0, 0, Pistol2, snowlaser, laser, 1, mainStage, world);
-        tower3 = new Tower(3,"Cadence",8, 300, 25, 200, 0, 0, Pistol3, snowlaser, laser, 1, mainStage, world);
-        tower4 = new Tower(4,"Portée",80, 1000, 400, 250, 0, 0, Pistol4, snowlaser, laser, 1, mainStage, world);
-        tower5 = new FreezeTower(5, "Freeze",0, 500, 80, 200, 0, 0, Pistol5, snowlaser, laser, 1, mainStage, world, 2);
-        tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 300, 0, 0, Pistol6, snowlaser, laser, 1, mainStage, world, 1.2f, player);
+        tower1 = new Tower(1,"Classic",10, 400, 60, 50, 0, 0, Base1, Weapon1, laser, .6f, mainStage, world);
+        tower2 = new Tower(2,"Cadence",8, 275, 20, 175, 0, 0, Pistol2, snowlaser, laser, 1, mainStage, world);
+        tower3 = new Tower(3,"Portée",100, 1200, 400, 400, 0, 0, Pistol3, snowlaser, laser, 1, mainStage, world);
+        tower4 = new Tower(4,"Dégats",100, 450, 80, 1000, 0, 0, Pistol4, snowlaser, laser, 1, mainStage, world);
+        tower5 = new FreezeTower(5, "Freeze",0, 250, 50, 500, 0, 0, Pistol5, snowlaser, laser, 1, mainStage, world, 2);
+        tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 400, 0, 0, Pistol6, snowlaser, laser, 1, mainStage, world, 1.25f, player);
         player.setMoneyboost(1);
 
         menuStage = new MenuStage(menuAreaViewport, game, tower1, tower2, tower3, tower4, tower5, tower6);
@@ -507,73 +507,138 @@ public class PlayScreen implements Screen{
             this.gameOver = true;
             game.setScreen(new LoseScreen(game, player));
         }
-        else if(round.getRoundnbr() == 13){
+        else if(round.getRoundnbr() == 25){
             this.gameOver = true;
             game.setScreen(new WinScreen(game, player));
         }
         else {
             handleInput(dt);
-            if (round.getRoundnbr() != 0) { // met le round a jour
+            if (round.getRoundnbr() != -1) { // met le round a jour
                 round.update(dt, game, player, mainStage);
             }
-            if (ennemycount < 3 && temps1 > 125) { //demarre le premier round
-                round.setRoundnbr(1);
+            if (ennemycount < 1 && temps1 > 125) { //demarre le premier round
+                round.setRoundnbr(0);
+                round.round0(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 1 && ennemycount < 3 && temps1 > 150) { //demarre le premier round
                 round.round1(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 2 && ennemycount < 8 && temps1 > 125) {
+            else if (round.getRoundnbr() == 2 && ennemycount < 6 && temps1 > 150) {
                 round.round2(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 3 && ennemycount < 12 && temps1 > 125) {
+            else if (round.getRoundnbr() == 3 && ennemycount < 7 && temps1 > 125) {
                 round.round3(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 4 && ennemycount < 14 && temps1 > 125) {
+            else if (round.getRoundnbr() == 4 && ennemycount < 12 && temps1 > 125) {
                 round.round4(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 5 && ennemycount < 21 && temps1 > 125) {
+            else if (round.getRoundnbr() == 5 && ennemycount < 16 && temps1 > 125) {
                 round.round5(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 6 && ennemycount < 22 && temps1 > 125) {
+            else if (round.getRoundnbr() == 6 && ennemycount < 18 && temps1 > 150) {
                 round.round6(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 7 && ennemycount < 37 && temps1 > 80) {
+            else if (round.getRoundnbr() == 7 && ennemycount < 26 && temps1 > 125) {
                 round.round7(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 8 && ennemycount < 42 && temps1 > 125) {
+            else if (round.getRoundnbr() == 8 && ennemycount < 36 && temps1 > 60) {
                 round.round8(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 9 && ennemycount < 46 && temps1 > 125) {
+            else if (round.getRoundnbr() == 9 && ennemycount < 41 && temps1 > 100) {
                 round.round9(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 10 && ennemycount < 48 && temps1 > 125) {
+            else if (round.getRoundnbr() == 10 && ennemycount < 42 && temps1 > 125) {
                 round.round10(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 11 && ennemycount < 51 && temps1 > 125) {
+            else if (round.getRoundnbr() == 11 && ennemycount < 44 && temps1 > 125) {
                 round.round11(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 12 && ennemycount < 54 && temps1 > 125) {
+            else if (round.getRoundnbr() == 12 && ennemycount < 46 && temps1 > 125) {
                 round.round12(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 13 && ennemycount < 50 && temps1 > 125) {
+                round.round13(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 14 && ennemycount < 52 && temps1 > 125) {
+                round.round14(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 15 && ennemycount < 53 && temps1 > 125) {
+                round.round15(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 16 && ennemycount < 58 && temps1 > 125) {
+                round.round16(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 17 && ennemycount < 68 && temps1 > 125) {
+                round.round17(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 18 && ennemycount < 69 && temps1 > 125) {
+                round.round18(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 19 && ennemycount < 72 && temps1 > 125) {
+                round.round19(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 20 && ennemycount < 80 && temps1 > 125) {
+                round.round20(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 21 && ennemycount < 83 && temps1 > 125) {
+                round.round21(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 22 && ennemycount < 85 && temps1 > 125) {
+                round.round22(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 23 && ennemycount < 93 && temps1 > 125) {
+                round.round23(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 24 && ennemycount < 94 && temps1 > 125) {
+                round.round24(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
@@ -671,7 +736,7 @@ public class PlayScreen implements Screen{
         font.setColor(Color.BLACK);
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 1680, 30);
         font.getData().setScale(1.8f);
-        if(round.getRoundnbr() != 0) {
+        if(round.getRoundnbr() != -1) {
             round.draw(batch);
         }
         if(!player.isEmptyWeapons()) {
@@ -682,18 +747,18 @@ public class PlayScreen implements Screen{
                 tower.getWeapon_sprite().draw(batch);
             }
         }
-        if (round.getRoundnbr() != 0) {
+        if (round.getRoundnbr() != -1) {
             for(Tower tower : player.getWeapons()) {
                 round.shoot(tower, batch, delta, world, game, uiStage);
             }
             temps = 0;
         }
-        if(round.getRoundnbr() != 0) {
+        if(round.getRoundnbr() != -1) {
             for(Tower tower : player.getWeapons()) {
                 round.updateLaser(delta, batch, game, uiStage, tower);
             }
         }
-        if(round.getRoundnbr() != 0){
+        if(round.getRoundnbr() != -1){
             for(Tower tower : player.getWeapons()){
                 round.updateTower(delta, batch, game, uiStage, tower);
             }

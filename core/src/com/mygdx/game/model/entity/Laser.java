@@ -15,6 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.mygdx.game.model.utils.BaseActor;
 
+import java.awt.Color;
+
+import javax.swing.plaf.ColorUIResource;
+
 public class Laser extends BaseActor
 {
 
@@ -27,7 +31,7 @@ public class Laser extends BaseActor
     private float conversion2 = 0.0174533f;
 
 
-    public Laser(float x, float y, float lasersize, Texture texture, Stage s, World world)
+    public Laser(float x, float y, float lasersize, Texture texture, int speed, Sound sound, Stage s, World world)
     {
         super(x,y,s);
         this.sprite = new Sprite(texture);
@@ -38,8 +42,8 @@ public class Laser extends BaseActor
         setSpeed(2000);
         setDeceleration(0);
         this.world = world;
-        this.speed = 2000;
-        sound = Gdx.audio.newSound(Gdx.files.internal("Laser1.wav"));
+        this.speed = speed;
+        this.sound = sound;
     }
 
     public void defineLaser(){
@@ -85,4 +89,5 @@ public class Laser extends BaseActor
     public Sprite getSprite(){
         return sprite;
     }
+    
 }

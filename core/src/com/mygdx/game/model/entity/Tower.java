@@ -1,6 +1,8 @@
 package com.mygdx.game.model.entity;
 import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -27,6 +29,7 @@ public class Tower extends BaseActor {
     private World world;
     private int ennemyinrange;
     public float temps;
+    private Sound sound;
 
     public Tower(int ID ,String nom, int degats, int portee, int cadence, int prix, float x, float y, Texture base_texture, Texture gun_texture, Texture texture2, float lasersize, Stage s, World world){
         super(x,y,s);
@@ -43,7 +46,13 @@ public class Tower extends BaseActor {
         weapon_sprite = new Sprite(gun_texture);
         this.world = world;
         this.laserTexture = texture2;
-        laser = new Laser(50000, 50000, lasersize, texture2, s, world);
+        if(prix == 400){
+            sound = (Gdx.audio.newSound(Gdx.files.internal("tir.mp3")));
+        }
+        else {
+            sound = (Gdx.audio.newSound(Gdx.files.internal("Laser1.wav")));
+        }
+        laser = new Laser(50000, 50000, lasersize, texture2, 2000, sound, s, world);
         laser.defineLaser();
         temps = 0;
         long soundId;
@@ -56,7 +65,12 @@ public class Tower extends BaseActor {
         //if (getStage() == null) {
         //    return;
         //}
-        laser.getSound().play(0.15f);
+        if(price != 400) {
+            laser.getSound().play(0.15f);
+        }
+        else{
+            laser.getSound().play();
+        }
         laser.centerAtActor(this);
         laser.update(dt, batch, ennemy, game, stage);
     }
