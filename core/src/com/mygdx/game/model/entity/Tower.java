@@ -53,6 +53,10 @@ public class Tower extends BaseActor {
             sound = (Gdx.audio.newSound(Gdx.files.internal("Laser1.wav")));
         }
         laser = new Laser(50000, 50000, lasersize, texture2, 2000, sound, s, world);
+        if(prix == 400){
+            laser.yellow();
+            laser.setSpeed(3000);
+        }
         laser.defineLaser();
         temps = 0;
         long soundId;

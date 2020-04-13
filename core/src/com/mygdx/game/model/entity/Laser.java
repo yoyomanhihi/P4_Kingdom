@@ -14,8 +14,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.mygdx.game.model.utils.BaseActor;
-
-import java.awt.Color;
+import com.badlogic.gdx.graphics.Color;
 
 import javax.swing.plaf.ColorUIResource;
 
@@ -39,7 +38,6 @@ public class Laser extends BaseActor
         addAction( Actions.delay(1) );
         addAction( Actions.after( Actions.fadeOut(0.5f) ) );
         addAction( Actions.after( Actions.removeActor() ) );
-        setSpeed(2000);
         setDeceleration(0);
         this.world = world;
         this.speed = speed;
@@ -89,5 +87,13 @@ public class Laser extends BaseActor
     public Sprite getSprite(){
         return sprite;
     }
-    
+
+    public void yellow(){
+        sprite.setColor(Color.YELLOW);
+    }
+
+    public void setSpeed(int speed){
+        this.speed = speed;
+    }
+
 }
