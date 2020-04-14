@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -19,6 +20,8 @@ public class ShopCell extends Group {
     private Sprite base_sprite;
     private ImageButton btn;
     private BitmapFont font;
+    private boolean selected = false;
+    private Image select;
 
     private float MENU_WIDTH = Gdx.graphics.getWidth()/5.0f;
 
@@ -35,6 +38,13 @@ public class ShopCell extends Group {
         Drawable image = new TextureRegionDrawable(base_sprite);
         image.setMinHeight(100);
         image.setMinWidth(100);
+
+        Texture selectTexture = new Texture("yellow.png");
+        select = new Image(selectTexture);
+        select.setHeight(30);
+        select.setWidth(30);
+        select.setPosition(this.getWidth()/2f-select.getWidth()/2f, this.getHeight()-select.getHeight());
+
         btn = new ImageButton(image);
         btn.setPosition(this.getWidth() / 2f - btn.getWidth() / 2f,this.getHeight() / 2f - btn.getHeight() / 2f);
 
@@ -47,5 +57,22 @@ public class ShopCell extends Group {
         this.addActor(btn);
         this.addActor(nameLabel);
         this.addActor(costLabel);
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+        if (isSelected()) {
+            this.addActor(select);
+        }
+        else this.removeActor(select);
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 }

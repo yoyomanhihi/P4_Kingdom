@@ -105,4 +105,37 @@ public class MenuStage extends Stage {
         lifeLabel.setText(String.format("%01d", player.getLife()));
         super.act();
     }
+
+    public void deselect() {
+        getItem1().setSelected(false);
+        getItem2().setSelected(false);
+        getItem3().setSelected(false);
+        getItem4().setSelected(false);
+        getItem5().setSelected(false);
+        getItem6().setSelected(false);
+    }
+
+    public ShopCell getItem1() {
+        return item1;
+    }
+
+    public ShopCell getItem2() {
+        return item2;
+    }
+
+    public ShopCell getItem3() {
+        return item3;
+    }
+
+    public ShopCell getItem4() {
+        return item4;
+    }
+
+    public ShopCell getItem5() {
+        return item5;
+    }
+
+    public ShopCell getItem6() {
+        return item6;
+    }
 }

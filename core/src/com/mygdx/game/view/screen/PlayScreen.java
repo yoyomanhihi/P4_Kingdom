@@ -427,27 +427,27 @@ public class PlayScreen implements Screen{
             }
             else if (pos3.x >49.5 && pos3.x <53 && pos3.y>20.5 && pos3.y<25.5) {
                 System.out.println("Button 1 detected");
-                selectedTower = tower1;
+                handleSelected(1);
             }
             else if (pos3.x >49.5 && pos3.x <53 && pos3.y>11.5 && pos3.y<16.5) {
                 System.out.println("Button 2 detected");
-                selectedTower = tower3;
+                handleSelected(3);
             }
             else if (pos3.x >49.5 && pos3.x <53 && pos3.y>3 && pos3.y<8) {
                 System.out.println("Button 3 detected");
-                selectedTower = tower5;
+                handleSelected(5);
             }
             else if (pos3.x >55.5 && pos3.x <59 && pos3.y>20.5 && pos3.y<25.5) {
                 System.out.println("Button 4 detected");
-                selectedTower = tower2;
+                handleSelected(2);
             }
             else if (pos3.x >55.5 && pos3.x <59 && pos3.y>11.5 && pos3.y<16.5) {
                 System.out.println("Button 5 detected");
-                selectedTower = tower4;
+                handleSelected(4);
             }
             else if (pos3.x >55.5 && pos3.x <59 && pos3.y>3 && pos3.y<8) {
                 System.out.println("Button 6 detected");
-                selectedTower = tower6;
+                handleSelected(6);
             }
             else if (cell != null) {
                 System.out.println("Cell id: " + cell.getTile().getId());
@@ -765,6 +765,107 @@ public class PlayScreen implements Screen{
         }
         temps++;
         batch.end();
+    }
+
+    private void handleSelected(int i){
+        switch (i) {
+            case 1: {
+                if (menuStage.getItem1().isSelected()) {
+                    menuStage.getItem1().setSelected(false);
+                    selectedTower = null;
+                }
+                else if (selectedTower != null) {
+                    menuStage.deselect();
+                    menuStage.getItem1().setSelected(true);
+                    selectedTower = tower1;
+                }
+                else {
+                    menuStage.getItem1().setSelected(true);
+                    selectedTower = tower1;
+                }
+                break;
+            }
+            case 2: {
+                if (menuStage.getItem2().isSelected()) {
+                    menuStage.getItem2().setSelected(false);
+                    selectedTower = null;
+                }
+                else if (selectedTower != null) {
+                    menuStage.deselect();
+                    menuStage.getItem2().setSelected(true);
+                    selectedTower = tower2;
+                }
+                else {
+                    menuStage.getItem2().setSelected(true);
+                    selectedTower = tower2;
+                }
+                break;
+            }
+            case 3: {
+                if (menuStage.getItem3().isSelected()) {
+                    menuStage.getItem3().setSelected(false);
+                    selectedTower = null;
+                }
+                else if (selectedTower != null) {
+                    menuStage.deselect();
+                    menuStage.getItem3().setSelected(true);
+                    selectedTower = tower3;
+                }
+                else {
+                    menuStage.getItem3().setSelected(true);
+                    selectedTower = tower3;
+                }
+                break;
+            }
+            case 4: {
+                if (menuStage.getItem4().isSelected()) {
+                    menuStage.getItem4().setSelected(false);
+                    selectedTower = null;
+                }
+                else if (selectedTower != null) {
+                    menuStage.deselect();
+                    menuStage.getItem4().setSelected(true);
+                    selectedTower = tower4;
+                }
+                else {
+                    menuStage.getItem4().setSelected(true);
+                    selectedTower = tower4;
+                }
+                break;
+            }
+            case 5: {
+                if (menuStage.getItem5().isSelected()) {
+                    menuStage.getItem5().setSelected(false);
+                    selectedTower = null;
+                }
+                else if (selectedTower != null) {
+                    menuStage.deselect();
+                    menuStage.getItem5().setSelected(true);
+                    selectedTower = tower5;
+                }
+                else {
+                    menuStage.getItem5().setSelected(true);
+                    selectedTower = tower5;
+                }
+                break;
+            }
+            case 6: {
+                if (menuStage.getItem6().isSelected()) {
+                    menuStage.getItem6().setSelected(false);
+                    selectedTower = null;
+                }
+                else if (selectedTower != null) {
+                    menuStage.deselect();
+                    menuStage.getItem6().setSelected(true);
+                    selectedTower = tower6;
+                }
+                else {
+                    menuStage.getItem6().setSelected(true);
+                    selectedTower = tower6;
+                }
+                break;
+            }
+        }
     }
 
 }
