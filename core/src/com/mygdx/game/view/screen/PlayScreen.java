@@ -190,7 +190,7 @@ public class PlayScreen implements Screen{
         menuAreaViewport = new FitViewport(MENU_WIDTH, HEIGHT, menuAreaCamera);
 
         tower1 = new Tower(1,"Classic",10, 375, 60, 50, 0, 0, Base1, Weapon1, laser, .5f, mainStage, world);
-        tower2 = new Tower(2,"Cadence",7, 275, 20, 175, 0, 0, Pistol2, snowlaser, laser, .4f, mainStage, world);
+        tower2 = new Tower(2,"Cadence",8, 275, 20, 175, 0, 0, Pistol2, snowlaser, laser, .4f, mainStage, world);
         tower3 = new Tower(3,"Portée",100, 1200, 400, 400, 0, 0, Pistol3, snowlaser, laser, .8f, mainStage, world);
         tower4 = new Tower(4,"Dégats",80, 400, 80, 1000, 0, 0, Pistol4, snowlaser, laser, .6f, mainStage, world);
         tower5 = new FreezeTower(5, "Freeze",0, 250, 70, 500, 0, 0, Pistol5, snowlaser, snowlaser, .3f, mainStage, world, 2);

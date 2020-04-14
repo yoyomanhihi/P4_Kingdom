@@ -336,7 +336,7 @@ public class Round {
         ennemies2transition.removeFirst();
     }
 
-    public void round16(int temps, Stage stage, World world, int ennemynbr) { //Cinq ennemis 2 rapides BUG
+    public void round16(int temps, Stage stage, World world, int ennemynbr) { //Cinq ennemis 2 rapides
         ennemies2transition.getFirst().setLife(300);
         ennemies2transition.getFirst().setPosition(startX, startY);
         ennemies2transition.getFirst().setDirection(0);
@@ -409,7 +409,7 @@ public class Round {
         }
     }
 
-    public void round20(int temps, Stage stage, World world, int ennemynbr) { // Quatre ennemis 2 rapides & quatre ennemis 2 avec recharge
+    public void round20(int temps, Stage stage, World world, int ennemynbr) { // Quatre ennemis 2 rapides & quatre ennemis 2 avec recharge attrnyion 5 rapides
         if(ennemynbr < 76) {
             ennemies2transition.getFirst().setLife(300);
             ennemies2transition.getFirst().setPosition(startX, startY);
@@ -429,6 +429,7 @@ public class Round {
             ennemies2transition.getFirst().setTarget(0);
             ennemies2transition.getFirst().setAttackPlayer(false);
             ennemies2transition.getFirst().beReload();
+            ennemies2transition.getFirst().setSpeed(ennemies2transition.getFirst().getNormalspeed());
             ennemies2transition.getFirst().setPoint(ennemies2transition.getFirst().getNormalpoint()*2);
             ennemies.add(ennemies2transition.getFirst());
             ennemies2transition.removeFirst();
@@ -437,6 +438,7 @@ public class Round {
             ennemies.add(new Ennemy(300, 80, 30, new Texture("RedTank.png"), stage, world,directionsEnemy,startX,startY, 2));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
             ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2);
+            ennemies2transition.getFirst().setSpeed(ennemies2transition.getFirst().getNormalspeed());
             ennemies.get(ennemynbr - deadennemies).beReload();
             ennemies.get(ennemynbr - deadennemies).setPoint(ennemies.get(ennemynbr - deadennemies).getNormalpoint()*2);
         }
