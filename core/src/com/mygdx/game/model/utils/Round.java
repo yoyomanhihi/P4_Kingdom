@@ -598,8 +598,12 @@ public class Round {
     public void updateTower(float delta, SpriteBatch batch, Game game, Stage uiStage, Tower tour) {
         if(ennemies.size() != 0){
             for (int i = 0; i < ennemies.size(); i++){
-                tour.updateTower(delta,batch,ennemies.get(i),game,uiStage);
-                i = 1000;
+                if (ennemies.get(i) != null) {
+                    if (ennemies.get(i).isInRange(tour)) {
+                        tour.updateTower(delta, batch, ennemies.get(i), game, uiStage);
+                        i = 1000;
+                    }
+                }
             }
         }
     }
