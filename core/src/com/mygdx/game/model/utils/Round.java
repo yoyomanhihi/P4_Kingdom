@@ -53,7 +53,7 @@ public class Round {
     } //Put the good size for the first wave
 
     public void round0(int temps, Stage stage, World world, int ennemynbr){ //Un ennemi 1
-        ennemies.add(new Ennemy(1000, 120, 8, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY, 1));
+        ennemies.add(new Ennemy(80, 120, 8, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY, 1));
         ennemies.get(ennemynbr-deadennemies).defineEnnemy();
     }
 
