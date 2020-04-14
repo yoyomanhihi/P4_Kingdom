@@ -502,7 +502,7 @@ public class Round {
         if(ennemies.size()==0){
             temps++;
 
-            if(temps > 10){
+            if(temps > 1000){
                 roundnbr++;
                 temps = 0;
             }

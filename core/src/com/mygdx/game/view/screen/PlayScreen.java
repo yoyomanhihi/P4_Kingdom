@@ -21,6 +21,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -465,10 +466,10 @@ public class PlayScreen implements Screen{
                         posTowerSell = null;
                     }
                 }
-                if(true){
+                if(round.getTemps() != 0){
                     if(pos3.x>1.2 && pos3.x<4.6 && pos3.y>2.4 && pos3.y<3.6){
                         System.out.println("SKIP");
-
+                        round.setTemps(1000);
                     }
                 }
             } else {
@@ -738,7 +739,7 @@ public class PlayScreen implements Screen{
             sellButton.draw(batch, 1);
             cancelButton.draw(batch, 1);
         }
-        if(true){
+        if(round.getTemps() != 0){
             skipButton.draw(batch, 1);
         }
         font.setColor(Color.BLACK);
@@ -774,6 +775,7 @@ public class PlayScreen implements Screen{
         temps++;
         batch.end();
     }
+
 
     private void handleSelected(int i){
         switch (i) {
