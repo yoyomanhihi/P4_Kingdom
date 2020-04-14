@@ -115,6 +115,7 @@ public class PlayScreen implements Screen{
     private Tower towerToSell;
     private TextButton sellButton;
     private TextButton cancelButton;
+    private TextButton skipButton;
     private Vector3 posTowerSell;
 
 
@@ -167,14 +168,12 @@ public class PlayScreen implements Screen{
         Skin skin = new Skin(Gdx.files.internal("skin2/skin/star-soldier-ui.json"));
         sellButton = new TextButton("Sell", skin);
         cancelButton = new TextButton("Cancel", skin);
+        skipButton = new TextButton("Skip", skin);
+
         propertiesButton(sellButton,-15,90);
         propertiesButton(cancelButton,-50,10);
+        propertiesButton(skipButton, -10, 50);
 
-        /*Label.LabelStyle font2 = new Label.LabelStyle(new BitmapFont(), Color.BLACK);
-        Label label = new Label("Sell or not?",font2);
-        dialogSell = new Dialog("Sell",new Skin(Gdx.files.internal("skin2/glassy-ui.json")));
-        dialogSell.getContentTable().add(label);
-        dialogSell.button("OK", true).button("Cancel", false);*/
 
         this.game = game;
         this.player = this.game.player;
@@ -466,6 +465,12 @@ public class PlayScreen implements Screen{
                         posTowerSell = null;
                     }
                 }
+                if(true){
+                    if(pos3.x>1.2 && pos3.x<4.6 && pos3.y>2.4 && pos3.y<3.6){
+                        System.out.println("SKIP");
+
+                    }
+                }
             } else {
                     float offset = Gdx.graphics.getWidth() / 48;
                     float x = (pos3.x * offset);
@@ -732,6 +737,9 @@ public class PlayScreen implements Screen{
         if(dialogSellOrNot){
             sellButton.draw(batch, 1);
             cancelButton.draw(batch, 1);
+        }
+        if(true){
+            skipButton.draw(batch, 1);
         }
         font.setColor(Color.BLACK);
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 1680, 30);
