@@ -30,6 +30,7 @@ public class Tower extends BaseActor {
     private int ennemyinrange;
     public float temps;
     private Sound sound;
+    private float lasersize;
 
     public Tower(int ID ,String nom, int degats, int portee, int cadence, int prix, float x, float y, Texture base_texture, Texture gun_texture, Texture texture2, float lasersize, Stage s, World world){
         super(x,y,s);
@@ -42,12 +43,16 @@ public class Tower extends BaseActor {
         this.locked = true;
         this.base_texture = base_texture;
         this.weapon_texture = gun_texture;
+        this.lasersize = lasersize;
         base_sprite = new Sprite(base_texture);
         weapon_sprite = new Sprite(gun_texture);
         this.world = world;
         this.laserTexture = texture2;
         if(prix == 400){
             sound = (Gdx.audio.newSound(Gdx.files.internal("tir.mp3")));
+        }
+        else if(prix == 500){
+            sound = (Gdx.audio.newSound(Gdx.files.internal("ice.wav")));
         }
         else {
             sound = (Gdx.audio.newSound(Gdx.files.internal("Laser1.wav")));
@@ -69,7 +74,7 @@ public class Tower extends BaseActor {
         //if (getStage() == null) {
         //    return;
         //}
-        if(price != 400) {
+        if(price != 400 && price != 500) {
             laser.getSound().play(0.15f);
         }
         else{
@@ -128,6 +133,10 @@ public class Tower extends BaseActor {
 
     public void setTemps(float temps){
         this.temps = temps;
+    }
+
+    public float getLasersize(){
+        return lasersize;
     }
 
     public Sprite getBase_sprite() { return base_sprite;}

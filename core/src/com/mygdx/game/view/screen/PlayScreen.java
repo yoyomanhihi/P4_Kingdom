@@ -189,11 +189,11 @@ public class PlayScreen implements Screen{
         menuAreaCamera.update();
         menuAreaViewport = new FitViewport(MENU_WIDTH, HEIGHT, menuAreaCamera);
 
-        tower1 = new Tower(1,"Classic",10, 400, 60, 50, 0, 0, Base1, Weapon1, laser, .6f, mainStage, world);
-        tower2 = new Tower(2,"Cadence",8, 275, 20, 175, 0, 0, Pistol2, snowlaser, laser, 1, mainStage, world);
-        tower3 = new Tower(3,"Portée",100, 1200, 400, 400, 0, 0, Pistol3, snowlaser, laser, 1, mainStage, world);
-        tower4 = new Tower(4,"Dégats",100, 450, 80, 1000, 0, 0, Pistol4, snowlaser, laser, 1, mainStage, world);
-        tower5 = new FreezeTower(5, "Freeze",0, 250, 50, 500, 0, 0, Pistol5, snowlaser, laser, 1, mainStage, world, 2);
+        tower1 = new Tower(1,"Classic",10, 375, 60, 50, 0, 0, Base1, Weapon1, laser, .5f, mainStage, world);
+        tower2 = new Tower(2,"Cadence",7, 275, 20, 175, 0, 0, Pistol2, snowlaser, laser, .4f, mainStage, world);
+        tower3 = new Tower(3,"Portée",100, 1200, 400, 400, 0, 0, Pistol3, snowlaser, laser, .8f, mainStage, world);
+        tower4 = new Tower(4,"Dégats",80, 400, 80, 1000, 0, 0, Pistol4, snowlaser, laser, .6f, mainStage, world);
+        tower5 = new FreezeTower(5, "Freeze",0, 250, 70, 500, 0, 0, Pistol5, snowlaser, snowlaser, .3f, mainStage, world, 2);
         tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 400, 0, 0, Pistol6, snowlaser, laser, 1, mainStage, world, 1.25f, player);
         player.setMoneyboost(1);
 
@@ -479,17 +479,17 @@ public class PlayScreen implements Screen{
                         }else if(checkPosTower(pos3) && selectedTower != null) {
                             putTowerMapCol(pos3);
                             if(selectedTower.getID() < 5) {
-                                Tower tower = new Tower(selectedTower.getID(), selectedTower.getName(), selectedTower.getDamage(), selectedTower.getRange(), selectedTower.getFireRate(), selectedTower.getPrice(), x, HEIGHT - Gdx.input.getY(), selectedTower.getBase_texture(), selectedTower.getWeapon_texture(), selectedTower.getLaserTexture(), .6f, mainStage, world);
+                                Tower tower = new Tower(selectedTower.getID(), selectedTower.getName(), selectedTower.getDamage(), selectedTower.getRange(), selectedTower.getFireRate(), selectedTower.getPrice(), x, HEIGHT - Gdx.input.getY(), selectedTower.getBase_texture(), selectedTower.getWeapon_texture(), selectedTower.getLaserTexture(), selectedTower.getLasersize(), mainStage, world);
                                 player.buyWeapons(tower);
                                 towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x] = tower;
                             }
                             else if(selectedTower.getID() == 5) {
-                                FreezeTower tower = new FreezeTower(selectedTower.getID(), selectedTower.getName(), selectedTower.getDamage(), selectedTower.getRange(), selectedTower.getFireRate(), selectedTower.getPrice(), x, HEIGHT - Gdx.input.getY(), selectedTower.getBase_texture(), selectedTower.getWeapon_texture(), selectedTower.getLaserTexture(), .6f, mainStage, world, 2);
+                                FreezeTower tower = new FreezeTower(selectedTower.getID(), selectedTower.getName(), selectedTower.getDamage(), selectedTower.getRange(), selectedTower.getFireRate(), selectedTower.getPrice(), x, HEIGHT - Gdx.input.getY(), selectedTower.getBase_texture(), selectedTower.getWeapon_texture(), selectedTower.getLaserTexture(), selectedTower.getLasersize(), mainStage, world, 2);
                                 player.buyWeapons(tower);
                                 towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x] = tower;
                             }
                             else{
-                                MoneyTower tower = new MoneyTower(selectedTower.getID(), selectedTower.getName(), selectedTower.getDamage(), selectedTower.getRange(), selectedTower.getFireRate(), selectedTower.getPrice(), x, HEIGHT - Gdx.input.getY(), selectedTower.getBase_texture(), selectedTower.getWeapon_texture(), selectedTower.getLaserTexture(), .6f, mainStage, world, 1.2f, player);
+                                MoneyTower tower = new MoneyTower(selectedTower.getID(), selectedTower.getName(), selectedTower.getDamage(), selectedTower.getRange(), selectedTower.getFireRate(), selectedTower.getPrice(), x, HEIGHT - Gdx.input.getY(), selectedTower.getBase_texture(), selectedTower.getWeapon_texture(), selectedTower.getLaserTexture(), selectedTower.getLasersize(), mainStage, world, 1.2f, player);
                                 player.buyWeapons(tower);
                                 towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x] = tower;
                             }
