@@ -92,6 +92,10 @@ public class Laser extends BaseActor
         sprite.setColor(Color.YELLOW);
     }
 
+    public void red(){
+        sprite.setColor(Color.RED);
+    }
+
     public void setSpeed(int speed){
         this.speed = speed;
     }

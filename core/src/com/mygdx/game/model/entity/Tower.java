@@ -48,7 +48,7 @@ public class Tower extends BaseActor {
         weapon_sprite = new Sprite(gun_texture);
         this.world = world;
         this.laserTexture = texture2;
-        if(prix == 400){
+        if(prix == 375){
             sound = (Gdx.audio.newSound(Gdx.files.internal("tir.mp3")));
         }
         else if(prix == 500){
@@ -58,9 +58,13 @@ public class Tower extends BaseActor {
             sound = (Gdx.audio.newSound(Gdx.files.internal("Laser1.wav")));
         }
         laser = new Laser(50000, 50000, lasersize, texture2, 2000, sound, s, world);
-        if(prix == 400){
+        if(prix == 375){
             laser.yellow();
             laser.setSpeed(3000);
+        }
+        if(prix == 800){
+            laser.red();
+            laser.setSpeed(1200);
         }
         laser.defineLaser();
         temps = 0;
@@ -74,7 +78,7 @@ public class Tower extends BaseActor {
         //if (getStage() == null) {
         //    return;
         //}
-        if(price != 400 && price != 500) {
+        if(price != 375 && price != 500) {
             laser.getSound().play(0.15f);
         }
         else{
