@@ -67,15 +67,16 @@ public class PlayScreen implements Screen{
     private World world;
     private Box2DDebugRenderer b2dr;
     private Texture Pistol1;
-    private Texture Pistol2;
-    private Texture Pistol3;
-    private Texture Pistol4;
-    private Texture Pistol5;
-    private Texture Pistol6;
     private Texture snowlaser;
     private Texture Exit;
     private Texture Base1;
+    private Texture Base2;
+    private Texture Base3;
+    private Texture Base4;
     private Texture Gun1;
+    private Texture Gun2;
+    private Texture Gun3;
+    private Texture Gun4;
     public static final float GAME_WIDTH = Gdx.graphics.getWidth()*4.0f/5.0f;
     public static final float MENU_WIDTH = Gdx.graphics.getWidth()/5.0f;
     public static final float HEIGHT = Gdx.graphics.getHeight();
@@ -141,13 +142,14 @@ public class PlayScreen implements Screen{
         world = new World(new Vector2(0, 0), true);
         Tank = new Texture("Tank.png");
         Pistol1 = new Texture("Pistol.png");
-        Pistol2 = new Texture("tiny_gun_icons/md5.png");
-        Pistol3 = new Texture("tiny_gun_icons/mg6000.png");
-        Pistol4 = new Texture("tiny_gun_icons/pow9.png");
-        Pistol5 = new Texture("tiny_gun_icons/desert_hawk.png");
-        Pistol6 = new Texture("tiny_gun_icons/snp6plus.png");
         Base1 = new Texture("weapon_sprites/Base1.png");
+        Base2 = new Texture("weapon_sprites/Base2.png");
+        Base3 = new Texture("weapon_sprites/Base3.png");
+        Base4 = new Texture("weapon_sprites/Base4.png");
         Gun1 = new Texture("weapon_sprites/Gun1.png");
+        Gun2 = new Texture("weapon_sprites/Gun2.png");
+        Gun3 = new Texture("weapon_sprites/Gun3.png");
+        Gun4 = new Texture("weapon_sprites/Gun4.png");
         snowlaser = new Texture("snowflake.png");
         Exit = new Texture("x.png");
         Menu = new Texture("levelsel.png");
@@ -190,11 +192,11 @@ public class PlayScreen implements Screen{
         menuAreaViewport = new FitViewport(MENU_WIDTH, HEIGHT, menuAreaCamera);
 
         tower1 = new Tower(1,"Classic",6, 375, 60, 50, 0, 0, Base1, Gun1, laser, .5f, mainStage, world);
-        tower2 = new Tower(2,"Cadence",10, 300, 20, 150, 0, 0, Pistol2, snowlaser, laser, .4f, mainStage, world);
-        tower3 = new Tower(3,"Portée",100, 1200, 400, 375, 0, 0, Pistol3, snowlaser, laser, .8f, mainStage, world);
-        tower4 = new Tower(4,"Dégats",110, 450, 100, 800, 0, 0, Pistol4, snowlaser, laser, .6f, mainStage, world);
-        tower5 = new FreezeTower(5, "Freeze",0, 250, 70, 500, 0, 0, Pistol5, snowlaser, snowlaser, .3f, mainStage, world, 2);
-        tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 400, 0, 0, Pistol6, snowlaser, laser, 2, mainStage, world, 1.25f, player);
+        tower2 = new Tower(2,"Cadence",10, 300, 20, 150, 0, 0, Base2, Gun2, laser, .4f, mainStage, world);
+        tower3 = new Tower(3,"Portée",100, 1200, 400, 375, 0, 0, Base3, Gun3, laser, .8f, mainStage, world);
+        tower4 = new Tower(4,"Dégats",110, 450, 100, 800, 0, 0, Base4, Gun4, laser, .6f, mainStage, world);
+        tower5 = new FreezeTower(5, "Freeze",0, 250, 70, 500, 0, 0, Pistol1, snowlaser, snowlaser, .3f, mainStage, world, 2);
+        tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 400, 0, 0, Pistol1, snowlaser, laser, 2, mainStage, world, 1.25f, player);
         player.setMoneyboost(1);
 
         menuStage = new MenuStage(menuAreaViewport, game, tower1, tower2, tower3, tower4, tower5, tower6);
