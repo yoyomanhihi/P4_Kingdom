@@ -463,6 +463,8 @@ public class PlayScreen implements Screen{
                         deleteTowerMapCol(posTowerSell);
                         towersMap[(numTilesVertical-1) - (int)posTowerSell.y][(int)posTowerSell.x] = null;
                         dialogSellOrNot = false;
+                        towerToSell = null;
+                        posTowerSell = null;
                     }else if(pos3.x>0.1 && pos3.x<5.8 && pos3.y>1.5 && pos3.y<2.5){
                         System.out.println("CANCEL");
                         dialogSellOrNot = false;
