@@ -75,7 +75,7 @@ public class PlayScreen implements Screen{
     private Texture snowlaser;
     private Texture Exit;
     private Texture Base1;
-    private Texture Weapon1;
+    private Texture Gun1;
     public static final float GAME_WIDTH = Gdx.graphics.getWidth()*4.0f/5.0f;
     public static final float MENU_WIDTH = Gdx.graphics.getWidth()/5.0f;
     public static final float HEIGHT = Gdx.graphics.getHeight();
@@ -147,7 +147,7 @@ public class PlayScreen implements Screen{
         Pistol5 = new Texture("tiny_gun_icons/desert_hawk.png");
         Pistol6 = new Texture("tiny_gun_icons/snp6plus.png");
         Base1 = new Texture("Base1.png");
-        Weapon1 = new Texture("Arme1.png");
+        Gun1 = new Texture("weapon_sprites/Gun1.png");
         snowlaser = new Texture("snowflake.png");
         Exit = new Texture("x.png");
         Menu = new Texture("levelsel.png");
@@ -189,7 +189,7 @@ public class PlayScreen implements Screen{
         menuAreaCamera.update();
         menuAreaViewport = new FitViewport(MENU_WIDTH, HEIGHT, menuAreaCamera);
 
-        tower1 = new Tower(1,"Classic",6, 375, 60, 50, 0, 0, Base1, Weapon1, laser, .5f, mainStage, world);
+        tower1 = new Tower(1,"Classic",6, 375, 60, 50, 0, 0, Base1, Gun1, laser, .5f, mainStage, world);
         tower2 = new Tower(2,"Cadence",10, 300, 20, 150, 0, 0, Pistol2, snowlaser, laser, .4f, mainStage, world);
         tower3 = new Tower(3,"Portée",100, 1200, 400, 375, 0, 0, Pistol3, snowlaser, laser, .8f, mainStage, world);
         tower4 = new Tower(4,"Dégats",110, 450, 100, 800, 0, 0, Pistol4, snowlaser, laser, .6f, mainStage, world);

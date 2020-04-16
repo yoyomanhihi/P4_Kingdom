@@ -20,9 +20,9 @@ public class Tower extends BaseActor {
     private int price;
     private boolean locked;
     private Sprite base_sprite;
-    private Sprite weapon_sprite;
+    private Sprite gun_sprite;
     private Texture base_texture;
-    private Texture weapon_texture;
+    private Texture gun_texture;
     private Texture laserTexture;
     private Sprite sprite;
     Laser laser;
@@ -42,10 +42,10 @@ public class Tower extends BaseActor {
         this.price = prix;
         this.locked = true;
         this.base_texture = base_texture;
-        this.weapon_texture = gun_texture;
+        this.gun_texture = gun_texture;
         this.lasersize = lasersize;
         base_sprite = new Sprite(base_texture);
-        weapon_sprite = new Sprite(gun_texture);
+        gun_sprite = new Sprite(gun_texture);
         this.world = world;
         this.laserTexture = texture2;
         if(prix == 375){
@@ -145,11 +145,11 @@ public class Tower extends BaseActor {
 
     public Sprite getBase_sprite() { return base_sprite;}
 
-    public Sprite getWeapon_sprite() { return weapon_sprite;}
+    public Sprite getWeapon_sprite() { return gun_sprite;}
 
     public Texture getBase_texture() { return base_texture;}
 
-    public Texture getWeapon_texture() {return weapon_texture;}
+    public Texture getWeapon_texture() {return gun_texture;}
 
     public Texture getLaserTexture() { return laserTexture;}
 
