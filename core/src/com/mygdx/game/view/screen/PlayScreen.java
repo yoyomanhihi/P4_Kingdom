@@ -146,7 +146,7 @@ public class PlayScreen implements Screen{
         Pistol4 = new Texture("tiny_gun_icons/pow9.png");
         Pistol5 = new Texture("tiny_gun_icons/desert_hawk.png");
         Pistol6 = new Texture("tiny_gun_icons/snp6plus.png");
-        Base1 = new Texture("Base1.png");
+        Base1 = new Texture("weapon_sprites/Base1.png");
         Gun1 = new Texture("weapon_sprites/Gun1.png");
         snowlaser = new Texture("snowflake.png");
         Exit = new Texture("x.png");
