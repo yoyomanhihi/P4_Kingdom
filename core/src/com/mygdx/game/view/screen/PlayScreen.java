@@ -77,6 +77,7 @@ public class PlayScreen implements Screen{
     private Texture Gun2;
     private Texture Gun3;
     private Texture Gun4;
+    private Texture MoneyCoin;
     public static final float GAME_WIDTH = Gdx.graphics.getWidth()*4.0f/5.0f;
     public static final float MENU_WIDTH = Gdx.graphics.getWidth()/5.0f;
     public static final float HEIGHT = Gdx.graphics.getHeight();
@@ -150,6 +151,7 @@ public class PlayScreen implements Screen{
         Gun2 = new Texture("weapon_sprites/Gun2.png");
         Gun3 = new Texture("weapon_sprites/Gun3.png");
         Gun4 = new Texture("weapon_sprites/Gun4.png");
+        MoneyCoin = new Texture("Gold.png");
         snowlaser = new Texture("snowflake.png");
         Exit = new Texture("x.png");
         Menu = new Texture("levelsel.png");
@@ -196,7 +198,7 @@ public class PlayScreen implements Screen{
         tower3 = new Tower(3,"Portée",100, 1200, 400, 375, 0, 0, Base3, Gun3, laser, .8f, mainStage, world);
         tower4 = new Tower(4,"Dégats",110, 450, 100, 800, 0, 0, Base4, Gun4, laser, .6f, mainStage, world);
         tower5 = new FreezeTower(5, "Freeze",0, 250, 70, 500, 0, 0, Pistol1, snowlaser, snowlaser, .3f, mainStage, world, 2);
-        tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 400, 0, 0, Pistol1, snowlaser, laser, 2, mainStage, world, 1.25f, player);
+        tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 400, 0, 0, MoneyCoin, MoneyCoin, laser, 2, mainStage, world, 1.25f, player);
         player.setMoneyboost(1);
 
         menuStage = new MenuStage(menuAreaViewport, game, tower1, tower2, tower3, tower4, tower5, tower6);
