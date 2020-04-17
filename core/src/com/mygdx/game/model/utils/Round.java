@@ -533,7 +533,7 @@ public class Round {
                     ennemies.remove(i);
                 }
                 if (0 < ennemies.size() && !ennemies.get(i).isAlive()) {
-                    transition = (int) (ennemies.get(i).getPoint() * player.getMoneyboost());
+                    transition = (int) ((ennemies.get(i).getPoint()) * (1 + (player.getMoneyboost()/10)));
                     player.setMoney(player.getMoney() + transition);
                     player.setScore(player.getScore() + ennemies.get(i).getPoint());
                     if(ennemies.get(i).getInitiallife() == 80){

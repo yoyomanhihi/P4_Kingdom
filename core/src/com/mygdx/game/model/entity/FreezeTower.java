@@ -10,7 +10,7 @@ public class FreezeTower extends Tower{
 
     private float slower;
 
-    public FreezeTower(int ID, String nom, int degats, int portee, int cadence, int prix, float x, float y, Texture
+    public FreezeTower(int ID, String nom, int degats, float portee, int cadence, int prix, float x, float y, Texture
             base_texture, Texture gun_texture, Texture texture2, float lasersize, Stage s, World world, float slower) {
         super(ID ,nom, degats, portee, cadence, prix, x, y, base_texture, gun_texture, texture2, lasersize, s, world);
         this.slower = slower;
@@ -29,7 +29,7 @@ public class FreezeTower extends Tower{
                 Ennemy.beFreezed(2);
                 laser.setPosition(500000, 500000);
             }
-            temps++;
+            this.setTemps(this.getTemps()+1);
         }
     }
 }

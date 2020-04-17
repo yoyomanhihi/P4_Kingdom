@@ -15,7 +15,7 @@ public class Tower extends BaseActor {
     private int ID;
     private String name;
     private int damage;
-    private int range;
+    private float range;
     private int fireRate;
     private int price;
     private boolean locked;
@@ -28,11 +28,13 @@ public class Tower extends BaseActor {
     Laser laser;
     private World world;
     private int ennemyinrange;
-    public float temps;
+    private float temps;
     private Sound sound;
     private float lasersize;
+    private float tempscercle;
 
-    public Tower(int ID ,String nom, int degats, int portee, int cadence, int prix, float x, float y, Texture base_texture, Texture gun_texture, Texture texture2, float lasersize, Stage s, World world){
+
+    public Tower(int ID ,String nom, int degats, float portee, int cadence, int prix, float x, float y, Texture base_texture, Texture gun_texture, Texture texture2, float lasersize, Stage s, World world){
         super(x,y,s);
         this.ID = ID;
         this.name = nom;
@@ -54,6 +56,9 @@ public class Tower extends BaseActor {
         else if(prix == 350){
             sound = (Gdx.audio.newSound(Gdx.files.internal("ice.wav")));
         }
+        else if(prix == 300){
+            base_sprite.setScale(.5f);
+        }
         else {
             sound = (Gdx.audio.newSound(Gdx.files.internal("Laser1.wav")));
         }
@@ -72,6 +77,7 @@ public class Tower extends BaseActor {
         laser.defineLaser();
         temps = 0;
         long soundId;
+        tempscercle = 0;
     }
 
     //First checks if there is a Stage
@@ -114,7 +120,7 @@ public class Tower extends BaseActor {
         return price;
     }
 
-    public int getRange(){
+    public float getRange(){
         return range;
     }
 
@@ -158,5 +164,13 @@ public class Tower extends BaseActor {
 
     public int getID(){
         return ID;
+    }
+
+    public float getTempscercle(){
+        return tempscercle;
+    }
+
+    public void setTempscercle(float tempscercle){
+        this.tempscercle = tempscercle;
     }
 }

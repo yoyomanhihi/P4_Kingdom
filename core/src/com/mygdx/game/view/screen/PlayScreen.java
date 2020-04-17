@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
@@ -79,6 +80,7 @@ public class PlayScreen implements Screen{
     private Texture Gun4;
     private Texture MoneyCoin;
     private Texture blank;
+    private Sprite circle;
     public static final float GAME_WIDTH = Gdx.graphics.getWidth()*4.0f/5.0f;
     public static final float MENU_WIDTH = Gdx.graphics.getWidth()/5.0f;
     public static final float HEIGHT = Gdx.graphics.getHeight();
@@ -152,6 +154,8 @@ public class PlayScreen implements Screen{
         Gun2 = new Texture("weapon_sprites/Gun2.png");
         Gun3 = new Texture("weapon_sprites/Gun3.png");
         Gun4 = new Texture("weapon_sprites/Gun4.png");
+        circle = new Sprite(new Texture("circle.png"));
+
         MoneyCoin = new Texture("Gold.png");
         blank = new Texture("Healthbar.png");
         snowlaser = new Texture("snowflake.png");
@@ -197,11 +201,11 @@ public class PlayScreen implements Screen{
 
         tower1 = new Tower(1,"Classic",6, 375, 60, 50, 0, 0, Base1, Gun1, laser, .5f, mainStage, world);
         tower2 = new Tower(2,"Cadence",10, 300, 20, 150, 0, 0, Base2, Gun2, laser, .4f, mainStage, world);
-        tower3 = new Tower(3,"Portée",100, 1200, 400, 375, 0, 0, Base3, Gun3, laser, .8f, mainStage, world);
+        tower3 = new Tower(3,"Portée",100, 1000, 400, 375, 0, 0, Base3, Gun3, laser, .8f, mainStage, world);
         tower4 = new Tower(4,"Dégats",110, 450, 100, 1000, 0, 0, Base4, Gun4, laser, .6f, mainStage, world);
         tower5 = new FreezeTower(5, "Freeze",0, 250, 70, 350, 0, 0, snowlaser, Pistol1, snowlaser, .3f, mainStage, world, 2);
-        tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 250, 0, 0, MoneyCoin, blank, laser, 2, mainStage, world, 1.12f, player);
-        player.setMoneyboost(1);
+        tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 300, 0, 0, MoneyCoin, blank, laser, 2, mainStage, world, 1.10f, player);
+        player.setMoneyboost(0);
 
         menuStage = new MenuStage(menuAreaViewport, game, tower1, tower2, tower3, tower4, tower5, tower6);
 
@@ -747,7 +751,7 @@ public class PlayScreen implements Screen{
             sellButton.draw(batch, 1);
             cancelButton.draw(batch, 1);
         }
-        if(round.getTemps() > 50){
+        if(round.getTemps() > 50 && !dialogSellOrNot){
             skipButton.draw(batch, 1);
         }
         font.setColor(Color.BLACK);
@@ -762,6 +766,12 @@ public class PlayScreen implements Screen{
                 tower.getBase_sprite().draw(batch);
                 tower.getWeapon_sprite().setPosition(tower.getX()-29, tower.getY()-27);
                 tower.getWeapon_sprite().draw(batch);
+                if(tower.getTempscercle() < 120){
+                    tower.setTempscercle(tower.getTempscercle()+1);
+                    circle.setScale(tower.getRange() / 520, tower.getRange() / 660);
+                    circle.setPosition(tower.getX() - 790, tower.getY() - 800);
+                    circle.draw(batch);
+                }
             }
         }
         if (round.getRoundnbr() != -1) {

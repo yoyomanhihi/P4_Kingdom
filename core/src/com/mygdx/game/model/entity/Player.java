@@ -15,7 +15,7 @@ public class Player {
         this.money = 225;
         this.life = 10;
         this.score = 0;
-        this.moneyboost = 1;
+        this.moneyboost = 0;
         weapons = new ArrayList<>();
     }
 
