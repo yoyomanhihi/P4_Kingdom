@@ -51,18 +51,21 @@ public class Tower extends BaseActor {
         if(prix == 375){
             sound = (Gdx.audio.newSound(Gdx.files.internal("tir.mp3")));
         }
-        else if(prix == 500){
+        else if(prix == 350){
             sound = (Gdx.audio.newSound(Gdx.files.internal("ice.wav")));
         }
         else {
             sound = (Gdx.audio.newSound(Gdx.files.internal("Laser1.wav")));
         }
         laser = new Laser(50000, 50000, lasersize, texture2, 2000, sound, s, world);
+        if(prix == 150){
+            laser.purple();
+        }
         if(prix == 375){
             laser.yellow();
             laser.setSpeed(3000);
         }
-        if(prix == 800){
+        if(prix == 1000){
             laser.red();
             laser.setSpeed(1200);
         }
@@ -78,7 +81,7 @@ public class Tower extends BaseActor {
         //if (getStage() == null) {
         //    return;
         //}
-        if(price != 375 && price != 500) {
+        if(price != 375 && price != 350) {
             laser.getSound().play(0.15f);
         }
         else{

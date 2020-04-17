@@ -108,11 +108,11 @@ public class Ennemy extends BaseActor {
         }
         else {
             if(doreload && life < initiallife){
-                life = life+(initiallife/750);
+                life = life+(initiallife/1000);
             }
             if(isfreezed){
                 timefreezed++;
-                if(timefreezed > 50){
+                if(timefreezed > 40){
                     if(sprite.getColor().equals(Color.RED)){
                         this.speed = 2*normalspeed;
                     }

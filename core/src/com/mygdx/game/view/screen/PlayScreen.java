@@ -196,9 +196,9 @@ public class PlayScreen implements Screen{
         tower1 = new Tower(1,"Classic",6, 375, 60, 50, 0, 0, Base1, Gun1, laser, .5f, mainStage, world);
         tower2 = new Tower(2,"Cadence",10, 300, 20, 150, 0, 0, Base2, Gun2, laser, .4f, mainStage, world);
         tower3 = new Tower(3,"Portée",100, 1200, 400, 375, 0, 0, Base3, Gun3, laser, .8f, mainStage, world);
-        tower4 = new Tower(4,"Dégats",110, 450, 100, 800, 0, 0, Base4, Gun4, laser, .6f, mainStage, world);
-        tower5 = new FreezeTower(5, "Freeze",0, 250, 70, 500, 0, 0, Pistol1, snowlaser, snowlaser, .3f, mainStage, world, 2);
-        tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 400, 0, 0, MoneyCoin, MoneyCoin, laser, 2, mainStage, world, 1.25f, player);
+        tower4 = new Tower(4,"Dégats",110, 450, 100, 1000, 0, 0, Base4, Gun4, laser, .6f, mainStage, world);
+        tower5 = new FreezeTower(5, "Freeze",0, 250, 70, 350, 0, 0, Pistol1, snowlaser, snowlaser, .3f, mainStage, world, 2);
+        tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 250, 0, 0, MoneyCoin, MoneyCoin, laser, 2, mainStage, world, 1.12f, player);
         player.setMoneyboost(1);
 
         menuStage = new MenuStage(menuAreaViewport, game, tower1, tower2, tower3, tower4, tower5, tower6);
@@ -472,10 +472,10 @@ public class PlayScreen implements Screen{
                         posTowerSell = null;
                     }
                 }
-                if(round.getTemps() != 0){
+                if(round.getTemps() > 50){
                     if(pos3.x>1.2 && pos3.x<4.6 && pos3.y>2.4 && pos3.y<3.6){
                         System.out.println("SKIP");
-                        round.setTemps(1000);
+                        round.setTemps(1500);
                     }
                 }
             } else {
@@ -574,22 +574,22 @@ public class PlayScreen implements Screen{
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 9 && ennemycount < 41 && temps1 > 100) {
+            else if (round.getRoundnbr() == 9 && ennemycount < 37 && temps1 > 125) {
                 round.round9(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 10 && ennemycount < 42 && temps1 > 125) {
+            else if (round.getRoundnbr() == 10 && ennemycount < 41 && temps1 > 125) {
                 round.round10(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 11 && ennemycount < 44 && temps1 > 125) {
+            else if (round.getRoundnbr() == 11 && ennemycount < 42 && temps1 > 125) {
                 round.round11(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 12 && ennemycount < 46 && temps1 > 125) {
+            else if (round.getRoundnbr() == 12 && ennemycount < 43 && temps1 > 125) {
                 round.round12(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
@@ -599,7 +599,7 @@ public class PlayScreen implements Screen{
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 14 && ennemycount < 52 && temps1 > 125) {
+            else if (round.getRoundnbr() == 14 && ennemycount < 52 && temps1 > 150) {
                 round.round14(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
@@ -745,7 +745,7 @@ public class PlayScreen implements Screen{
             sellButton.draw(batch, 1);
             cancelButton.draw(batch, 1);
         }
-        if(round.getTemps() != 0){
+        if(round.getTemps() > 50){
             skipButton.draw(batch, 1);
         }
         font.setColor(Color.BLACK);
