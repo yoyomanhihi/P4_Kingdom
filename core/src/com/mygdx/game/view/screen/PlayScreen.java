@@ -532,7 +532,7 @@ public class PlayScreen implements Screen{
             this.gameOver = true;
             game.setScreen(new LoseScreen(game, player));
         }
-        else if(round.getRoundnbr() == 25){
+        else if(round.getRoundnbr() == 1){
             this.gameOver = true;
             game.setScreen(new WinScreen(game, player));
         }
@@ -775,12 +775,12 @@ public class PlayScreen implements Screen{
                 tower.getBase_sprite().draw(batch);
                 tower.getWeapon_sprite().setPosition(tower.getX()-29, tower.getY()-27);
                 tower.getWeapon_sprite().draw(batch);
-                //if(tower.getTempscercle() < 120){
+                if(tower.getTempscercle() < 120){
                     tower.setTempscercle(tower.getTempscercle()+1);
                     circle.setScale(tower.getRange() / 200, tower.getRange() / 250);
                     circle.setPosition(tower.getX() - 240, tower.getY() - 250);
                     circle.draw(batch);
-                //}
+                }
             }
         }
         if (round.getRoundnbr() != -1) {
