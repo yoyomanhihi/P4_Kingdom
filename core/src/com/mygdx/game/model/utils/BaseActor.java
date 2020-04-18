@@ -210,8 +210,8 @@ public class BaseActor extends Animations
 
     public void setBoundaryRectangle()
     {
-        float w = getWidth()+20;
-        float h = getHeight()+20;
+        float w = getWidth()+25;
+        float h = getHeight()+25;
         float[] vertices = {0,0, w,0, w,h, 0,h};
         boundaryPolygon = new Polygon(vertices);
     }

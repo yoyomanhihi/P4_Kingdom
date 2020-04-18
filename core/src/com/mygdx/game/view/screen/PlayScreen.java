@@ -207,7 +207,7 @@ public class PlayScreen implements Screen{
         menuAreaViewport = new FitViewport(MENU_WIDTH, HEIGHT, menuAreaCamera);
 
         tower1 = new Tower(1,"Classic",6, 375, 60, 50, 0, 0, Base1, Gun1, laser, .5f, mainStage, world);
-        tower2 = new Tower(2,"Cadence",10, 300, 20, 150, 0, 0, Base2, Gun2, laser, .4f, mainStage, world);
+        tower2 = new Tower(2,"Cadence",8, 300, 20, 150, 0, 0, Base2, Gun2, laser, .4f, mainStage, world);
         tower3 = new Tower(3,"Portée",100, 1000, 400, 375, 0, 0, Base3, Gun3, laser, .8f, mainStage, world);
         tower4 = new Tower(4,"Dégats",110, 450, 100, 1000, 0, 0, Base4, Gun4, laser, .6f, mainStage, world);
         tower5 = new FreezeTower(5, "Freeze",0, 250, 70, 350, 0, 0, snowlaser, Pistol1, snowlaser, .3f, mainStage, world, 2);
@@ -532,7 +532,7 @@ public class PlayScreen implements Screen{
             this.gameOver = true;
             game.setScreen(new LoseScreen(game, player));
         }
-        else if(round.getRoundnbr() == 1){
+        else if(round.getRoundnbr() == 25){
             this.gameOver = true;
             game.setScreen(new WinScreen(game, player));
         }
