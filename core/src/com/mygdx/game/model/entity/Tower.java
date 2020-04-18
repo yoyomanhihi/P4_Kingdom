@@ -27,7 +27,6 @@ public class Tower extends BaseActor {
     private Sprite sprite;
     Laser laser;
     private World world;
-    private int ennemyinrange;
     private float temps;
     private Sound sound;
     private float lasersize;

@@ -106,7 +106,7 @@ public class BaseActor extends Animations
     }
 
     public float getDistance(Tower Tower){
-        return (float)Math.sqrt(Math.pow(this.getX()-Tower.getX(),2) + Math.pow(this.getY()-Tower.getY(),2));
+        return (float)Math.sqrt(Math.pow((this.getX() - Tower.getX())/1.25 ,2) + Math.pow((this.getY() - Tower.getY()),2));
     }
 
     public boolean isInRange(Tower Tower){

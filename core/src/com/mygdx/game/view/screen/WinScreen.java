@@ -61,7 +61,7 @@ public class WinScreen implements Screen{
         @Override
         public void render(float delta) {
             if(Gdx.input.justTouched()) {
-                game.setScreen(new PlayScreen((ProtectTheKingdom) game));
+                game.setScreen(new MenuScreen((ProtectTheKingdom) game));
                 dispose();
             }
             Gdx.gl.glClearColor(0, 0, 1, 1);

@@ -775,12 +775,12 @@ public class PlayScreen implements Screen{
                 tower.getBase_sprite().draw(batch);
                 tower.getWeapon_sprite().setPosition(tower.getX()-29, tower.getY()-27);
                 tower.getWeapon_sprite().draw(batch);
-                if(tower.getTempscercle() < 120){
+                //if(tower.getTempscercle() < 120){
                     tower.setTempscercle(tower.getTempscercle()+1);
-                    circle.setScale(tower.getRange() / 580, tower.getRange() / 680);
-                    circle.setPosition(tower.getX() - 790, tower.getY() - 800);
+                    circle.setScale(tower.getRange() / 200, tower.getRange() / 250);
+                    circle.setPosition(tower.getX() - 240, tower.getY() - 250);
                     circle.draw(batch);
-                }
+                //}
             }
         }
         if (round.getRoundnbr() != -1) {

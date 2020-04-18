@@ -37,6 +37,9 @@ public class Player {
 
     public void sellWeapon(Tower tour){
 
+        if(tour.getPrice() == 500){
+            this.setMoneyboost(moneyboost - 1);
+        }
         setMoney(getMoney() + tour.getPrice()/2);
         weapons.remove(tour);
 
