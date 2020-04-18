@@ -53,6 +53,8 @@ public class Round {
     } //Put the good size for the first wave
 
     public void round0(int temps, Stage stage, World world, int ennemynbr){ //Un ennemi 1
+        //ennemies.add(new Ennemy(5000, 50, 120, new Texture("Tank4.png"), stage, world,directionsEnemy,startX,startY, 4));
+        //ennemies.get(ennemynbr - deadennemies).defineEnnemy();
         ennemies.add(new Ennemy(80, 120, 8, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY, 1));
         ennemies.get(ennemynbr-deadennemies).defineEnnemy();
     }
@@ -98,7 +100,7 @@ public class Round {
     public void round3(int temps, Stage stage, World world, int ennemynbr){ //Un ennemi 2
         ennemies.add(new Ennemy(300, 75, 30, new Texture("RedTank.png"), stage, world,directionsEnemy,startX,startY, 1));
         ennemies.get(ennemynbr - deadennemies).defineEnnemy();
-        ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2);
+        ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2, 2.5f);
     }
 
     public void round4(int temps, Stage stage, World world, int ennemynbr) { // Cinq ennemis 1
@@ -165,7 +167,7 @@ public class Round {
         else{
             ennemies.add(new Ennemy(300, 75, 30, new Texture("RedTank.png"), stage, world,directionsEnemy,startX,startY, 1));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
-            ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2);
+            ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2, 2.5f);
         }
     }
 
@@ -197,7 +199,7 @@ public class Round {
         else{
             ennemies.add(new Ennemy(300, 75, 30, new Texture("RedTank.png"), stage, world,directionsEnemy,startX,startY, 1));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
-            ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2);
+            ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2, 2.5f);
         }
     }
 
@@ -251,7 +253,7 @@ public class Round {
         else{
             ennemies.add(new Ennemy(300, 75, 30, new Texture("RedTank.png"), stage, world,directionsEnemy,startX,startY, 1));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
-            ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2);
+            ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2, 2.5f);
         }
     }
 
@@ -260,7 +262,7 @@ public class Round {
     public void round11(int temps, Stage stage, World world, int ennemynbr) { // Un ennemi 3
         ennemies.add(new Ennemy(1200, 65, 70, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY, 2));
         ennemies.get(ennemynbr - deadennemies).defineEnnemy();
-        ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2);
+        ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2, 2.5f);
     }
 
     public void round12(int temps, Stage stage, World world, int ennemynbr) { // Un ennemi 2 avec recharge
@@ -336,7 +338,7 @@ public class Round {
         else{
             ennemies.add(new Ennemy(1200, 65, 70, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY, 2));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
-            ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2);
+            ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2, 2.5f);
         }
     }
 
@@ -422,7 +424,7 @@ public class Round {
         else{
             ennemies.add(new Ennemy(1200, 65, 70, new Texture("Tank.png"), stage, world,directionsEnemy,startX,startY, 2));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
-            ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2);
+            ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2, 2.5f);
         }
     }
 
@@ -442,7 +444,7 @@ public class Round {
         else{
             ennemies.add(new Ennemy(300, 75, 30, new Texture("RedTank.png"), stage, world,directionsEnemy,startX,startY, 1));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
-            ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2);
+            ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2, 2.5f);
             ennemies2transition.getFirst().setSpeed(ennemies2transition.getFirst().getNormalspeed());
             ennemies.get(ennemynbr - deadennemies).beReload();
             ennemies.get(ennemynbr - deadennemies).setPoint(ennemies.get(ennemynbr - deadennemies).getNormalpoint()*2);

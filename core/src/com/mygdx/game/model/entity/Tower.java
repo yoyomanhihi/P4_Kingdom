@@ -48,6 +48,8 @@ public class Tower extends BaseActor {
         this.lasersize = lasersize;
         base_sprite = new Sprite(base_texture);
         gun_sprite = new Sprite(gun_texture);
+        base_sprite.setScale(1.25f, 1);
+        gun_sprite.setScale(1.25f, 1);
         this.world = world;
         this.laserTexture = texture2;
         if(prix == 375){
@@ -57,7 +59,7 @@ public class Tower extends BaseActor {
             sound = (Gdx.audio.newSound(Gdx.files.internal("ice.wav")));
         }
         else if(prix == 300){
-            base_sprite.setScale(.5f);
+            base_sprite.setScale(.625f, .5f);
         }
         else {
             sound = (Gdx.audio.newSound(Gdx.files.internal("Laser1.wav")));

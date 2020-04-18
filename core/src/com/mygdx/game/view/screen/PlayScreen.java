@@ -740,6 +740,25 @@ public class PlayScreen implements Screen{
 
     private void drawGameArea(float delta) {
         update(delta);
+
+        Label.LabelStyle font2 = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
+
+        Table table = new Table();
+        table.center();
+        table.setFillParent(true);
+
+        Label roundLabel = new Label("Round:", font2);
+        Label intLabel = new Label(Integer.toString(round.getRoundnbr()+1), font2);
+
+        roundLabel.setFontScale(5);
+        intLabel.setFontScale(5);
+
+        table.add(roundLabel).fillX().uniformX();
+        table.add(intLabel).fillX().uniformX();
+
+        mainStage.addActor(table);
+
+
         gameAreaCamera.update();
         renderer.setView(gameAreaCamera);
         renderer.render();
@@ -768,7 +787,7 @@ public class PlayScreen implements Screen{
                 tower.getWeapon_sprite().draw(batch);
                 if(tower.getTempscercle() < 120){
                     tower.setTempscercle(tower.getTempscercle()+1);
-                    circle.setScale(tower.getRange() / 520, tower.getRange() / 660);
+                    circle.setScale(tower.getRange() / 580, tower.getRange() / 680);
                     circle.setPosition(tower.getX() - 790, tower.getY() - 800);
                     circle.draw(batch);
                 }

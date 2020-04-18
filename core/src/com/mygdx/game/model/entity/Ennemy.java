@@ -58,6 +58,7 @@ public class Ennemy extends BaseActor {
         this.directions = directions;
         this.damage = damage;
         this.world = world;
+        sprite.setScale(1, 1.25f);
         initRectangleList();
     }
 
