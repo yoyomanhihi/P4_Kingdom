@@ -58,7 +58,7 @@ public class Tower extends BaseActor {
         else if(prix == 350){
             sound = (Gdx.audio.newSound(Gdx.files.internal("ice.wav")));
         }
-        else if(prix == 300){
+        else if(prix == 500){
             base_sprite.setScale(.625f, .5f);
         }
         else {

@@ -279,7 +279,7 @@ public class Round {
     }
 
 
-    public void round13(int temps, Stage stage, World world, int ennemynbr) { //Trois ennemis 1 et trois ennemis 2 et un ennemi 3
+    public void round13(int temps, Stage stage, World world, int ennemynbr) { //Trois ennemis 2 et un ennemi 3
         if(ennemynbr < 46){
             ennemies1transition.getFirst().setLife(80);
             ennemies1transition.getFirst().setPosition(startX, startY);
@@ -321,8 +321,34 @@ public class Round {
         }
     }
 
-    public void round14(int temps, Stage stage, World world, int ennemynbr) { // Deux ennemis 3
-        if(ennemynbr < 51) {
+    public void round14(int temps, Stage stage, World world, int ennemynbr) { //Un ennemi 2 rapide avec recharge
+        ennemies2transition.getFirst().setLife(300);
+        ennemies2transition.getFirst().setPosition(startX, startY);
+        ennemies2transition.getFirst().setDirection(0);
+        ennemies2transition.getFirst().setTarget(0);
+        ennemies2transition.getFirst().setAttackPlayer(false);
+        ennemies2transition.getFirst().beReload();
+        ennemies2transition.getFirst().beFast();
+        ennemies2transition.getFirst().setPoint(ennemies2transition.getFirst().getNormalpoint()*2);
+        ennemies.add(ennemies2transition.getFirst());
+        ennemies2transition.removeFirst();
+    }
+
+    public void round15(int temps, Stage stage, World world, int ennemynbr) { //Cinq ennemis 2 rapides
+        ennemies2transition.getFirst().setLife(300);
+        ennemies2transition.getFirst().setPosition(startX, startY);
+        ennemies2transition.getFirst().setDirection(0);
+        ennemies2transition.getFirst().setTarget(0);
+        ennemies2transition.getFirst().setAttackPlayer(false);
+        ennemies2transition.getFirst().setDoreload(false);
+        ennemies2transition.getFirst().beFast();
+        ennemies2transition.getFirst().setPoint(ennemies2transition.getFirst().getNormalpoint());
+        ennemies.add(ennemies2transition.getFirst());
+        ennemies2transition.removeFirst();
+    }
+
+    public void round16(int temps, Stage stage, World world, int ennemynbr) { // Deux ennemis 3
+        if(ennemynbr < 54) {
             ennemies3transition.getFirst().setLife(1200);
             ennemies3transition.getFirst().setPosition(startX, startY);
             ennemies3transition.getFirst().setDirection(0);
@@ -342,7 +368,8 @@ public class Round {
         }
     }
 
-    public void round15(int temps, Stage stage, World world, int ennemynbr) { //Un ennemi 2 rapide avec recharge
+
+    public void round17(int temps, Stage stage, World world, int ennemynbr) { // Trois ennemis 2 rapides avec recharge
         ennemies2transition.getFirst().setLife(300);
         ennemies2transition.getFirst().setPosition(startX, startY);
         ennemies2transition.getFirst().setDirection(0);
@@ -350,49 +377,9 @@ public class Round {
         ennemies2transition.getFirst().setAttackPlayer(false);
         ennemies2transition.getFirst().beReload();
         ennemies2transition.getFirst().beFast();
-        ennemies2transition.getFirst().setPoint(ennemies2transition.getFirst().getNormalpoint()*3);
+        ennemies2transition.getFirst().setPoint(ennemies2transition.getFirst().getNormalpoint() * 2);
         ennemies.add(ennemies2transition.getFirst());
         ennemies2transition.removeFirst();
-    }
-
-    public void round16(int temps, Stage stage, World world, int ennemynbr) { //Cinq ennemis 2 rapides
-        ennemies2transition.getFirst().setLife(300);
-        ennemies2transition.getFirst().setPosition(startX, startY);
-        ennemies2transition.getFirst().setDirection(0);
-        ennemies2transition.getFirst().setTarget(0);
-        ennemies2transition.getFirst().setAttackPlayer(false);
-        ennemies2transition.getFirst().setDoreload(false);
-        ennemies2transition.getFirst().beFast();
-        ennemies2transition.getFirst().setPoint(ennemies2transition.getFirst().getNormalpoint()*2);
-        ennemies.add(ennemies2transition.getFirst());
-        ennemies2transition.removeFirst();
-    }
-
-    public void round17(int temps, Stage stage, World world, int ennemynbr) { // Huit ennemis 1 rapides & Deux ennemis 2 rapides avec recharge, deuxieme pas rapide
-        if(ennemynbr < 66) {
-            ennemies1transition.getFirst().setLife(80);
-            ennemies1transition.getFirst().setPosition(startX, startY);
-            ennemies1transition.getFirst().setDirection(0);
-            ennemies1transition.getFirst().setTarget(0);
-            ennemies1transition.getFirst().setAttackPlayer(false);
-            ennemies1transition.getFirst().setPoint(ennemies1transition.getFirst().getNormalpoint() * 2);
-            ennemies1transition.getFirst().setDoreload(false);
-            ennemies1transition.getFirst().beFast();
-            ennemies.add(ennemies1transition.getFirst());
-            ennemies1transition.removeFirst();
-        }
-        else{
-            ennemies2transition.getFirst().setLife(300);
-            ennemies2transition.getFirst().setPosition(startX, startY);
-            ennemies2transition.getFirst().setDirection(0);
-            ennemies2transition.getFirst().setTarget(0);
-            ennemies2transition.getFirst().setAttackPlayer(false);
-            ennemies2transition.getFirst().beReload();
-            ennemies2transition.getFirst().beFast();
-            ennemies2transition.getFirst().setPoint(ennemies2transition.getFirst().getNormalpoint()*3);
-            ennemies.add(ennemies2transition.getFirst());
-            ennemies2transition.removeFirst();
-        }
     }
 
     public void round18(int temps, Stage stage, World world, int ennemynbr) { // Un ennemi 3 rapide
@@ -402,13 +389,13 @@ public class Round {
         ennemies3transition.getFirst().setTarget(0);
         ennemies3transition.getFirst().setAttackPlayer(false);
         ennemies3transition.getFirst().beFast();
-        ennemies3transition.getFirst().setPoint(ennemies3transition.getFirst().getNormalpoint()*2);
+        ennemies3transition.getFirst().setPoint(ennemies3transition.getFirst().getNormalpoint());
         ennemies.add(ennemies3transition.getFirst());
         ennemies3transition.removeFirst();
     }
 
     public void round19(int temps, Stage stage, World world, int ennemynbr) { // Trois ennemis 3
-        if(ennemynbr < 71) {
+        if(ennemynbr < 61) {
             ennemies3transition.getFirst().setLife(1200);
             ennemies3transition.getFirst().setPosition(startX, startY);
             ennemies3transition.getFirst().setDirection(0);
@@ -428,30 +415,12 @@ public class Round {
         }
     }
 
-    public void round20(int temps, Stage stage, World world, int ennemynbr) { // Quatre ennemis 2 rapides & quatre ennemis 2 avec recharge attrnyion 5 rapides
-        if(ennemynbr < 76) {
-            ennemies2transition.getFirst().setLife(300);
-            ennemies2transition.getFirst().setPosition(startX, startY);
-            ennemies2transition.getFirst().setDirection(0);
-            ennemies2transition.getFirst().setTarget(0);
-            ennemies2transition.getFirst().setAttackPlayer(false);
-            ennemies2transition.getFirst().beFast();
-            ennemies2transition.getFirst().setDoreload(false);
-            ennemies2transition.getFirst().setPoint(ennemies2transition.getFirst().getNormalpoint()*2);
-            ennemies.add(ennemies2transition.getFirst());
-            ennemies2transition.removeFirst();
-        }
-        else{
-            ennemies.add(new Ennemy(300, 75, 30, new Texture("RedTank.png"), stage, world,directionsEnemy,startX,startY, 1));
-            ennemies.get(ennemynbr - deadennemies).defineEnnemy();
-            ennemies.get(ennemynbr - deadennemies).getSprite().setScale(2, 2.5f);
-            ennemies2transition.getFirst().setSpeed(ennemies2transition.getFirst().getNormalspeed());
-            ennemies.get(ennemynbr - deadennemies).beReload();
-            ennemies.get(ennemynbr - deadennemies).setPoint(ennemies.get(ennemynbr - deadennemies).getNormalpoint()*2);
-        }
+    public void round20(int temps, Stage stage, World world, int ennemynbr) { //Un ennemi 4
+        ennemies.add(new Ennemy(3500, 60, 100, new Texture("Tank4.png"), stage, world,directionsEnemy,startX,startY, 4));
+        ennemies.get(ennemynbr - deadennemies).defineEnnemy();
     }
 
-    public void round21(int temps, Stage stage, World world, int ennemynbr) { // Trois ennemis 2 rapides avec recharge
+    public void round21(int temps, Stage stage, World world, int ennemynbr) { // Cinq ennemis 2 rapides avec recharge
         ennemies2transition.getFirst().setLife(300);
         ennemies2transition.getFirst().setPosition(startX, startY);
         ennemies2transition.getFirst().setDirection(0);
@@ -459,40 +428,64 @@ public class Round {
         ennemies2transition.getFirst().setAttackPlayer(false);
         ennemies2transition.getFirst().beReload();
         ennemies2transition.getFirst().beFast();
-        ennemies2transition.getFirst().setPoint(ennemies2transition.getFirst().getNormalpoint()*3);
+        ennemies2transition.getFirst().setPoint(ennemies2transition.getFirst().getNormalpoint()*2);
         ennemies.add(ennemies2transition.getFirst());
         ennemies2transition.removeFirst();
     }
 
-    public void round22(int temps, Stage stage, World world, int ennemynbr) { // Deux ennemi 3 rapide
+    public void round22(int temps, Stage stage, World world, int ennemynbr) { // Trois ennemis 3 rapide
         ennemies3transition.getFirst().setLife(1200);
         ennemies3transition.getFirst().setPosition(startX, startY);
         ennemies3transition.getFirst().setDirection(0);
         ennemies3transition.getFirst().setTarget(0);
         ennemies3transition.getFirst().setAttackPlayer(false);
         ennemies3transition.getFirst().beFast();
-        ennemies3transition.getFirst().setPoint(ennemies3transition.getFirst().getNormalpoint()*2);
+        ennemies3transition.getFirst().setPoint(ennemies3transition.getFirst().getNormalpoint());
         ennemies3transition.getFirst().setDoreload(false);
         ennemies.add(ennemies3transition.getFirst());
         ennemies3transition.removeFirst();
     }
 
-    public void round23(int temps, Stage stage, World world, int ennemynbr) { //Huit ennemis 2 rapides
-        ennemies2transition.getFirst().setLife(300);
-        ennemies2transition.getFirst().setPosition(startX, startY);
-        ennemies2transition.getFirst().setDirection(0);
-        ennemies2transition.getFirst().setTarget(0);
-        ennemies2transition.getFirst().setAttackPlayer(false);
-        ennemies2transition.getFirst().beFast();
-        ennemies2transition.getFirst().setDoreload(false);
-        ennemies2transition.getFirst().setPoint(ennemies2transition.getFirst().getNormalpoint()*2);
-        ennemies.add(ennemies2transition.getFirst());
-        ennemies2transition.removeFirst();
+    public void round23(int temps, Stage stage, World world, int ennemynbr) { // Deux ennemis 3 et un ennemi 4
+        if(ennemynbr < 73) {
+            ennemies3transition.getFirst().setLife(1200);
+            ennemies3transition.getFirst().setPosition(startX, startY);
+            ennemies3transition.getFirst().setDirection(0);
+            ennemies3transition.getFirst().setTarget(0);
+            ennemies3transition.getFirst().setAttackPlayer(false);
+            ennemies3transition.getFirst().setSpeed(ennemies3transition.getFirst().getNormalspeed());
+            ennemies3transition.getFirst().getSprite().setColor(Color.WHITE);
+            ennemies3transition.getFirst().setPoint(ennemies3transition.getFirst().getNormalpoint());
+            ennemies3transition.getFirst().setDoreload(false);
+            ennemies.add(ennemies3transition.getFirst());
+            ennemies3transition.removeFirst();
+        }
+        else{
+            ennemies4transition.getFirst().setLife(3500);
+            ennemies4transition.getFirst().setPosition(startX, startY);
+            ennemies4transition.getFirst().setDirection(0);
+            ennemies4transition.getFirst().setTarget(0);
+            ennemies4transition.getFirst().setAttackPlayer(false);
+            ennemies4transition.getFirst().setSpeed(ennemies4transition.getFirst().getNormalspeed());
+            ennemies4transition.getFirst().getSprite().setColor(Color.WHITE);
+            ennemies4transition.getFirst().setPoint(ennemies4transition.getFirst().getNormalpoint());
+            ennemies4transition.getFirst().setDoreload(false);
+            ennemies.add(ennemies4transition.getFirst());
+            ennemies4transition.removeFirst();
+        }
     }
 
-    public void round24(int temps, Stage stage, World world, int ennemynbr) { //Un ennemi 4
-        ennemies.add(new Ennemy(5000, 50, 120, new Texture("Tank4.png"), stage, world,directionsEnemy,startX,startY, 4));
-        ennemies.get(ennemynbr - deadennemies).defineEnnemy();
+    public void round24(int temps, Stage stage, World world, int ennemynbr) { //Un ennemi 4 rapide
+        ennemies4transition.getFirst().setLife(3500);
+        ennemies4transition.getFirst().setPosition(startX, startY);
+        ennemies4transition.getFirst().setDirection(0);
+        ennemies4transition.getFirst().setTarget(0);
+        ennemies4transition.getFirst().setAttackPlayer(false);
+        ennemies4transition.getFirst().beFast();
+        ennemies4transition.getFirst().setPoint(ennemies4transition.getFirst().getNormalpoint());
+        ennemies4transition.getFirst().setDoreload(false);
+        ennemies.add(ennemies4transition.getFirst());
+        ennemies4transition.removeFirst();
     }
 
 
@@ -528,7 +521,7 @@ public class Round {
                     else if(ennemies.get(i).getInitiallife() == 1200){
                         ennemies3transition.addLast(ennemies.get(i));
                     }
-                    else if(ennemies.get(i).getInitiallife() == 5000){
+                    else if(ennemies.get(i).getInitiallife() == 3500){
                         ennemies4transition.addLast(ennemies.get(i));
                     }
                     deadennemies++;
@@ -547,7 +540,7 @@ public class Round {
                     else if(ennemies.get(i).getInitiallife() == 1200){
                         ennemies3transition.addLast(ennemies.get(i));
                     }
-                    else if(ennemies.get(i).getInitiallife() == 5000){
+                    else if(ennemies.get(i).getInitiallife() == 3500){
                         ennemies4transition.addLast(ennemies.get(i));
                     }
                     deadennemies++;
@@ -630,6 +623,10 @@ public class Round {
 
     public void setTemps(float temps){
         this.temps = temps;
+    }
+
+    public LinkedList<Ennemy> getEnnemies(){
+        return ennemies;
     }
 
 }

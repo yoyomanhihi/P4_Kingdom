@@ -12,7 +12,7 @@ public class Player {
     private float moneyboost;
 
     public Player(){ //donne un budget et un nombre de vie au joueur au début de la partie
-        this.money = 100000;
+        this.money = 225;
         this.life = 10;
         this.score = 0;
         this.moneyboost = 0;
@@ -39,6 +39,7 @@ public class Player {
 
         setMoney(getMoney() + tour.getPrice()/2);
         weapons.remove(tour);
+
     }
 
     public int getScore() {

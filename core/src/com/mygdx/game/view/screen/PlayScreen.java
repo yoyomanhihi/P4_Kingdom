@@ -211,7 +211,7 @@ public class PlayScreen implements Screen{
         tower3 = new Tower(3,"Portée",100, 1000, 400, 375, 0, 0, Base3, Gun3, laser, .8f, mainStage, world);
         tower4 = new Tower(4,"Dégats",110, 450, 100, 1000, 0, 0, Base4, Gun4, laser, .6f, mainStage, world);
         tower5 = new FreezeTower(5, "Freeze",0, 250, 70, 350, 0, 0, snowlaser, Pistol1, snowlaser, .3f, mainStage, world, 2);
-        tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 300, 0, 0, MoneyCoin, blank, laser, 2, mainStage, world, 1.10f, player);
+        tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 500, 0, 0, MoneyCoin, blank, laser, 2, mainStage, world, 1.10f, player);
         player.setMoneyboost(0);
 
         menuStage = new MenuStage(menuAreaViewport, game, tower1, tower2, tower3, tower4, tower5, tower6);
@@ -607,12 +607,12 @@ public class PlayScreen implements Screen{
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 13 && ennemycount < 50 && temps1 > 125) {
+            else if (round.getRoundnbr() == 13 && ennemycount < 47 && temps1 > 125) {
                 round.round13(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 14 && ennemycount < 52 && temps1 > 150) {
+            else if (round.getRoundnbr() == 14 && ennemycount < 48 && temps1 > 150) {
                 round.round14(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
@@ -622,47 +622,47 @@ public class PlayScreen implements Screen{
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 16 && ennemycount < 58 && temps1 > 125) {
+            else if (round.getRoundnbr() == 16 && ennemycount < 55 && temps1 > 125) {
                 round.round16(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 17 && ennemycount < 68 && temps1 > 125) {
+            else if (round.getRoundnbr() == 17 && ennemycount < 58 && temps1 > 125) {
                 round.round17(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 18 && ennemycount < 69 && temps1 > 125) {
+            else if (round.getRoundnbr() == 18 && ennemycount < 59 && temps1 > 125) {
                 round.round18(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 19 && ennemycount < 72 && temps1 > 125) {
+            else if (round.getRoundnbr() == 19 && ennemycount < 62 && temps1 > 125) {
                 round.round19(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 20 && ennemycount < 80 && temps1 > 125) {
+            else if (round.getRoundnbr() == 20 && ennemycount < 63 && temps1 > 125) {
                 round.round20(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 21 && ennemycount < 83 && temps1 > 125) {
+            else if (round.getRoundnbr() == 21 && ennemycount < 68 && temps1 > 125) {
                 round.round21(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 22 && ennemycount < 85 && temps1 > 125) {
+            else if (round.getRoundnbr() == 22 && ennemycount < 71 && temps1 > 125) {
                 round.round22(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 23 && ennemycount < 93 && temps1 > 125) {
+            else if (round.getRoundnbr() == 23 && ennemycount < 74 && temps1 > 125) {
                 round.round23(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 24 && ennemycount < 94 && temps1 > 125) {
+            else if (round.getRoundnbr() == 24 && ennemycount < 75 && temps1 > 125) {
                 round.round24(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
@@ -748,24 +748,6 @@ public class PlayScreen implements Screen{
 
     private void drawGameArea(float delta) {
         update(delta);
-
-        Label.LabelStyle font2 = new Label.LabelStyle(new BitmapFont(), Color.WHITE);
-
-        Table table = new Table();
-        table.center();
-        table.setFillParent(true);
-
-        Label roundLabel = new Label("Round:", font2);
-        Label intLabel = new Label(Integer.toString(round.getRoundnbr()+1), font2);
-
-        roundLabel.setFontScale(5);
-        intLabel.setFontScale(5);
-
-        table.add(roundLabel).fillX().uniformX();
-        table.add(intLabel).fillX().uniformX();
-
-        mainStage.addActor(table);
-
 
         gameAreaCamera.update();
         renderer.setView(gameAreaCamera);
