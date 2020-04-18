@@ -39,6 +39,7 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.ProtectTheKingdom;
 import com.mygdx.game.model.entity.FreezeTower;
 import com.mygdx.game.model.entity.MoneyTower;
+import com.mygdx.game.model.entity.Nuke;
 import com.mygdx.game.model.entity.Player;
 import com.mygdx.game.model.entity.ShopCell;
 import com.mygdx.game.model.entity.Tower;
@@ -123,6 +124,7 @@ public class PlayScreen implements Screen{
     private TextButton cancelButton;
     private TextButton skipButton;
     private Vector3 posTowerSell;
+    private Nuke my_nuke;
 
 
 
@@ -146,6 +148,7 @@ public class PlayScreen implements Screen{
         world = new World(new Vector2(0, 0), true);
         Tank = new Texture("Tank.png");
         Pistol1 = new Texture("Pistol.png");
+
         Base1 = new Texture("weapon_sprites/Base1.png");
         Base2 = new Texture("weapon_sprites/Base2.png");
         Base3 = new Texture("weapon_sprites/Base3.png");
@@ -154,7 +157,10 @@ public class PlayScreen implements Screen{
         Gun2 = new Texture("weapon_sprites/Gun2.png");
         Gun3 = new Texture("weapon_sprites/Gun3.png");
         Gun4 = new Texture("weapon_sprites/Gun4.png");
+
         circle = new Sprite(new Texture("circle.png"));
+
+        my_nuke = new Nuke(0,0);
 
         MoneyCoin = new Texture("Gold.png");
         blank = new Texture("Healthbar.png");
@@ -165,6 +171,7 @@ public class PlayScreen implements Screen{
         Coin = new Image(new Texture("coin.png"));
         laser = new Texture("Bullet.png");
         temps = 61;
+
         ArrayList<MapObject> directions = getRectangleList("direction");
         MapObject start = getRectangleList("start").get(0);
         MapObject end = getRectangleList("end").get(0);
@@ -662,6 +669,7 @@ public class PlayScreen implements Screen{
             }
             temps1++;
             world.step(1 / 60f, 6, 2);
+            //my_nuke.detectMovement();
 
         }
     }

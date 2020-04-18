@@ -7,6 +7,7 @@ public class Nuke {
     private int number;
     private float cooldown;
     private int damage;
+    private Ennemy[] ennemies;
 
     public Nuke(int number, float cooldown){
         this.number = number;
@@ -14,8 +15,8 @@ public class Nuke {
         this.damage = 500000;
     }
 
-    public boolean isAvailable(Nuke nuke){
-        if (getNumber(nuke) != 0 && nuke.cooldown == 0){
+    public boolean isAvailable(){
+        if (getNumber(this) != 0 && this.cooldown == 0){
             return true;
         }
         return false;
@@ -32,17 +33,20 @@ public class Nuke {
         return gForce;
     }
 
-    public void detectMovement(Nuke nuke){
+    public void detectMovement(Ennemy[] ennemies){
         if (gForce() >= 1.7) {
-            if (isAvailable(nuke)){
-                explode();
+            if (this.isAvailable()){
+                explode(ennemies);
             }
         }
     }
 
-    public void explode(){
+    public void explode(Ennemy[] ennemies){
         this.number--;
         this.cooldown = 30;
+        for (int i = 0; i<ennemies.length;i++){
+            ennemies[i].setLife(0);
+        }
     }
 
     public int getNumber(Nuke nuke){ return nuke.number;}
