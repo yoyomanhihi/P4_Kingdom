@@ -454,13 +454,11 @@ public class PlayScreen implements Screen{
 
     public void handleInput(float dt) {
         if (Gdx.input.justTouched()) {
-            printMapTower();
             Vector3 pos3 = gameAreaCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0), 0, 0, (int) GAME_WIDTH, (int) HEIGHT);
             //System.out.println("click "+(int)pos3.x +" "+ (int)pos3.y);
             System.out.println("click "+(int)pos3.x +" "+ (29 - (int)pos3.y));
             TiledMapTileLayer tiledMapTileLayer = (TiledMapTileLayer) map.getLayers().get(0);
             TiledMapTileLayer.Cell cell = tiledMapTileLayer.getCell((int) pos3.x, (int) pos3.y);
-            System.out.println("x "+pos3.x+" & y "+pos3.y);
             if (pos3.x >56 && pos3.x <60 && pos3.y>26 && pos3.y<30) {
                 game.setScreen(new MenuScreen(game));
             }
@@ -489,14 +487,14 @@ public class PlayScreen implements Screen{
                 handleSelected(6);
             }
             else if (cell != null) {
-                System.out.println("Cell id: " + cell.getTile().getId());
-                System.out.println("Pas placer sur le chemin");
                 if(dialogSellOrNot){
                     if(pos3.x>0.4 && pos3.x<5.3 && pos3.y>3.1 && pos3.y<5.0){
                         System.out.println("SELL");
+                        System.out.println("sell: x : "+ posTowerSell.x + " y: "+ posTowerSell.y);
                         player.sellWeapon(towerToSell);
                         deleteTowerMapCol(posTowerSell);
                         towersMap[(numTilesVertical-1) - (int)posTowerSell.y][(int)posTowerSell.x] = null;
+                        removeEmptyTowerMap((int)posTowerSell.x,(numTilesVertical-1) - (int)posTowerSell.y);
                         dialogSellOrNot = false;
                         towerToSell = null;
                         posTowerSell = null;
@@ -521,24 +519,38 @@ public class PlayScreen implements Screen{
                             System.out.println("vendre");
                             System.out.println(towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x].getName());
                             dialogSellOrNot = true;
-                            towerToSell = towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x];
-                            posTowerSell = pos3;
+                            if(towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x].isOrigin()){
+                                System.out.println("Origin");
+                                towerToSell = towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x];
+                                posTowerSell = pos3;
+                                System.out.println("x: " + posTowerSell.x + " y: " + posTowerSell.y);
+                            }else{
+                                System.out.println("Not Origin");
+                                int xOrigin = towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x].getxOrigin();
+                                int yOrigin = towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x].getyOrigin();
+                                towerToSell = towersMap[yOrigin][xOrigin];
+                                posTowerSell = towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x].getPosOrigin();
+                                System.out.println("xO: " + posTowerSell.x + " yO: " + posTowerSell.y);
+                            }
                         }else if(selectedTower != null && player.canBuyNot(selectedTower) && checkPosTower(pos3)) {
                             putTowerMapCol(pos3);
                             if(selectedTower.getID() < 5) {
                                 Tower tower = new Tower(selectedTower.getID(), selectedTower.getName(), selectedTower.getDamage(), selectedTower.getRange(), selectedTower.getFireRate(), selectedTower.getPrice(), x, HEIGHT - Gdx.input.getY(), selectedTower.getGlobalTexture(), selectedTower.getBase_texture(), selectedTower.getWeapon_texture(), selectedTower.getLaserTexture(), selectedTower.getLasersize(), mainStage, world);
                                 player.buyWeapons(tower);
                                 towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x] = tower;
+                                putEmptyTowerMap(pos3);
                             }
                             else if(selectedTower.getID() == 5) {
                                 FreezeTower tower = new FreezeTower(selectedTower.getID(), selectedTower.getName(), selectedTower.getDamage(), selectedTower.getRange(), selectedTower.getFireRate(), selectedTower.getPrice(), x, HEIGHT - Gdx.input.getY(), selectedTower.getBase_texture(), selectedTower.getWeapon_texture(), selectedTower.getLaserTexture(), selectedTower.getLasersize(), mainStage, world, 2);
                                 player.buyWeapons(tower);
                                 towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x] = tower;
+                                putEmptyTowerMap(pos3);
                             }
                             else{
                                 MoneyTower tower = new MoneyTower(selectedTower.getID(), selectedTower.getName(), selectedTower.getDamage(), selectedTower.getRange(), selectedTower.getFireRate(), selectedTower.getPrice(), x, HEIGHT - Gdx.input.getY(), selectedTower.getBase_texture(), selectedTower.getWeapon_texture(), selectedTower.getLaserTexture(), selectedTower.getLasersize(), mainStage, world, 1.2f, player);
                                 player.buyWeapons(tower);
                                 towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x] = tower;
+                                putEmptyTowerMap(pos3);
                             }
 
                         }else {
@@ -546,6 +558,25 @@ public class PlayScreen implements Screen{
                         }
                     }
             }
+        }
+    }
+
+    private void putEmptyTowerMap(Vector3 pos){
+        Tower emptyTower = new Tower((int)pos.x, (numTilesVertical-1) - (int)pos.y, pos);
+        if((numTilesVertical-1) - (int)pos.y != towersMap.length - 1 ){
+            towersMap[((numTilesVertical-1) - (int)pos.y)+1][(int)pos.x] = emptyTower;
+        }
+        if((numTilesVertical-1) - (int)pos.y !=0 ){
+            towersMap[((numTilesVertical-1) - (int)pos.y)-1][(int)pos.x] = emptyTower;
+        }
+    }
+
+    private void removeEmptyTowerMap(int x, int y){
+        if(y != towersMap.length - 1 ){
+            towersMap[y+1][x] = null;
+        }
+        if(y != 0 ){
+            towersMap[y-1][x] = null;
         }
     }
 
@@ -814,7 +845,7 @@ public class PlayScreen implements Screen{
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), Gdx.graphics.getWidth()-110, 30);
         //font.getData().setScale(1.8f);
         if(round.getRoundnbr()>-1) {
-            font.draw(batch, "Round: " + round.getRoundnbr()+1, 10, HEIGHT - 10);
+            font.draw(batch, "Round: " + (round.getRoundnbr()+1), 10, HEIGHT - 10);
         }
         font.getData().setScale(2f);
         if(round.getRoundnbr() != -1) {

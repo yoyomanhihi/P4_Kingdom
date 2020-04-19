@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.model.utils.BaseActor;
@@ -36,6 +37,7 @@ public class Tower extends BaseActor {
     private boolean isOrigin = true;
     private int xOrigin;
     private int yOrigin;
+    private Vector3 posOrigin;
 
 
     /**
@@ -44,10 +46,12 @@ public class Tower extends BaseActor {
      * @param x the origin cell-x of the Tower.
      * @param y the origin cell-y of the Tower.
      */
-    public Tower(int x, int y){
+    public Tower(int x, int y, Vector3 posOrigin){
+        this.name = "empty";
         this.isOrigin = false;
         this.xOrigin = x;
         this.yOrigin = y;
+        this.posOrigin = posOrigin;
     }
 
     public Tower(int ID ,String nom, int degats, float portee, int cadence, int prix, float x, float y, Texture globalTexture, Texture base_texture, Texture gun_texture, Texture texture2, float lasersize, Stage s, World world){
@@ -224,5 +228,13 @@ public class Tower extends BaseActor {
 
     public void setyOrigin(int yOrigin) {
         this.yOrigin = yOrigin;
+    }
+
+    public Vector3 getPosOrigin() {
+        return posOrigin;
+    }
+
+    public void setPosOrigin(Vector3 posOrigin) {
+        this.posOrigin = posOrigin;
     }
 }
