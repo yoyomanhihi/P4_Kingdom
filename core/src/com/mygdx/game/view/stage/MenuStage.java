@@ -25,6 +25,7 @@ import com.mygdx.game.view.screen.MenuScreen;
 
 public class MenuStage extends Stage {
 
+    private Label nukeLabel;
     private Label moneyLabel;
     private Label lifeLabel;
     private Player player;
@@ -42,21 +43,11 @@ public class MenuStage extends Stage {
         this.player = game.player;
         BitmapFont font = new BitmapFont();
 
-        Texture Exit = new Texture("x.png");
-        Drawable exitImage = new TextureRegionDrawable(Exit);
-        Texture Menu = new Texture("levelsel.png");
+        Texture Menu = new Texture("menu.png");
         Drawable menuImage = new TextureRegionDrawable(Menu);
+        Image Nuke = new Image(new Texture("mine.png"));
         Image Coin = new Image(new Texture("coin.png"));
         Image Heart = new Image(new Texture("heart.png"));
-
-        ImageButton exitButton = new ImageButton(exitImage);
-        exitButton.addListener(new InputListener() {
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.exit();
-                return true;
-            }
-        });
 
         ImageButton menuButton = new ImageButton(menuImage);
         menuButton.addListener(new ChangeListener() {
@@ -68,6 +59,7 @@ public class MenuStage extends Stage {
 
         moneyLabel = new Label("MONEY", new Label.LabelStyle(font, Color.WHITE));
         lifeLabel = new Label("LIFE", new Label.LabelStyle(font, Color.WHITE));
+        nukeLabel = new Label("NUKE", new Label.LabelStyle(font, Color.WHITE));
 
         item1 = new ShopCell(tower1, font);
         item2 = new ShopCell(tower2, font);
@@ -79,8 +71,10 @@ public class MenuStage extends Stage {
         Table menu = new Table();
         menu.setFillParent(true);
 
-        menu.add(menuButton).right().colspan(2);
-        menu.add(exitButton).right().colspan(2);
+        menu.row().pad(10,0,0,0);
+        menu.add(Nuke).expandX().right().size(60, 60).colspan(1);
+        menu.add(nukeLabel).expandX().colspan(1);
+        menu.add(menuButton).colspan(2);
         menu.row();
         menu.add(item1).expandX().expandY().colspan(2);
         menu.add(item2).expandX().expandY().colspan(2);
@@ -103,6 +97,7 @@ public class MenuStage extends Stage {
     public void act(){
         moneyLabel.setText(String.format("%04d", player.getMoney()));
         lifeLabel.setText(String.format("%01d", player.getLife()));
+        nukeLabel.setText(String.format("%01d", 0)); //TODO change for player.getNuke();
         super.act();
     }
 

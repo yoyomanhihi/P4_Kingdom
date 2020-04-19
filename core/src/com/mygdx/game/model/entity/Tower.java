@@ -19,11 +19,13 @@ public class Tower extends BaseActor {
     private int fireRate;
     private int price;
     private boolean locked;
+    private Sprite globalSprite;
     private Sprite base_sprite;
     private Sprite gun_sprite;
     private Texture base_texture;
     private Texture gun_texture;
     private Texture laserTexture;
+    private Texture globalTexture;
     private Sprite sprite;
     Laser laser;
     private World world;
@@ -33,7 +35,7 @@ public class Tower extends BaseActor {
     private float tempscercle;
 
 
-    public Tower(int ID ,String nom, int degats, float portee, int cadence, int prix, float x, float y, Texture base_texture, Texture gun_texture, Texture texture2, float lasersize, Stage s, World world){
+    public Tower(int ID ,String nom, int degats, float portee, int cadence, int prix, float x, float y, Texture globalTexture, Texture base_texture, Texture gun_texture, Texture texture2, float lasersize, Stage s, World world){
         super(x,y,s);
         this.ID = ID;
         this.name = nom;
@@ -42,9 +44,11 @@ public class Tower extends BaseActor {
         this.fireRate = cadence;
         this.price = prix;
         this.locked = true;
+        this.globalTexture = globalTexture;
         this.base_texture = base_texture;
         this.gun_texture = gun_texture;
         this.lasersize = lasersize;
+        globalSprite = new Sprite(globalTexture);
         base_sprite = new Sprite(base_texture);
         gun_sprite = new Sprite(gun_texture);
         base_sprite.setScale(1.25f, 1);
@@ -153,9 +157,17 @@ public class Tower extends BaseActor {
         return lasersize;
     }
 
+    public Sprite getGlobalSprite() {
+        return globalSprite;
+    }
+
     public Sprite getBase_sprite() { return base_sprite;}
 
     public Sprite getWeapon_sprite() { return gun_sprite;}
+
+    public Texture getGlobalTexture() {
+        return globalTexture;
+    }
 
     public Texture getBase_texture() { return base_texture;}
 

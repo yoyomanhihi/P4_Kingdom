@@ -71,6 +71,10 @@ public class PlayScreen implements Screen{
     private Texture Pistol1;
     private Texture snowlaser;
     private Texture Exit;
+    private Texture Weapon1;
+    private Texture Weapon2;
+    private Texture Weapon3;
+    private Texture Weapon4;
     private Texture Base1;
     private Texture Base2;
     private Texture Base3;
@@ -149,6 +153,10 @@ public class PlayScreen implements Screen{
         Tank = new Texture("Tank.png");
         Pistol1 = new Texture("Pistol.png");
 
+        Weapon1 = new Texture("weapon_sprites/Weapon1.png");
+        Weapon2 = new Texture("weapon_sprites/Weapon2.png");
+        Weapon3 = new Texture("weapon_sprites/Weapon3.png");
+        Weapon4 = new Texture("weapon_sprites/Weapon4.png");
         Base1 = new Texture("weapon_sprites/Base1.png");
         Base2 = new Texture("weapon_sprites/Base2.png");
         Base3 = new Texture("weapon_sprites/Base3.png");
@@ -165,10 +173,6 @@ public class PlayScreen implements Screen{
         MoneyCoin = new Texture("Gold.png");
         blank = new Texture("Healthbar.png");
         snowlaser = new Texture("snowflake.png");
-        Exit = new Texture("x.png");
-        Menu = new Texture("levelsel.png");
-        Heart = new Image(new Texture("heart.png"));
-        Coin = new Image(new Texture("coin.png"));
         laser = new Texture("Bullet.png");
         temps = 61;
 
@@ -206,10 +210,10 @@ public class PlayScreen implements Screen{
         menuAreaCamera.update();
         menuAreaViewport = new FitViewport(MENU_WIDTH, HEIGHT, menuAreaCamera);
 
-        tower1 = new Tower(1,"Classic",6, 375, 60, 50, 0, 0, Base1, Gun1, laser, .5f, mainStage, world);
-        tower2 = new Tower(2,"Cadence",8, 300, 20, 150, 0, 0, Base2, Gun2, laser, .4f, mainStage, world);
-        tower3 = new Tower(3,"Portée",100, 1000, 400, 375, 0, 0, Base3, Gun3, laser, .8f, mainStage, world);
-        tower4 = new Tower(4,"Dégats",110, 450, 100, 1000, 0, 0, Base4, Gun4, laser, .6f, mainStage, world);
+        tower1 = new Tower(1,"Classic",6, 375, 60, 50, 0, 0, Weapon1, Base1, Gun1, laser, .5f, mainStage, world);
+        tower2 = new Tower(2,"Cadence",8, 300, 20, 150, 0, 0, Weapon2, Base2, Gun2, laser, .4f, mainStage, world);
+        tower3 = new Tower(3,"Portée",100, 1000, 400, 375, 0, 0, Weapon3, Base3, Gun3, laser, .8f, mainStage, world);
+        tower4 = new Tower(4,"Dégats",110, 450, 100, 1000, 0, 0, Weapon4, Base4, Gun4, laser, .6f, mainStage, world);
         tower5 = new FreezeTower(5, "Freeze",0, 250, 70, 350, 0, 0, snowlaser, Pistol1, snowlaser, .3f, mainStage, world, 2);
         tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 500, 0, 0, MoneyCoin, blank, laser, 2, mainStage, world, 1.10f, player);
         player.setMoneyboost(0);
@@ -436,11 +440,8 @@ public class PlayScreen implements Screen{
             TiledMapTileLayer tiledMapTileLayer = (TiledMapTileLayer) map.getLayers().get(0);
             TiledMapTileLayer.Cell cell = tiledMapTileLayer.getCell((int) pos3.x, (int) pos3.y);
             System.out.println("x "+pos3.x+" & y "+pos3.y);
-            if (pos3.x >52 && pos3.x <55 && pos3.y>28 && pos3.y<30) {
+            if (pos3.x >56 && pos3.x <60 && pos3.y>26 && pos3.y<30) {
                 game.setScreen(new MenuScreen(game));
-            }
-            else if (pos3.x >58 && pos3.x <60 && pos3.y>28 && pos3.y<30) {
-                Gdx.app.exit();
             }
             else if (pos3.x >49.5 && pos3.x <53 && pos3.y>20.5 && pos3.y<25.5) {
                 System.out.println("Button 1 detected");
@@ -504,7 +505,7 @@ public class PlayScreen implements Screen{
                         }else if(checkPosTower(pos3) && selectedTower != null) {
                             putTowerMapCol(pos3);
                             if(selectedTower.getID() < 5) {
-                                Tower tower = new Tower(selectedTower.getID(), selectedTower.getName(), selectedTower.getDamage(), selectedTower.getRange(), selectedTower.getFireRate(), selectedTower.getPrice(), x, HEIGHT - Gdx.input.getY(), selectedTower.getBase_texture(), selectedTower.getWeapon_texture(), selectedTower.getLaserTexture(), selectedTower.getLasersize(), mainStage, world);
+                                Tower tower = new Tower(selectedTower.getID(), selectedTower.getName(), selectedTower.getDamage(), selectedTower.getRange(), selectedTower.getFireRate(), selectedTower.getPrice(), x, HEIGHT - Gdx.input.getY(), selectedTower.getGlobalTexture(), selectedTower.getBase_texture(), selectedTower.getWeapon_texture(), selectedTower.getLaserTexture(), selectedTower.getLasersize(), mainStage, world);
                                 player.buyWeapons(tower);
                                 towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x] = tower;
                             }
@@ -685,7 +686,7 @@ public class PlayScreen implements Screen{
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+        Gdx.gl.glClearColor(34/255f, 34/255f, 34/255f, 1.0f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         Gdx.gl.glViewport(0, 0, (int) GAME_WIDTH, (int) HEIGHT);

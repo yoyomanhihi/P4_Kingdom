@@ -2,6 +2,7 @@ package com.mygdx.game.model.entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -17,7 +18,7 @@ public class ShopCell extends Group {
     private Label nameLabel;
     private int cost;
     private Label costLabel;
-    private Sprite base_sprite;
+    private Texture globalTexture;
     private ImageButton btn;
     private BitmapFont font;
     private boolean selected = false;
@@ -28,16 +29,38 @@ public class ShopCell extends Group {
     public ShopCell(Tower tw, BitmapFont fnt){
         this.tower = tw;
         cost = tower.getPrice();
-        base_sprite = tower.getBase_sprite();
+        globalTexture = tower.getGlobalTexture();
         font = fnt;
         font.getData().setScale(2f);
 
         this.setWidth(MENU_WIDTH / 2.2f);
         this.setHeight(this.getWidth()*4/3f);
 
-        Drawable image = new TextureRegionDrawable(base_sprite);
-        image.setMinHeight(100);
-        image.setMinWidth(100);
+        if (tower.getID() <= 4) {
+            Pixmap pixmap200 = new Pixmap(Gdx.files.internal("weapon_sprites/Weapon"+tower.getID()+".png"));
+            Pixmap pixmap100 = new Pixmap(70, 150, pixmap200.getFormat());
+            pixmap100.drawPixmap(pixmap200,
+                    0, 0, pixmap200.getWidth(), pixmap200.getHeight(),
+                    0, 0, pixmap100.getWidth(), pixmap100.getHeight()
+            );
+            globalTexture = new Texture(pixmap100);
+            pixmap200.dispose();
+            pixmap100.dispose();
+        }
+
+        if (tower.getID() == 5) {
+            Pixmap pixmap200 = new Pixmap(Gdx.files.internal("snowflake.png"));
+            Pixmap pixmap100 = new Pixmap(100, 100, pixmap200.getFormat());
+            pixmap100.drawPixmap(pixmap200,
+                    0, 0, pixmap200.getWidth(), pixmap200.getHeight(),
+                    0, 0, pixmap100.getWidth(), pixmap100.getHeight()
+            );
+            globalTexture = new Texture(pixmap100);
+            pixmap200.dispose();
+            pixmap100.dispose();
+        }
+
+        Drawable image = new TextureRegionDrawable(globalTexture);
 
         Texture selectTexture = new Texture("yellow.png");
         select = new Image(selectTexture);
@@ -46,6 +69,7 @@ public class ShopCell extends Group {
         select.setPosition(this.getWidth()/2f-select.getWidth()/2f, this.getHeight()-select.getHeight());
 
         btn = new ImageButton(image);
+        if (tower.getID()<5) btn.setScale(2f);
         btn.setPosition(this.getWidth() / 2f - btn.getWidth() / 2f,this.getHeight() / 2f - btn.getHeight() / 2f);
 
         nameLabel = new Label(tower.getName(), new Label.LabelStyle(font, Color.WHITE));

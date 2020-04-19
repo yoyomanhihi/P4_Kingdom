@@ -44,19 +44,19 @@ public class MenuScreen implements Screen {
         table.setFillParent(true);
         stage.addActor(table);
 
-        Skin skin = new Skin(Gdx.files.internal("skin2/glassy-ui.json"));
+        Skin skin = new Skin(Gdx.files.internal("skin2/skin/star-soldier-ui.json"));
 
-        final TextButton newGame = new TextButton("New Game", skin);
+        TextButton newGame = new TextButton("New Game", skin);
         TextButton resume = new TextButton("Resume", skin);
         TextButton exit = new TextButton("Exit", skin);
 
         if (game.playScreen != null){
-            table.add(resume).fillX().uniformX();
+            table.add(resume).size((Gdx.graphics.getWidth()) - (Gdx.graphics.getWidth() / 1.5f), Gdx.graphics.getHeight() / 7).row();
             table.row().pad(10, 0, 10, 0);
         }
-        table.add(newGame).fillX().uniformX();
+        table.add(newGame).size((Gdx.graphics.getWidth()) - (Gdx.graphics.getWidth() / 1.5f), Gdx.graphics.getHeight() / 7).row();
         table.row().pad(10, 0, 10, 0);
-        table.add(exit).fillX().uniformX();
+        table.add(exit).size((Gdx.graphics.getWidth()) - (Gdx.graphics.getWidth() / 1.5f), Gdx.graphics.getHeight() / 7).row();
 
         exit.addListener(new ChangeListener() {
             @Override
@@ -86,22 +86,6 @@ public class MenuScreen implements Screen {
                 game.setScreen(game.playScreen);
             }
         });
-
-        //Test dialog box dans le menu screen
-/*
-        Label.LabelStyle font = new Label.LabelStyle(new BitmapFont(), Color.BLACK);
-        Label label = new Label("Sell or not?",font);
-        Dialog dialogSell = new Dialog("Sell",new Skin(Gdx.files.internal("skin2/default/skin/uiskin.json")));
-        dialogSell.setMovable(true);
-        dialogSell.padTop(50).padBottom(50);
-        //dialogSell.getContentTable().add(label).row();
-        dialogSell.text("Sell or not?");
-        dialogSell.text("????");
-        dialogSell.button("Yes", true).button("No", false);
-        //stage.addActor(dialogSell);
-        dialogSell.show(stage);
-
- */
     }
 
     @Override
