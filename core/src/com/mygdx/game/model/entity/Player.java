@@ -19,8 +19,12 @@ public class Player {
         weapons = new ArrayList<>();
     }
 
+    public boolean canBuyNot(Tower tower){
+        return tower.getPrice() <= this.money;
+    }
+
     public void buyWeapons(Tower tour){ //Si le joueur a assez d'argent, enleve le prix de l arme a son budget
-        if(tour.getPrice() <= money){
+        if(canBuyNot(tour)){
             tour.setLocked(false);
             setMoney(getMoney() - tour.getPrice());
             weapons.add(tour);

@@ -149,6 +149,7 @@ public class PlayScreen implements Screen{
         mapCollision = new boolean[numTilesVertical][numTilesHorizontal];
         towersMap = new Tower[numTilesVertical][numTilesHorizontal];
         initMapCollision();
+        initMapTower();
         world = new World(new Vector2(0, 0), true);
         Tank = new Texture("Tank.png");
         Pistol1 = new Texture("Pistol.png");
@@ -188,13 +189,13 @@ public class PlayScreen implements Screen{
         round = new Round(directionList,startX,startY,endRect);
         ennemycount = 0;
         Skin skin = new Skin(Gdx.files.internal("skin2/skin/star-soldier-ui.json"));
-        sellButton = new TextButton("Sell", skin);
-        cancelButton = new TextButton("Cancel", skin);
-        skipButton = new TextButton("Skip", skin);
+        sellButton = new TextButton("Sell\nTower", skin);
+        cancelButton = new TextButton("No", skin);
+        skipButton = new TextButton("Next\nRound", skin);
 
-        propertiesButton(sellButton,-15,90);
-        propertiesButton(cancelButton,-50,10);
-        propertiesButton(skipButton, -10, 50);
+        propertiesButton(sellButton,-40,70,2.0f);
+        propertiesButton(cancelButton,-20,-25, 2.6f);
+        propertiesButton(skipButton, -40, 35, 2.0f);
 
 
         this.game = game;
@@ -283,6 +284,25 @@ public class PlayScreen implements Screen{
                 mapCollision[i][j] = false;
             }
         }
+    }
+
+    private void initMapTower(){
+        for (int i = 0 ; i<towersMap.length;i++){
+            for (int j = 0 ; j<towersMap[i].length;j++){
+                towersMap[i][j] = null;
+            }
+        }
+    }
+
+    private void printMapTower(){
+        System.out.println("Map");
+        for (int i = 0 ; i<towersMap.length;i++){
+            for (int j = 0 ; j<towersMap[i].length;j++){
+                System.out.println(towersMap[i][j]);
+            }
+            System.out.println();
+        }
+        System.out.println("end");
     }
 
     private float translateOffsetPointX(float x){
@@ -434,6 +454,7 @@ public class PlayScreen implements Screen{
 
     public void handleInput(float dt) {
         if (Gdx.input.justTouched()) {
+            printMapTower();
             Vector3 pos3 = gameAreaCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0), 0, 0, (int) GAME_WIDTH, (int) HEIGHT);
             //System.out.println("click "+(int)pos3.x +" "+ (int)pos3.y);
             System.out.println("click "+(int)pos3.x +" "+ (29 - (int)pos3.y));
@@ -471,7 +492,7 @@ public class PlayScreen implements Screen{
                 System.out.println("Cell id: " + cell.getTile().getId());
                 System.out.println("Pas placer sur le chemin");
                 if(dialogSellOrNot){
-                    if(pos3.x>0.93 && pos3.x<4.7 && pos3.y>3.8 && pos3.y<4.8){
+                    if(pos3.x>0.4 && pos3.x<5.3 && pos3.y>3.1 && pos3.y<5.0){
                         System.out.println("SELL");
                         player.sellWeapon(towerToSell);
                         deleteTowerMapCol(posTowerSell);
@@ -479,7 +500,7 @@ public class PlayScreen implements Screen{
                         dialogSellOrNot = false;
                         towerToSell = null;
                         posTowerSell = null;
-                    }else if(pos3.x>0.1 && pos3.x<5.8 && pos3.y>1.5 && pos3.y<2.5){
+                    }else if(pos3.x>1.4 && pos3.x<3.9 && pos3.y>0.8 && pos3.y<2.1){
                         System.out.println("CANCEL");
                         dialogSellOrNot = false;
                         towerToSell = null;
@@ -487,7 +508,7 @@ public class PlayScreen implements Screen{
                     }
                 }
                 if(round.getTemps() > 50){
-                    if(pos3.x>1.2 && pos3.x<4.6 && pos3.y>2.4 && pos3.y<3.6){
+                    if(pos3.x>0.5 && pos3.x<5.0 && pos3.y>2.2 && pos3.y<4.0){
                         System.out.println("SKIP");
                         round.setTemps(1500);
                     }
@@ -502,7 +523,7 @@ public class PlayScreen implements Screen{
                             dialogSellOrNot = true;
                             towerToSell = towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x];
                             posTowerSell = pos3;
-                        }else if(checkPosTower(pos3) && selectedTower != null) {
+                        }else if(selectedTower != null && player.canBuyNot(selectedTower) && checkPosTower(pos3)) {
                             putTowerMapCol(pos3);
                             if(selectedTower.getID() < 5) {
                                 Tower tower = new Tower(selectedTower.getID(), selectedTower.getName(), selectedTower.getDamage(), selectedTower.getRange(), selectedTower.getFireRate(), selectedTower.getPrice(), x, HEIGHT - Gdx.input.getY(), selectedTower.getGlobalTexture(), selectedTower.getBase_texture(), selectedTower.getWeapon_texture(), selectedTower.getLaserTexture(), selectedTower.getLasersize(), mainStage, world);
@@ -766,10 +787,10 @@ public class PlayScreen implements Screen{
         }
     }*/
 
-    private void propertiesButton(TextButton button,int x, int y){
+    private void propertiesButton(TextButton button,int x, int y, float scale){
         button.setPosition(x, y);
         button.setTransform(true);
-        button.setScale(2.0f);
+        button.setScale(scale);
     }
 
     private void drawGameArea(float delta) {
@@ -790,8 +811,12 @@ public class PlayScreen implements Screen{
             skipButton.draw(batch, 1);
         }
         font.setColor(Color.BLACK);
-        font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), 1680, 30);
-        font.getData().setScale(1.8f);
+        font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), Gdx.graphics.getWidth()-110, 30);
+        //font.getData().setScale(1.8f);
+        if(round.getRoundnbr()>-1) {
+            font.draw(batch, "Round: " + round.getRoundnbr()+1, 10, HEIGHT - 10);
+        }
+        font.getData().setScale(2f);
         if(round.getRoundnbr() != -1) {
             round.draw(batch);
         }

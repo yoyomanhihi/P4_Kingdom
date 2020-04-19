@@ -33,7 +33,22 @@ public class Tower extends BaseActor {
     private Sound sound;
     private float lasersize;
     private float tempscercle;
+    private boolean isOrigin = true;
+    private int xOrigin;
+    private int yOrigin;
 
+
+    /**
+     * Default constructor of Tower.
+     * Create a empty Tower to simulate the cell of the Tower.
+     * @param x the origin cell-x of the Tower.
+     * @param y the origin cell-y of the Tower.
+     */
+    public Tower(int x, int y){
+        this.isOrigin = false;
+        this.xOrigin = x;
+        this.yOrigin = y;
+    }
 
     public Tower(int ID ,String nom, int degats, float portee, int cadence, int prix, float x, float y, Texture globalTexture, Texture base_texture, Texture gun_texture, Texture texture2, float lasersize, Stage s, World world){
         super(x,y,s);
@@ -185,5 +200,29 @@ public class Tower extends BaseActor {
 
     public void setTempscercle(float tempscercle){
         this.tempscercle = tempscercle;
+    }
+
+    public boolean isOrigin() {
+        return isOrigin;
+    }
+
+    public void setOrigin(boolean origin) {
+        isOrigin = origin;
+    }
+
+    public int getxOrigin() {
+        return xOrigin;
+    }
+
+    public void setxOrigin(int xOrigin) {
+        this.xOrigin = xOrigin;
+    }
+
+    public int getyOrigin() {
+        return yOrigin;
+    }
+
+    public void setyOrigin(int yOrigin) {
+        this.yOrigin = yOrigin;
     }
 }

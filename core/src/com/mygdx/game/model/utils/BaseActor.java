@@ -29,6 +29,10 @@ public class BaseActor extends Animations
     private Polygon boundaryPolygon;
     private float conversion = 57.2958f;
 
+    public BaseActor(){
+
+    }
+
     public BaseActor(float x, float y, Stage s)
     {
         // call constructor from Actor class
