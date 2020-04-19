@@ -210,11 +210,11 @@ public class PlayScreen implements Screen{
         menuAreaCamera.update();
         menuAreaViewport = new FitViewport(MENU_WIDTH, HEIGHT, menuAreaCamera);
 
-        tower1 = new Tower(1,"Classic",6, 375, 60, 50, 0, 0, Weapon1, Base1, Gun1, laser, .5f, mainStage, world);
-        tower2 = new Tower(2,"Cadence",8, 300, 20, 150, 0, 0, Weapon2, Base2, Gun2, laser, .4f, mainStage, world);
-        tower3 = new Tower(3,"Portée",100, 1000, 400, 375, 0, 0, Weapon3, Base3, Gun3, laser, .8f, mainStage, world);
-        tower4 = new Tower(4,"Dégats",110, 450, 100, 1000, 0, 0, Weapon4, Base4, Gun4, laser, .6f, mainStage, world);
-        tower5 = new FreezeTower(5, "Freeze",0, 250, 70, 350, 0, 0, snowlaser, Pistol1, snowlaser, .3f, mainStage, world, 2);
+        tower1 = new Tower(1,"Classic",6, 325, 60, 50, 0, 0, Weapon1, Base1, Gun1, laser, .5f, mainStage, world);
+        tower2 = new Tower(2,"Cadence",8, 250, 20, 150, 0, 0, Weapon2, Base2, Gun2, laser, .4f, mainStage, world);
+        tower3 = new Tower(3,"Portée",130, 800, 400, 375, 0, 0, Weapon3, Base3, Gun3, laser, .8f, mainStage, world);
+        tower4 = new Tower(4,"Dégats",110, 400, 100, 1000, 0, 0, Weapon4, Base4, Gun4, laser, .6f, mainStage, world);
+        tower5 = new FreezeTower(5, "Freeze",0, 225, 70, 350, 0, 0, snowlaser, Pistol1, snowlaser, .3f, mainStage, world, 2);
         tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 500, 0, 0, MoneyCoin, blank, laser, 2, mainStage, world, 1.10f, player);
         player.setMoneyboost(0);
 
@@ -533,7 +533,7 @@ public class PlayScreen implements Screen{
             this.gameOver = true;
             game.setScreen(new LoseScreen(game, player));
         }
-        else if(round.getRoundnbr() == 25){
+        else if(round.getRoundnbr() == 30){
             this.gameOver = true;
             game.setScreen(new WinScreen(game, player));
         }
@@ -548,12 +548,12 @@ public class PlayScreen implements Screen{
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 1 && ennemycount < 3 && temps1 > 150) { //demarre le premier round
+            else if (round.getRoundnbr() == 1 && ennemycount < 3 && temps1 > 125) { //demarre le premier round
                 round.round1(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 2 && ennemycount < 6 && temps1 > 150) {
+            else if (round.getRoundnbr() == 2 && ennemycount < 6 && temps1 > 125) {
                 round.round2(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
@@ -563,7 +563,7 @@ public class PlayScreen implements Screen{
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 4 && ennemycount < 12 && temps1 > 125) {
+            else if (round.getRoundnbr() == 4 && ennemycount < 12 && temps1 > 100) {
                 round.round4(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
@@ -638,7 +638,7 @@ public class PlayScreen implements Screen{
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 19 && ennemycount < 62 && temps1 > 125) {
+            else if (round.getRoundnbr() == 19 && ennemycount < 60 && temps1 > 125) {
                 round.round19(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
@@ -648,23 +648,48 @@ public class PlayScreen implements Screen{
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 21 && ennemycount < 68 && temps1 > 125) {
+            else if (round.getRoundnbr() == 21 && ennemycount < 68 && temps1 > 100) {
                 round.round21(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 22 && ennemycount < 71 && temps1 > 125) {
+            else if (round.getRoundnbr() == 22 && ennemycount < 70 && temps1 > 125) {
                 round.round22(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 23 && ennemycount < 74 && temps1 > 125) {
+            else if (round.getRoundnbr() == 23 && ennemycount < 73 && temps1 > 125) {
                 round.round23(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 24 && ennemycount < 75 && temps1 > 125) {
+            else if (round.getRoundnbr() == 24 && ennemycount < 74 && temps1 > 125) {
                 round.round24(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 25 && ennemycount < 78 && temps1 > 175) {
+                round.round25(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 26 && ennemycount < 81 && temps1 > 150) {
+                round.round26(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 27 && ennemycount < 82 && temps1 > 125) {
+                round.round27(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 28 && ennemycount < 87 && temps1 > 125) {
+                round.round28(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 29 && ennemycount < 88 && temps1 > 125) {
+                round.round29(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }

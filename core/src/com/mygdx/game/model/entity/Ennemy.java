@@ -109,7 +109,12 @@ public class Ennemy extends BaseActor {
         }
         else {
             if(doreload && life < initiallife){
-                life = life+(initiallife/1000);
+                if(initiallife == 300) {
+                    life = life + (initiallife / 400);
+                }
+                if(initiallife == 1200){
+                    life = life +(initiallife / 1500);
+                }
             }
             if(isfreezed){
                 timefreezed++;
