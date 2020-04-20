@@ -110,6 +110,10 @@ public class MenuStage extends Stage {
         getItem6().setSelected(false);
     }
 
+    public void setInfo(ShopCell s, boolean b){
+        s.setInfo(b);
+    }
+
     public ShopCell getItem1() {
         return item1;
     }

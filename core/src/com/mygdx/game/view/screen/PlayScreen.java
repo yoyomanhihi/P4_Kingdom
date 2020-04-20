@@ -129,6 +129,8 @@ public class PlayScreen implements Screen{
     private TextButton skipButton;
     private Vector3 posTowerSell;
     private Nuke my_nuke;
+    private long lastTouchTime;
+    private int lastTouchCell;
 
 
 
@@ -463,24 +465,48 @@ public class PlayScreen implements Screen{
                 game.setScreen(new MenuScreen(game));
             }
             else if (pos3.x >49.5 && pos3.x <53 && pos3.y>20.5 && pos3.y<25.5) {
-                System.out.println("Button 1 detected");
-                handleSelected(1);
+                if (doubleTap(1)) {
+                    menuStage.setInfo(menuStage.getItem1(), true);
+                }
+                else {
+                    lastTouchCell = 1;
+                    lastTouchTime = System.currentTimeMillis();
+                    handleSelected(1);
+                }
             }
             else if (pos3.x >49.5 && pos3.x <53 && pos3.y>11.5 && pos3.y<16.5) {
-                System.out.println("Button 2 detected");
-                handleSelected(3);
+                if (doubleTap(3)) {
+                    menuStage.setInfo(menuStage.getItem3(), true);
+                }
+                else {
+                    lastTouchCell = 3;
+                    lastTouchTime = System.currentTimeMillis();
+                    handleSelected(3);
+                }
             }
             else if (pos3.x >49.5 && pos3.x <53 && pos3.y>3 && pos3.y<8) {
                 System.out.println("Button 3 detected");
                 handleSelected(5);
             }
             else if (pos3.x >55.5 && pos3.x <59 && pos3.y>20.5 && pos3.y<25.5) {
-                System.out.println("Button 4 detected");
-                handleSelected(2);
+                if (doubleTap(2)) {
+                    menuStage.setInfo(menuStage.getItem2(), true);
+                }
+                else {
+                    lastTouchCell = 2;
+                    lastTouchTime = System.currentTimeMillis();
+                    handleSelected(2);
+                }
             }
             else if (pos3.x >55.5 && pos3.x <59 && pos3.y>11.5 && pos3.y<16.5) {
-                System.out.println("Button 5 detected");
-                handleSelected(4);
+                if (doubleTap(4)) {
+                    menuStage.setInfo(menuStage.getItem4(), true);
+                }
+                else {
+                    lastTouchCell = 4;
+                    lastTouchTime = System.currentTimeMillis();
+                    handleSelected(4);
+                }
             }
             else if (pos3.x >55.5 && pos3.x <59 && pos3.y>3 && pos3.y<8) {
                 System.out.println("Button 6 detected");
@@ -559,6 +585,10 @@ public class PlayScreen implements Screen{
                     }
             }
         }
+    }
+
+    private boolean doubleTap(int i) {
+        return (lastTouchCell==i && System.currentTimeMillis()-lastTouchTime < 400);
     }
 
     private void putEmptyTowerMap(Vector3 pos){

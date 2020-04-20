@@ -10,6 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
@@ -22,7 +23,12 @@ public class ShopCell extends Group {
     private ImageButton btn;
     private BitmapFont font;
     private boolean selected = false;
+    private boolean info = false;
+    private boolean showInfo = false;
     private Image select;
+    private Table infos;
+    private long timeInfo;
+    private long selectedTime;
 
     private float MENU_WIDTH = Gdx.graphics.getWidth()/5.0f;
 
@@ -81,6 +87,36 @@ public class ShopCell extends Group {
         this.addActor(btn);
         this.addActor(nameLabel);
         this.addActor(costLabel);
+
+        Label name = new Label("Name", new Label.LabelStyle(font, Color.WHITE));
+        Label priceLabel = new Label("Price:", new Label.LabelStyle(font, Color.WHITE));
+        Label damageLabel = new Label("Damage:", new Label.LabelStyle(font, Color.WHITE));
+        Label fireRateLabel = new Label ("Rate:", new Label.LabelStyle(font, Color.WHITE));
+        Label rangeLabel = new Label("Range:", new Label.LabelStyle(font, Color.WHITE));
+        Label damage = new Label(String.format("%d",tower.getDamage()), new Label.LabelStyle(font, Color.WHITE));
+        Label fireRate = new Label(String.format("%d",tower.getFireRate()), new Label.LabelStyle(font, Color.WHITE));
+        Label range = new Label(String.format("%d",(int)tower.getRange()), new Label.LabelStyle(font, Color.WHITE));
+        Label cost = new Label(String.format("%d",tower.getPrice()), new Label.LabelStyle(font, Color.WHITE));
+
+        name.setText(tower.getName());
+
+        infos = new Table();
+        infos.setFillParent(true);
+
+        infos.add(name).expandX().expandY().colspan(2).pad(50,0,20,0);
+        infos.row();
+        infos.add(damageLabel).expandY().left();
+        infos.add(damage).expandY().right();
+        infos.row();
+        infos.add(fireRateLabel).expandY().left();
+        infos.add(fireRate).expandY().right();
+        infos.row();
+        infos.add(rangeLabel).expandY().left();
+        infos.add(range).expandY().right();
+        infos.row();
+        infos.add(priceLabel).expandY().left();
+        infos.add(cost).expandY().right();
+
     }
 
     @Override
@@ -88,8 +124,41 @@ public class ShopCell extends Group {
         super.act(delta);
         if (isSelected()) {
             this.addActor(select);
+            selectedTime = System.currentTimeMillis();
         }
-        else this.removeActor(select);
+        else {
+            this.removeActor(select);
+            selectedTime = System.currentTimeMillis();
+        }
+        if (showInfo && System.currentTimeMillis()-timeInfo>5000){
+            setInfo(false);
+        }
+        if (isInfo() && !showInfo) {
+            this.showInfo();
+            timeInfo = System.currentTimeMillis();
+            showInfo = true;
+            if (System.currentTimeMillis()-selectedTime<500) {
+                setSelected(!selected);
+            }
+        }
+        else if (!isInfo() && showInfo){
+            this.hideInfo();
+            showInfo = false;
+        }
+    }
+
+    private void showInfo(){
+        this.removeActor(btn);
+        this.removeActor(nameLabel);
+        this.removeActor(costLabel);
+        this.addActor(infos);
+    }
+
+    private void hideInfo(){
+        this.removeActor(infos);
+        this.addActor(btn);
+        this.addActor(nameLabel);
+        this.addActor(costLabel);
     }
 
     public boolean isSelected() {
@@ -98,5 +167,13 @@ public class ShopCell extends Group {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+
+    public boolean isInfo() {
+        return info;
+    }
+
+    public void setInfo(boolean info) {
+        this.info = info;
     }
 }
