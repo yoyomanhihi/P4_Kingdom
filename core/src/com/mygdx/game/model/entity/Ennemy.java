@@ -59,7 +59,15 @@ public class Ennemy extends BaseActor {
         this.damage = damage;
         this.world = world;
         this.texture = texture;
-        sprite.setScale(0.5f, 0.5f);
+        if(life == 80 || life == 300) {
+            sprite.setScale(0.32f, 0.4f);
+        }
+        else if(life == 1200 || life == 1500) {
+            sprite.setScale(0.4f, 0.5f);
+        }
+        else{
+            sprite.setScale(0.5f, 0.625f);
+        }
         initRectangleList();
     }
 
@@ -111,16 +119,16 @@ public class Ennemy extends BaseActor {
         else {
             if(doreload && life < initiallife){
                 if(initiallife == 300) {
-                    life = life + (initiallife / 400);
+                    life = life + (initiallife / 1100);
                 }
                 if(initiallife == 1200){
-                    life = life +(initiallife / 1500);
+                    life = life +(initiallife / 2800);
                 }
             }
             if(isfreezed){
                 timefreezed++;
                 if(timefreezed > 40){
-                    if(sprite.getColor().equals(Color.RED)){
+                    if(sprite.getColor().equals(Color.PURPLE)){
                         this.speed = 2*normalspeed;
                     }
                     else {
@@ -213,7 +221,7 @@ public class Ennemy extends BaseActor {
 
     public void beFreezed(int divider){
         isfreezed = true;
-        if(sprite.getColor().equals(Color.RED)){
+        if(sprite.getColor().equals(Color.PURPLE)){
             this.speed = normalspeed;
         }
         else {
@@ -233,7 +241,7 @@ public class Ennemy extends BaseActor {
 
     public void beFast(){
         this.speed = normalspeed*2;
-        sprite.setColor(Color.RED);
+        sprite.setColor(Color.PURPLE);
     }
 
     public int getNormalspeed(){

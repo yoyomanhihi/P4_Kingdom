@@ -213,12 +213,12 @@ public class PlayScreen implements Screen{
         menuAreaCamera.update();
         menuAreaViewport = new FitViewport(MENU_WIDTH, HEIGHT, menuAreaCamera);
 
-        tower1 = new Tower(1,"Classic",6, 325, 60, 50, 0, 0, Weapon1, Base1, Gun1, laser, .5f, mainStage, world);
-        tower2 = new Tower(2,"Cadence",8, 250, 20, 150, 0, 0, Weapon2, Base2, Gun2, laser, .4f, mainStage, world);
-        tower3 = new Tower(3,"Portée",130, 800, 400, 375, 0, 0, Weapon3, Base3, Gun3, laser, .8f, mainStage, world);
+        tower1 = new Tower(1,"Classic",6, 350, 60, 50, 0, 0, Weapon1, Base1, Gun1, laser, .5f, mainStage, world);
+        tower2 = new Tower(2,"Cadence",8, 275, 20, 150, 0, 0, Weapon2, Base2, Gun2, laser, .4f, mainStage, world);
+        tower3 = new Tower(3,"Portée",120, 800, 400, 375, 0, 0, Weapon3, Base3, Gun3, laser, .8f, mainStage, world);
         tower4 = new Tower(4,"Dégats",110, 400, 100, 1000, 0, 0, Weapon4, Base4, Gun4, laser, .6f, mainStage, world);
         tower5 = new FreezeTower(5, "Freeze",0, 225, 70, 350, 0, 0, snowlaser, Pistol1, snowlaser, .3f, mainStage, world, 2);
-        tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 500, 0, 0, MoneyCoin, blank, laser, 2, mainStage, world, 1.10f, player);
+        tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 400, 0, 0, MoneyCoin, blank, laser, 2, mainStage, world, 1.10f, player);
         player.setMoneyboost(0);
 
         menuStage = new MenuStage(menuAreaViewport, game, tower1, tower2, tower3, tower4, tower5, tower6);
