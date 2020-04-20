@@ -94,7 +94,7 @@ public class ShopCell extends Group {
         Label fireRateLabel = new Label ("Rate:", new Label.LabelStyle(font, Color.WHITE));
         Label rangeLabel = new Label("Range:", new Label.LabelStyle(font, Color.WHITE));
         Label damage = new Label(String.format("%d",tower.getDamage()), new Label.LabelStyle(font, Color.WHITE));
-        Label fireRate = new Label(String.format("%d",tower.getFireRate()), new Label.LabelStyle(font, Color.WHITE));
+        Label fireRate = new Label(String.format("%.2f",(double)60f/tower.getFireRate()), new Label.LabelStyle(font, Color.WHITE));
         Label range = new Label(String.format("%d",(int)tower.getRange()), new Label.LabelStyle(font, Color.WHITE));
         Label cost = new Label(String.format("%d",tower.getPrice()), new Label.LabelStyle(font, Color.WHITE));
 
