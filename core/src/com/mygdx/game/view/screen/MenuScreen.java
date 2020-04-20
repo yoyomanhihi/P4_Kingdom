@@ -5,7 +5,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -15,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mygdx.game.ProtectTheKingdom;
 import com.mygdx.game.model.entity.Player;
@@ -54,6 +57,7 @@ public class MenuScreen implements Screen {
             table.add(resume).size((Gdx.graphics.getWidth()) - (Gdx.graphics.getWidth() / 1.5f), Gdx.graphics.getHeight() / 7).row();
             table.row().pad(10, 0, 10, 0);
         }
+        table.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture("background.png"))));
         table.add(newGame).size((Gdx.graphics.getWidth()) - (Gdx.graphics.getWidth() / 1.5f), Gdx.graphics.getHeight() / 7).row();
         table.row().pad(10, 0, 10, 0);
         table.add(exit).size((Gdx.graphics.getWidth()) - (Gdx.graphics.getWidth() / 1.5f), Gdx.graphics.getHeight() / 7).row();
@@ -99,7 +103,6 @@ public class MenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
         stage.getViewport().update(width, height, true);
     }
 

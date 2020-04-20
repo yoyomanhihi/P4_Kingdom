@@ -21,7 +21,7 @@ public class Ennemy extends BaseActor {
     private float life;
     private int speed;
     private int point; // l argent qu il rapporte s il meurt
-    //private Texture texture;
+    private Texture texture;
     private Body b2body;
     private float direction;
     private float old_direction = 0;
@@ -58,7 +58,8 @@ public class Ennemy extends BaseActor {
         this.directions = directions;
         this.damage = damage;
         this.world = world;
-        sprite.setScale(1, 1.25f);
+        this.texture = texture;
+        sprite.setScale(0.5f, 0.5f);
         initRectangleList();
     }
 
@@ -260,4 +261,19 @@ public class Ennemy extends BaseActor {
         return normalpoint;
     }
 
+    public Texture getTexture(){ return this.texture;}
+
+    public Texture[] TextureTable(){
+        Texture[] textTable = new Texture[8];
+        textTable[0]= new Texture("ennemies_sprite/red1.png");
+        textTable[1]= new Texture("ennemies_sprite/red2.png");
+        textTable[2]= new Texture("ennemies_sprite/red3.png");
+        textTable[3]= new Texture("ennemies_sprite/red4.png");
+        textTable[4]= new Texture("ennemies_sprite/blue1.png");
+        textTable[5]= new Texture("ennemies_sprite/blue2.png");
+        textTable[6]= new Texture("ennemies_sprite/blue3.png");
+        textTable[7]= new Texture("ennemies_sprite/blue4.png");
+
+        return textTable;
+    }
 }

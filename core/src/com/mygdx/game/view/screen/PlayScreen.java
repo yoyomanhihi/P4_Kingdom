@@ -153,7 +153,7 @@ public class PlayScreen implements Screen{
         initMapCollision();
         initMapTower();
         world = new World(new Vector2(0, 0), true);
-        Tank = new Texture("Tank.png");
+        Tank = new Texture("ennemies_sprite/red1.png");
         Pistol1 = new Texture("Pistol.png");
 
         Weapon1 = new Texture("weapon_sprites/Weapon1.png");
