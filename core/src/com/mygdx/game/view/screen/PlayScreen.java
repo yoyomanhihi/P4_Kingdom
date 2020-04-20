@@ -471,8 +471,8 @@ public class PlayScreen implements Screen{
                 else {
                     lastTouchCell = 1;
                     lastTouchTime = System.currentTimeMillis();
-                    handleSelected(1);
                 }
+                handleSelected(1);
             }
             else if (pos3.x >49.5 && pos3.x <53 && pos3.y>11.5 && pos3.y<16.5) {
                 if (doubleTap(3)) {
@@ -481,8 +481,8 @@ public class PlayScreen implements Screen{
                 else {
                     lastTouchCell = 3;
                     lastTouchTime = System.currentTimeMillis();
-                    handleSelected(3);
                 }
+                handleSelected(3);
             }
             else if (pos3.x >49.5 && pos3.x <53 && pos3.y>3 && pos3.y<8) {
                 System.out.println("Button 3 detected");
@@ -495,8 +495,8 @@ public class PlayScreen implements Screen{
                 else {
                     lastTouchCell = 2;
                     lastTouchTime = System.currentTimeMillis();
-                    handleSelected(2);
                 }
+                handleSelected(2);
             }
             else if (pos3.x >55.5 && pos3.x <59 && pos3.y>11.5 && pos3.y<16.5) {
                 if (doubleTap(4)) {
@@ -505,8 +505,8 @@ public class PlayScreen implements Screen{
                 else {
                     lastTouchCell = 4;
                     lastTouchTime = System.currentTimeMillis();
-                    handleSelected(4);
                 }
+                handleSelected(4);
             }
             else if (pos3.x >55.5 && pos3.x <59 && pos3.y>3 && pos3.y<8) {
                 System.out.println("Button 6 detected");

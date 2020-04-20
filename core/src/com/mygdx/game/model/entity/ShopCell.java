@@ -137,9 +137,6 @@ public class ShopCell extends Group {
             this.showInfo();
             timeInfo = System.currentTimeMillis();
             showInfo = true;
-            if (System.currentTimeMillis()-selectedTime<500) {
-                setSelected(!selected);
-            }
         }
         else if (!isInfo() && showInfo){
             this.hideInfo();
