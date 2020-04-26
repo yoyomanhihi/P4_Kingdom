@@ -578,7 +578,8 @@ public class PlayScreen implements Screen{
                                 towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x] = tower;
                                 putEmptyTowerMap(pos3);
                             }
-
+                            menuStage.deselect();
+                            selectedTower = null;
                         }else {
                             System.out.println("trop proche !!");
                         }
