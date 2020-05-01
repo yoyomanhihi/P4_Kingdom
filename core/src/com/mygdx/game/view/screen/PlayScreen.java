@@ -201,7 +201,7 @@ public class PlayScreen implements Screen{
         propertiesButton(sellButton,-25,180,2.3f);
         propertiesButton(upgradeButton, -35, 80, 2.0f);
         propertiesButton(cancelButton,5,-25, 2.8f);
-        propertiesButton(skipButton, -40, 35, 2.0f);
+        propertiesButton(skipButton, -40, 70, 2.5f);
 
         this.game = game;
         this.player = this.game.player;
@@ -542,7 +542,7 @@ public class PlayScreen implements Screen{
                     }
                 }
                 if(round.getTemps() > 50 && round.getRoundnbr() < 30 && !dialogSellOrNot){
-                    if(pos3.x>0.5 && pos3.x<5.0 && pos3.y>2.2 && pos3.y<4.0){
+                    if(pos3.x>0.86 && pos3.x<6.8 && pos3.y>3.5 && pos3.y<5.9){
                         System.out.println("SKIP");
                         round.setTemps(1500);
                     }
