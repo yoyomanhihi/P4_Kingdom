@@ -34,7 +34,17 @@ public class WinScreen implements Screen{
 
             Label gameWinLabel = new Label("YOU WIN", font);
             Label playAgainLabel = new Label("Click to Play Again", font);
-            Label score_Label = new Label("Score : ", font);
+            Label ennemieskilled = new Label("Game score : ", font);
+            String gamescore = (String) Integer.toString(player.getScore());
+            Label gamescoreLabel = new Label(gamescore, font);
+            Label lifebonus = new Label("Bonus life left : ", font);
+            String lifescore = (String) Integer.toString(100*player.getEndlife());
+            Label lifescoreLabel = new Label(lifescore, font);
+            Label roundbonus = new Label("Bonus round :", font);
+            String bonusscore = (String) Integer.toString(100*player.getBonusennemies());
+            Label bonusscoreLabel = new Label(bonusscore, font);
+            Label score_Label = new Label("Total score : ", font);
+            player.setScore(player.getScore() + 100*player.getEndlife() + 100*player.getBonusennemies());
             String score = (String) Integer.toString(player.getScore());
             Label scoreLabel = new Label(score, font);
 
@@ -42,13 +52,28 @@ public class WinScreen implements Screen{
             playAgainLabel.setFontScale(5);
             score_Label.setFontScale(5);
             scoreLabel.setFontScale(5);
+            ennemieskilled.setFontScale(5);
+            lifebonus.setFontScale(5);
+            roundbonus.setFontScale(5);
+            gamescoreLabel.setFontScale(5);
+            lifescoreLabel.setFontScale(5);
+            bonusscoreLabel.setFontScale(5);
 
             table.add(gameWinLabel).fillX().uniformX();
             table.row().pad(10, 0, 10, 0);
-            table.add(playAgainLabel).fillX().uniformX();
+            table.add(ennemieskilled).fillX().uniformX();
+            table.add(gamescoreLabel).fillX().uniformX();
+            table.row().pad(10, 0, 10, 0);
+            table.add(lifebonus).fillX().uniformX();
+            table.add(lifescoreLabel).fillX().uniformX();
+            table.row().pad(10, 0, 10, 0);
+            table.add(roundbonus).fillX().uniformX();
+            table.add(bonusscoreLabel).fillX().uniformX();
             table.row().pad(10, 0, 10, 0);
             table.add(score_Label).fillX().uniformX();
             table.add(scoreLabel).fillX().uniformX();
+            table.row().pad(10, 0, 10, 0);
+            table.add(playAgainLabel).fillX().uniformX();
 
             stage.addActor(table);
         }

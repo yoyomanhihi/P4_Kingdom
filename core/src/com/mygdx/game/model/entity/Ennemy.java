@@ -39,6 +39,7 @@ public class Ennemy extends BaseActor {
     private boolean isfast;
     private boolean doreload;
     private int normalpoint;
+    private Sprite speedsprite;
 
     //public int damage;  Si on veut faire en sorte qu'un ennemy puisse attaquer une tour
 
@@ -59,6 +60,8 @@ public class Ennemy extends BaseActor {
         this.damage = damage;
         this.world = world;
         this.texture = texture;
+        this.speedsprite = new Sprite(new Texture("speedflame.png"));
+        speedsprite.setScale(.04f, .05f);
         if(life == 80 || life == 300) {
             sprite.setScale(0.32f, 0.4f);
         }
@@ -128,7 +131,7 @@ public class Ennemy extends BaseActor {
             if(isfreezed){
                 timefreezed++;
                 if(timefreezed > 40){
-                    if(sprite.getColor().equals(Color.PURPLE)){
+                    if(isfast){
                         this.speed = 2*normalspeed;
                     }
                     else {
@@ -221,7 +224,7 @@ public class Ennemy extends BaseActor {
 
     public void beFreezed(int divider){
         isfreezed = true;
-        if(sprite.getColor().equals(Color.PURPLE)){
+        if(isfast){
             this.speed = normalspeed;
         }
         else {
@@ -241,7 +244,7 @@ public class Ennemy extends BaseActor {
 
     public void beFast(){
         this.speed = normalspeed*2;
-        sprite.setColor(Color.PURPLE);
+        isfast = true;
     }
 
     public int getNormalspeed(){
@@ -283,5 +286,17 @@ public class Ennemy extends BaseActor {
         textTable[7]= new Texture("ennemies_sprite/blue4.png");
 
         return textTable;
+    }
+
+    public boolean isIsfast(){
+        return isfast;
+    }
+
+    public void setIsfast(boolean isfast){
+        this.isfast = isfast;
+    }
+
+    public Sprite getSpeedsprite(){
+        return this.speedsprite;
     }
 }

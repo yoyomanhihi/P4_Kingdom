@@ -131,6 +131,7 @@ public class PlayScreen implements Screen{
     private Nuke my_nuke;
     private long lastTouchTime;
     private int lastTouchCell;
+    private boolean endcapture;
 
 
 
@@ -202,6 +203,7 @@ public class PlayScreen implements Screen{
 
         this.game = game;
         this.player = this.game.player;
+        endcapture = false;
 
         gameAreaCamera = new OrthographicCamera();
         gameAreaCamera.setToOrtho(false, GAME_WIDTH, HEIGHT);
@@ -531,7 +533,7 @@ public class PlayScreen implements Screen{
                         posTowerSell = null;
                     }
                 }
-                if(round.getTemps() > 50){
+                if(round.getTemps() > 50 && round.getRoundnbr() < 30 && !dialogSellOrNot){
                     if(pos3.x>0.5 && pos3.x<5.0 && pos3.y>2.2 && pos3.y<4.0){
                         System.out.println("SKIP");
                         round.setTemps(1500);
@@ -612,11 +614,12 @@ public class PlayScreen implements Screen{
     }
 
     public void update(float dt){
-        if(player.getLife() <= 0 ){
+        if(player.getLife() <= 0 && round.getRoundnbr() < 30){
             this.gameOver = true;
             game.setScreen(new LoseScreen(game, player));
         }
-        else if(round.getRoundnbr() == 30){
+        else if(round.getRoundnbr() == 30 && player.getLife()<=0){
+            player.setScore(player.getScore());
             this.gameOver = true;
             game.setScreen(new WinScreen(game, player));
         }
@@ -776,6 +779,15 @@ public class PlayScreen implements Screen{
                 ennemycount++;
                 temps1 = 0;
             }
+            else if (round.getRoundnbr() == 30 && ennemycount < 1000 && temps1 > 500) {
+                if(!endcapture){
+                    player.setEndlife(player.getLife());
+                    endcapture = true;
+                }
+                round.finalround(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
             temps1++;
             world.step(1 / 60f, 6, 2);
             //my_nuke.detectMovement();
@@ -869,7 +881,7 @@ public class PlayScreen implements Screen{
             sellButton.draw(batch, 1);
             cancelButton.draw(batch, 1);
         }
-        if(round.getTemps() > 50 && !dialogSellOrNot){
+        if(round.getTemps() > 50 && !dialogSellOrNot && round.getRoundnbr() < 30){
             skipButton.draw(batch, 1);
         }
         font.setColor(Color.BLACK);

@@ -10,12 +10,16 @@ public class Player {
     private List<Tower> weapons;
     private int score;
     private float moneyboost;
+    private int endlife;
+    private int bonusennemies;
 
     public Player(){ //donne un budget et un nombre de vie au joueur au début de la partie
         this.money = 225;
         this.life = 10;
         this.score = 0;
         this.moneyboost = 0;
+        endlife = 0;
+        bonusennemies = 0;
         weapons = new ArrayList<>();
     }
 
@@ -82,4 +86,23 @@ public class Player {
     }
 
     public void setMoneyboost(float moneyboost){ this.moneyboost = moneyboost; }
+
+    public void setEndlife(int endlife){
+        this.endlife = endlife;
+    }
+
+    public int getEndlife(){
+        return this.endlife;
+    }
+
+    public void setBonusennemies(int bonusennemies){
+        this.bonusennemies = bonusennemies;
+    }
+
+    public int getBonusennemies(){
+        return bonusennemies;
+    }
+
+
+
 }
