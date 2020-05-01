@@ -237,4 +237,8 @@ public class Tower extends BaseActor {
     public void setPosOrigin(Vector3 posOrigin) {
         this.posOrigin = posOrigin;
     }
+
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
 }

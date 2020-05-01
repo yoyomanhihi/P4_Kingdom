@@ -53,6 +53,14 @@ public class Player {
 
     }
 
+    public void upgradeWeapon(Tower tower){
+        if(tower.getID() == 1 && 50 <= this.money){
+            setMoney(getMoney() - 50);
+            int indexTower = weapons.indexOf(tower);
+            weapons.get(indexTower).setDamage(10);
+        }
+    }
+
     public int getScore() {
         return this.score;
     }

@@ -127,6 +127,7 @@ public class PlayScreen implements Screen{
     private TextButton sellButton;
     private TextButton cancelButton;
     private TextButton skipButton;
+    private TextButton upgradeButton;
     private Vector3 posTowerSell;
     private Nuke my_nuke;
     private long lastTouchTime;
@@ -195,11 +196,12 @@ public class PlayScreen implements Screen{
         sellButton = new TextButton("Sell\nTower", skin);
         cancelButton = new TextButton("No", skin);
         skipButton = new TextButton("Next\nRound", skin);
+        upgradeButton = new TextButton("Upgrade\nTower", skin);
 
-        propertiesButton(sellButton,-40,70,2.0f);
-        propertiesButton(cancelButton,-20,-25, 2.6f);
+        propertiesButton(sellButton,-25,180,2.3f);
+        propertiesButton(upgradeButton, -35, 80, 2.0f);
+        propertiesButton(cancelButton,5,-25, 2.8f);
         propertiesButton(skipButton, -40, 35, 2.0f);
-
 
         this.game = game;
         this.player = this.game.player;
@@ -459,7 +461,7 @@ public class PlayScreen implements Screen{
     public void handleInput(float dt) {
         if (Gdx.input.justTouched()) {
             Vector3 pos3 = gameAreaCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0), 0, 0, (int) GAME_WIDTH, (int) HEIGHT);
-            //System.out.println("click "+(int)pos3.x +" "+ (int)pos3.y);
+            System.out.println("x: "+pos3.x +" y:"+ pos3.y);
             System.out.println("click "+(int)pos3.x +" "+ (29 - (int)pos3.y));
             TiledMapTileLayer tiledMapTileLayer = (TiledMapTileLayer) map.getLayers().get(0);
             TiledMapTileLayer.Cell cell = tiledMapTileLayer.getCell((int) pos3.x, (int) pos3.y);
@@ -516,7 +518,7 @@ public class PlayScreen implements Screen{
             }
             else if (cell != null) {
                 if(dialogSellOrNot){
-                    if(pos3.x>0.4 && pos3.x<5.3 && pos3.y>3.1 && pos3.y<5.0){
+                    if(pos3.x>1.1 && pos3.x<6.7 && pos3.y>6.3 && pos3.y<8.5){
                         System.out.println("SELL");
                         System.out.println("sell: x : "+ posTowerSell.x + " y: "+ posTowerSell.y);
                         player.sellWeapon(towerToSell);
@@ -526,7 +528,13 @@ public class PlayScreen implements Screen{
                         dialogSellOrNot = false;
                         towerToSell = null;
                         posTowerSell = null;
-                    }else if(pos3.x>1.4 && pos3.x<3.9 && pos3.y>0.8 && pos3.y<2.1){
+                    }else if(pos3.x>0.63 && pos3.x<7.2 && pos3.y>3.5 && pos3.y<5.4){
+                        System.out.println("Upgrade");
+                        player.upgradeWeapon(towerToSell);
+                        dialogSellOrNot = false;
+                        towerToSell = null;
+                        posTowerSell = null;
+                    }else if(pos3.x>2.2 && pos3.x<5.1 && pos3.y>1 && pos3.y<2.5){
                         System.out.println("CANCEL");
                         dialogSellOrNot = false;
                         towerToSell = null;
@@ -879,6 +887,7 @@ public class PlayScreen implements Screen{
         batch.begin();
         if(dialogSellOrNot){
             sellButton.draw(batch, 1);
+            upgradeButton.draw(batch, 1);
             cancelButton.draw(batch, 1);
         }
         if(round.getTemps() > 50 && !dialogSellOrNot && round.getRoundnbr() < 30){
