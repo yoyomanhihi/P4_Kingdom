@@ -218,9 +218,9 @@ public class PlayScreen implements Screen{
         tower1 = new Tower(1,"Classic",6, 350, 60, 50, 0, 0, Weapon1, Base1, Gun1, laser, .5f, mainStage, world);
         tower2 = new Tower(2,"Cadence",8, 275, 20, 150, 0, 0, Weapon2, Base2, Gun2, laser, .4f, mainStage, world);
         tower3 = new Tower(3,"Portée",120, 800, 400, 375, 0, 0, Weapon3, Base3, Gun3, laser, .8f, mainStage, world);
-        tower4 = new Tower(4,"Dégats",110, 400, 100, 1000, 0, 0, Weapon4, Base4, Gun4, laser, .6f, mainStage, world);
+        tower4 = new Tower(4,"Dégats",110, 300, 100, 800, 0, 0, Weapon4, Base4, Gun4, laser, .6f, mainStage, world);
         tower5 = new FreezeTower(5, "Freeze",0, 225, 70, 350, 0, 0, snowlaser, Pistol1, snowlaser, .3f, mainStage, world, 2);
-        tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 400, 0, 0, MoneyCoin, blank, laser, 2, mainStage, world, 1.10f, player);
+        tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 250, 0, 0, MoneyCoin, blank, laser, 2, mainStage, world, 1.10f, player);
         player.setMoneyboost(0);
 
         menuStage = new MenuStage(menuAreaViewport, game, tower1, tower2, tower3, tower4, tower5, tower6);
@@ -628,7 +628,7 @@ public class PlayScreen implements Screen{
             if (round.getRoundnbr() != -1) { // met le round a jour
                 round.update(dt, game, player, mainStage);
             }
-            if (ennemycount < 1 && temps1 > 125) { //demarre le premier round
+            if (round.getRoundnbr() == -1 && ennemycount < 1 && temps1 > 125) { //demarre le premier round
                 round.setRoundnbr(0);
                 round.round0(temps, uiStage, world, ennemycount);
                 ennemycount++;
@@ -887,8 +887,11 @@ public class PlayScreen implements Screen{
         font.setColor(Color.BLACK);
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), Gdx.graphics.getWidth()-110, 30);
         //font.getData().setScale(1.8f);
-        if(round.getRoundnbr()>-1) {
+        if(round.getRoundnbr()>-1 && round.getRoundnbr()<30) {
             font.draw(batch, "Round: " + (round.getRoundnbr()+1), 10, HEIGHT - 10);
+        }
+        else if(round.getRoundnbr() == 30){
+            font.draw(batch, "BONUS ROUND" , 10, HEIGHT - 10);
         }
         font.getData().setScale(2f);
         if(round.getRoundnbr() != -1) {

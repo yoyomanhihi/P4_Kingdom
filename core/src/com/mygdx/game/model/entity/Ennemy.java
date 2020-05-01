@@ -230,7 +230,6 @@ public class Ennemy extends BaseActor {
         else {
             this.speed = normalspeed / divider;
         }
-        //sprite.setColor(Color.BLUE);
         timefreezed = 0;
     }
 
@@ -261,7 +260,6 @@ public class Ennemy extends BaseActor {
 
     public void beReload(){
         doreload = true;
-        sprite.setColor(Color.GREEN);
     }
 
     public void setPoint(int point){
