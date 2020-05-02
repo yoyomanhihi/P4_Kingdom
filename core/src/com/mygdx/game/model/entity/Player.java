@@ -18,7 +18,7 @@ public class Player {
 
     public Player(){ //donne un budget et un nombre de vie au joueur au début de la partie
         this.nuke = new Nuke(1);
-        this.money = 1000;
+        this.money = 225;
         this.life = 10;
         this.score = 0;
         this.moneyboost = 0;
