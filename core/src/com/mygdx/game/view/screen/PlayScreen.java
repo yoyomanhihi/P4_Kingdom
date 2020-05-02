@@ -37,6 +37,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.mygdx.game.ProtectTheKingdom;
+import com.mygdx.game.model.entity.Ennemy;
 import com.mygdx.game.model.entity.FreezeTower;
 import com.mygdx.game.model.entity.MoneyTower;
 import com.mygdx.game.model.entity.Nuke;
@@ -52,6 +53,7 @@ import com.mygdx.game.view.stage.MenuStage;
 import java.awt.Button;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 
 public class PlayScreen implements Screen{
 
@@ -175,7 +177,7 @@ public class PlayScreen implements Screen{
 
         circle = new Sprite(new Texture("circle.png"));
 
-        my_nuke = new Nuke(0,0);
+        my_nuke = new Nuke(1);
 
         MoneyCoin = new Texture("Gold.png");
         blank = new Texture("Healthbar.png");
@@ -806,8 +808,20 @@ public class PlayScreen implements Screen{
             }
             temps1++;
             world.step(1 / 60f, 6, 2);
-            //my_nuke.detectMovement();
 
+        }
+    }
+
+    /**
+     * This function will detect a movement, check if the player has a nuke and then explode all ennemies
+     * @param nuke
+     * @param ennemies
+     */
+    public void nuke_detection (Nuke nuke, LinkedList<Ennemy> ennemies){
+        if (nuke.detectMovement()){     //A movement has been detected
+            if (nuke.isAvailable()){            //The player has at least 1 nuke
+                nuke.explode(ennemies);
+            }
         }
     }
 
