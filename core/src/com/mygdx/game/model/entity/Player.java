@@ -1,5 +1,7 @@
 package com.mygdx.game.model.entity;
 
+import com.badlogic.gdx.graphics.Color;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,10 +56,145 @@ public class Player {
     }
 
     public void upgradeWeapon(Tower tower){
-        if(tower.getID() == 1 && 50 <= this.money){
-            setMoney(getMoney() - 50);
-            int indexTower = weapons.indexOf(tower);
-            weapons.get(indexTower).setDamage(10);
+        if(tower.getID() == 1) {
+            if (this.money >= 40) {
+                if (tower.getUpgraded() == 0) {
+                    setMoney(getMoney() - 40);
+                    int indexTower = weapons.indexOf(tower);
+                    weapons.get(indexTower).setDamage(10);
+                    weapons.get(indexTower).getBase_sprite().setColor(Color.BLUE);
+                    weapons.get(indexTower).setUpgraded(1);
+                    //weapons.get(indexTower).getWeapon_sprite().setColor(Color.BLUE);
+                }
+                else if (tower.getUpgraded() == 1) {
+                    setMoney(getMoney() - 40);
+                    int indexTower = weapons.indexOf(tower);
+                    weapons.get(indexTower).setDamage(14);
+                    weapons.get(indexTower).getBase_sprite().setColor(Color.PURPLE);
+                    weapons.get(indexTower).setUpgraded(2);
+                    //weapons.get(indexTower).getWeapon_sprite().setColor(Color.BLUE);
+                }
+                else if (tower.getUpgraded() == 2) {
+                    setMoney(getMoney() - 40);
+                    int indexTower = weapons.indexOf(tower);
+                    weapons.get(indexTower).setDamage(20);
+                    weapons.get(indexTower).getBase_sprite().setColor(Color.GOLD);
+                    weapons.get(indexTower).setUpgraded(3);
+                    //weapons.get(indexTower).getWeapon_sprite().setColor(Color.BLUE);
+                }
+            }
+        }
+
+        else if(tower.getID() == 2) {
+            if (this.money >= 120) {
+                if (tower.getUpgraded() == 0) {
+                    setMoney(getMoney() - 120);
+                    int indexTower = weapons.indexOf(tower);
+                    weapons.get(indexTower).setDamage(12);
+                    weapons.get(indexTower).getBase_sprite().setColor(Color.BLUE);
+                    weapons.get(indexTower).setUpgraded(1);
+                    //weapons.get(indexTower).getWeapon_sprite().setColor(Color.BLUE);
+                }
+                else if (tower.getUpgraded() == 1) {
+                    setMoney(getMoney() - 120);
+                    int indexTower = weapons.indexOf(tower);
+                    weapons.get(indexTower).setDamage(16);
+                    weapons.get(indexTower).getBase_sprite().setColor(Color.PURPLE);
+                    weapons.get(indexTower).setUpgraded(2);
+                    //weapons.get(indexTower).getWeapon_sprite().setColor(Color.BLUE);
+                }
+                else if (tower.getUpgraded() == 2) {
+                    setMoney(getMoney() - 120);
+                    int indexTower = weapons.indexOf(tower);
+                    weapons.get(indexTower).setDamage(22);
+                    weapons.get(indexTower).getBase_sprite().setColor(Color.GOLD);
+                    weapons.get(indexTower).setUpgraded(3);
+                    //weapons.get(indexTower).getWeapon_sprite().setColor(Color.BLUE);
+                }
+            }
+        }
+
+        else if(tower.getID() == 3) {
+            if (this.money >= 300) {
+                if (tower.getUpgraded() == 0) {
+                    setMoney(getMoney() - 300);
+                    int indexTower = weapons.indexOf(tower);
+                    weapons.get(indexTower).setDamage(195);
+                    weapons.get(indexTower).getBase_sprite().setColor(Color.BLUE);
+                    weapons.get(indexTower).setUpgraded(1);
+                    //weapons.get(indexTower).getWeapon_sprite().setColor(Color.BLUE);
+                }
+                else if (tower.getUpgraded() == 1) {
+                    setMoney(getMoney() - 300);
+                    int indexTower = weapons.indexOf(tower);
+                    weapons.get(indexTower).setDamage(275);
+                    weapons.get(indexTower).getBase_sprite().setColor(Color.PURPLE);
+                    weapons.get(indexTower).setUpgraded(2);
+                    //weapons.get(indexTower).getWeapon_sprite().setColor(Color.BLUE);
+                }
+                else if (tower.getUpgraded() == 2) {
+                    setMoney(getMoney() - 300);
+                    int indexTower = weapons.indexOf(tower);
+                    weapons.get(indexTower).setDamage(365);
+                    weapons.get(indexTower).getBase_sprite().setColor(Color.GOLD);
+                    weapons.get(indexTower).setUpgraded(3);
+                    //weapons.get(indexTower).getWeapon_sprite().setColor(Color.BLUE);
+                }
+            }
+        }
+
+        else if(tower.getID() == 4) {
+            if (this.money >= 640) {
+                if (tower.getUpgraded() == 0) {
+                    setMoney(getMoney() - 640);
+                    int indexTower = weapons.indexOf(tower);
+                    weapons.get(indexTower).setDamage(195);
+                    weapons.get(indexTower).getBase_sprite().setColor(Color.BLUE);
+                    weapons.get(indexTower).setUpgraded(1);
+                }
+                else if (tower.getUpgraded() == 1) {
+                    setMoney(getMoney() - 640);
+                    int indexTower = weapons.indexOf(tower);
+                    weapons.get(indexTower).setDamage(275);
+                    weapons.get(indexTower).getBase_sprite().setColor(Color.PURPLE);
+                    weapons.get(indexTower).setUpgraded(2);
+                }
+                else if (tower.getUpgraded() == 2) {
+                    setMoney(getMoney() - 640);
+                    int indexTower = weapons.indexOf(tower);
+                    weapons.get(indexTower).setDamage(365);
+                    weapons.get(indexTower).getBase_sprite().setColor(Color.GOLD);
+                    weapons.get(indexTower).setUpgraded(3);
+                }
+            }
+        }
+
+        else if(tower.getID() == 5) {
+            if (this.money >= 200) {
+                if (tower.getUpgraded() == 0) {
+                    setMoney(getMoney() - 200);
+                    int indexTower = weapons.indexOf(tower);
+                    weapons.get(indexTower).setFireRate(80);
+                    weapons.get(indexTower).getBase_sprite().setColor(Color.BLUE);
+                    weapons.get(indexTower).setUpgraded(1);
+                    //weapons.get(indexTower).getWeapon_sprite().setColor(Color.BLUE);
+                }
+                else if (tower.getUpgraded() == 1) {
+                    setMoney(getMoney() - 200);
+                    int indexTower = weapons.indexOf(tower);
+                    weapons.get(indexTower).setDamage(50);
+                    weapons.get(indexTower).getBase_sprite().setColor(Color.PURPLE);
+                    weapons.get(indexTower).setUpgraded(2);
+                    //weapons.get(indexTower).getWeapon_sprite().setColor(Color.BLUE);
+                }
+                else if (tower.getUpgraded() == 2) {
+                    setMoney(getMoney() - 200);
+                    int indexTower = weapons.indexOf(tower);
+                    weapons.get(indexTower).setDamage(25);
+                    weapons.get(indexTower).getBase_sprite().setColor(Color.GOLD);
+                    weapons.get(indexTower).setUpgraded(3);
+                }
+            }
         }
     }
 

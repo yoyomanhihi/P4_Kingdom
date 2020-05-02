@@ -133,6 +133,7 @@ public class PlayScreen implements Screen{
     private long lastTouchTime;
     private int lastTouchCell;
     private boolean endcapture;
+    private boolean islevelmax;
 
 
 
@@ -154,6 +155,7 @@ public class PlayScreen implements Screen{
         towersMap = new Tower[numTilesVertical][numTilesHorizontal];
         initMapCollision();
         initMapTower();
+        islevelmax = false;
         world = new World(new Vector2(0, 0), true);
         Tank = new Texture("ennemies_sprite/red1.png");
         Pistol1 = new Texture("Pistol.png");
@@ -220,9 +222,9 @@ public class PlayScreen implements Screen{
         tower1 = new Tower(1,"Classic",6, 350, 60, 50, 0, 0, Weapon1, Base1, Gun1, laser, .5f, mainStage, world);
         tower2 = new Tower(2,"Cadence",8, 275, 20, 150, 0, 0, Weapon2, Base2, Gun2, laser, .4f, mainStage, world);
         tower3 = new Tower(3,"Portée",120, 800, 400, 375, 0, 0, Weapon3, Base3, Gun3, laser, .8f, mainStage, world);
-        tower4 = new Tower(4,"Dégats",110, 300, 100, 800, 0, 0, Weapon4, Base4, Gun4, laser, .6f, mainStage, world);
-        tower5 = new FreezeTower(5, "Freeze",0, 225, 70, 350, 0, 0, snowlaser, Pistol1, snowlaser, .3f, mainStage, world, 2);
-        tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 250, 0, 0, MoneyCoin, blank, laser, 2, mainStage, world, 1.10f, player);
+        tower4 = new Tower(4,"Dégats",120, 400, 100, 800, 0, 0, Weapon4, Base4, Gun4, laser, .6f, mainStage, world);
+        tower5 = new FreezeTower(5, "Freeze",0, 375, 120, 250, 0, 0, snowlaser, Pistol1, snowlaser, .3f, mainStage, world, 2);
+        tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 300, 0, 0, MoneyCoin, blank, laser, 2, mainStage, world, 1.15f, player);
         player.setMoneyboost(0);
 
         menuStage = new MenuStage(menuAreaViewport, game, tower1, tower2, tower3, tower4, tower5, tower6);
@@ -526,17 +528,20 @@ public class PlayScreen implements Screen{
                         towersMap[(numTilesVertical-1) - (int)posTowerSell.y][(int)posTowerSell.x] = null;
                         removeEmptyTowerMap((int)posTowerSell.x,(numTilesVertical-1) - (int)posTowerSell.y);
                         dialogSellOrNot = false;
+                        islevelmax = false;
                         towerToSell = null;
                         posTowerSell = null;
                     }else if(pos3.x>0.63 && pos3.x<7.2 && pos3.y>3.5 && pos3.y<5.4){
                         System.out.println("Upgrade");
                         player.upgradeWeapon(towerToSell);
                         dialogSellOrNot = false;
+                        islevelmax = false;
                         towerToSell = null;
                         posTowerSell = null;
                     }else if(pos3.x>2.2 && pos3.x<5.1 && pos3.y>1 && pos3.y<2.5){
                         System.out.println("CANCEL");
                         dialogSellOrNot = false;
+                        islevelmax = false;
                         towerToSell = null;
                         posTowerSell = null;
                     }
@@ -555,6 +560,9 @@ public class PlayScreen implements Screen{
                             System.out.println("vendre");
                             System.out.println(towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x].getName());
                             dialogSellOrNot = true;
+                            if(towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x].getUpgraded() == 3){
+                                islevelmax = true;
+                            }
                             if(towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x].isOrigin()){
                                 System.out.println("Origin");
                                 towerToSell = towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x];
@@ -887,8 +895,10 @@ public class PlayScreen implements Screen{
         batch.begin();
         if(dialogSellOrNot){
             sellButton.draw(batch, 1);
-            upgradeButton.draw(batch, 1);
             cancelButton.draw(batch, 1);
+            if(!islevelmax) {
+                upgradeButton.draw(batch, 1);
+            }
         }
         if(round.getTemps() > 50 && !dialogSellOrNot && round.getRoundnbr() < 30){
             skipButton.draw(batch, 1);

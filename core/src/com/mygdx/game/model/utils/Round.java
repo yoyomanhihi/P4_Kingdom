@@ -688,12 +688,7 @@ public class Round {
                 }
             }
             else{
-                if(ennemies.get(i).isDoreload()){
-                    batch.setColor(Color.BLACK);
-                }
-                else {
-                    batch.setColor(Color.RED);
-                }
+                batch.setColor(Color.RED);
             }
             batch.draw(healthbar, ennemies.get(i).getX(), ennemies.get(i).getY() + 70, 60*ennemies.get(i).getPercentageOfLife(), 5);
             batch.setColor(Color.WHITE);

@@ -38,6 +38,7 @@ public class Tower extends BaseActor {
     private int xOrigin;
     private int yOrigin;
     private Vector3 posOrigin;
+    private int upgraded;
 
 
     /**
@@ -74,10 +75,11 @@ public class Tower extends BaseActor {
         gun_sprite.setScale(1.25f, 1);
         this.world = world;
         this.laserTexture = texture2;
+        this.upgraded = 0;
         if(prix == 375){
             sound = (Gdx.audio.newSound(Gdx.files.internal("tir.mp3")));
         }
-        else if(prix == 350){
+        else if(prix == 300){
             sound = (Gdx.audio.newSound(Gdx.files.internal("ice.wav")));
         }
         else if(prix == 250){
@@ -111,7 +113,7 @@ public class Tower extends BaseActor {
         //if (getStage() == null) {
         //    return;
         //}
-        if(price != 375 && price != 350) {
+        if(price != 375 && price != 300) {
             laser.getSound().play(0.15f);
         }
         else{
@@ -150,6 +152,10 @@ public class Tower extends BaseActor {
 
     public int getFireRate(){
         return fireRate;
+    }
+
+    public void setFireRate(int fireRate){
+        this.fireRate = fireRate;
     }
 
     public int getDamage(){
@@ -241,4 +247,14 @@ public class Tower extends BaseActor {
     public void setDamage(int damage) {
         this.damage = damage;
     }
+
+    public void setUpgraded(int upgraded){
+        this.upgraded = upgraded;
+    }
+
+    public int getUpgraded(){
+        return this.upgraded;
+    }
+
+
 }

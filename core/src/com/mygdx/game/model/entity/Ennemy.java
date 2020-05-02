@@ -130,7 +130,7 @@ public class Ennemy extends BaseActor {
             }
             if(isfreezed){
                 timefreezed++;
-                if(timefreezed > 40){
+                if(timefreezed > 35){
                     if(isfast){
                         this.speed = 2*normalspeed;
                     }
