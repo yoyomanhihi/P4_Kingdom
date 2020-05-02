@@ -86,6 +86,9 @@ public class PlayScreen implements Screen{
     private Texture Gun3;
     private Texture Gun4;
     private Texture MoneyCoin;
+    private Texture FreezerBase;
+    private Texture FreezerGun;
+    private Texture FreezerWeapon;
     private Texture blank;
     private Sprite circle;
     public static final float GAME_WIDTH = Gdx.graphics.getWidth()*4.0f/5.0f;
@@ -131,7 +134,6 @@ public class PlayScreen implements Screen{
     private TextButton skipButton;
     private TextButton upgradeButton;
     private Vector3 posTowerSell;
-    private Nuke my_nuke;
     private long lastTouchTime;
     private int lastTouchCell;
     private boolean endcapture;
@@ -174,10 +176,11 @@ public class PlayScreen implements Screen{
         Gun2 = new Texture("weapon_sprites/Gun2.png");
         Gun3 = new Texture("weapon_sprites/Gun3.png");
         Gun4 = new Texture("weapon_sprites/Gun4.png");
+        FreezerBase = new Texture("weapon_sprites/FreezerBase.png");
+        FreezerWeapon = new Texture("weapon_sprites/FreezerWeapon.png");
+        FreezerGun = new Texture("weapon_sprites/FreezerGun.png");
 
         circle = new Sprite(new Texture("circle.png"));
-
-        my_nuke = new Nuke(1);
 
         MoneyCoin = new Texture("Gold.png");
         blank = new Texture("Healthbar.png");
@@ -225,7 +228,7 @@ public class PlayScreen implements Screen{
         tower2 = new Tower(2,"Cadence",8, 275, 20, 150, 0, 0, Weapon2, Base2, Gun2, laser, .4f, mainStage, world);
         tower3 = new Tower(3,"Portée",120, 800, 400, 375, 0, 0, Weapon3, Base3, Gun3, laser, .8f, mainStage, world);
         tower4 = new Tower(4,"Dégats",120, 400, 100, 800, 0, 0, Weapon4, Base4, Gun4, laser, .6f, mainStage, world);
-        tower5 = new FreezeTower(5, "Freeze",0, 375, 120, 250, 0, 0, snowlaser, Pistol1, snowlaser, .3f, mainStage, world, 2);
+        tower5 = new FreezeTower(5, "Freeze",0, 375, 120, 250, 0, 0, FreezerBase, FreezerGun, snowlaser, .3f, mainStage, world, 2);
         tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 300, 0, 0, MoneyCoin, blank, laser, 2, mainStage, world, 1.15f, player);
         player.setMoneyboost(0);
 
@@ -463,6 +466,7 @@ public class PlayScreen implements Screen{
     }
 
     public void handleInput(float dt) {
+        nuke_detection(player.getNuke(), round.getEnnemies());
         if (Gdx.input.justTouched()) {
             Vector3 pos3 = gameAreaCamera.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0), 0, 0, (int) GAME_WIDTH, (int) HEIGHT);
             System.out.println("x: "+pos3.x +" y:"+ pos3.y);
@@ -632,6 +636,9 @@ public class PlayScreen implements Screen{
     }
 
     public void update(float dt){
+        if(player.getNuke().getCooldown() > 0){
+            player.getNuke().setCooldown(player.getNuke().getCooldown()-1);
+        }
         if(player.getLife() <= 0 && round.getRoundnbr() < 30){
             this.gameOver = true;
             game.setScreen(new LoseScreen(game, player));
@@ -718,6 +725,7 @@ public class PlayScreen implements Screen{
                 temps1 = 0;
             }
             else if (round.getRoundnbr() == 14 && ennemycount < 48 && temps1 > 150) {
+                player.getNuke().setNumber(player.getNuke().getNumber()+1);
                 round.round14(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;

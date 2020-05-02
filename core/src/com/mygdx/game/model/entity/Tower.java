@@ -79,10 +79,10 @@ public class Tower extends BaseActor {
         if(prix == 375){
             sound = (Gdx.audio.newSound(Gdx.files.internal("tir.mp3")));
         }
-        else if(prix == 300){
+        else if(prix == 250){
             sound = (Gdx.audio.newSound(Gdx.files.internal("ice.wav")));
         }
-        else if(prix == 250){
+        else if(prix == 300){
             base_sprite.setScale(.625f, .5f);
         }
         else {
@@ -113,7 +113,7 @@ public class Tower extends BaseActor {
         //if (getStage() == null) {
         //    return;
         //}
-        if(price != 375 && price != 300) {
+        if(price != 375 && price != 250) {
             laser.getSound().play(0.15f);
         }
         else{

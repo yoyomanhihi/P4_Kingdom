@@ -50,13 +50,14 @@ public class ShopCell extends Group {
                     0, 0, pixmap100.getWidth(), pixmap100.getHeight()
             );
             globalTexture = new Texture(pixmap100);
+            globalTexture = new Texture(pixmap100);
             pixmap200.dispose();
             pixmap100.dispose();
         }
 
         if (tower.getID() == 5) {
-            Pixmap pixmap200 = new Pixmap(Gdx.files.internal("snowflake.png"));
-            Pixmap pixmap100 = new Pixmap(100, 100, pixmap200.getFormat());
+            Pixmap pixmap200 = new Pixmap(Gdx.files.internal("weapon_sprites/FreezerWeapon.png"));
+            Pixmap pixmap100 = new Pixmap(70, 150, pixmap200.getFormat());
             pixmap100.drawPixmap(pixmap200,
                     0, 0, pixmap200.getWidth(), pixmap200.getHeight(),
                     0, 0, pixmap100.getWidth(), pixmap100.getHeight()

@@ -97,7 +97,7 @@ public class MenuStage extends Stage {
     public void act(){
         moneyLabel.setText(String.format("%04d", player.getMoney()));
         lifeLabel.setText(String.format("%01d", player.getLife()));
-        nukeLabel.setText(String.format("%01d", 0)); //TODO change for player.getNuke();
+        nukeLabel.setText(String.format("%01d", player.getNuke().getNumber()));
         super.act();
     }
 

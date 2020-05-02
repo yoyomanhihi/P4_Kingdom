@@ -9,18 +9,17 @@ import java.util.LinkedList;
 public class Nuke {
 
     private int number;
-    private float cooldown;
+    private int cooldown;
     private float damage;
-    private Ennemy[] ennemies;
 
     public Nuke(int number){
         this.number = number;
-        //this.cooldown = cooldown;
-        this.damage = 500000;
+        this.damage = 1000;
+        cooldown = 0;
     }
 
     public boolean isAvailable(){
-        if (getNumber(this) > 0){
+        if (getNumber() > 0){
             return true;
         }
         return false;
@@ -38,16 +37,18 @@ public class Nuke {
     }
 
     public boolean detectMovement(){
-        if (gForce() >= 1.7)
+        if (gForce() >= 38)
             return true;
         return false;
     }
 
     public void explode(LinkedList<Ennemy> ennemies){
-        this.number--;
-        this.cooldown = 30;
-        for (int i = 0 ; i<ennemies.size();i++){
-            ennemies.get(i).setLife(hp_calculator(ennemies.get(i).getLife(),this.damage));
+        if(cooldown == 0) {
+            this.cooldown = 300;
+            number--;
+            for (int i = 0; i < ennemies.size(); i++) {
+                ennemies.get(i).setLife(hp_calculator(ennemies.get(i).getLife(), this.damage));
+            }
         }
 
     }
@@ -59,7 +60,20 @@ public class Nuke {
         return hp-damage;
     }
 
-    public int getNumber(Nuke nuke){ return nuke.number;}
+    public int getNumber()
+    { return number;}
+
+    public void setNumber(int number){
+        this.number = number;
+    }
 
     public float getDamage(Nuke nuke){ return nuke.damage;}
+
+    public int getCooldown(){
+        return cooldown;
+    }
+
+    public void setCooldown(int cooldown){
+        this.cooldown = cooldown;
+    }
 }

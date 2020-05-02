@@ -14,9 +14,11 @@ public class Player {
     private float moneyboost;
     private int endlife;
     private int bonusennemies;
+    private Nuke nuke;
 
     public Player(){ //donne un budget et un nombre de vie au joueur au début de la partie
-        this.money = 225;
+        this.nuke = new Nuke(1);
+        this.money = 1000;
         this.life = 10;
         this.score = 0;
         this.moneyboost = 0;
@@ -246,6 +248,10 @@ public class Player {
 
     public int getBonusennemies(){
         return bonusennemies;
+    }
+
+    public Nuke getNuke(){
+        return nuke;
     }
 
 
