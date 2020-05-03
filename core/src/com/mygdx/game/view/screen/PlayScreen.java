@@ -132,12 +132,17 @@ public class PlayScreen implements Screen{
     private TextButton sellButton;
     private TextButton cancelButton;
     private TextButton skipButton;
-    private TextButton upgradeButton;
+    private TextButton upgradeButton1;
+    private TextButton upgradeButton2;
+    private TextButton upgradeButton3;
+    private TextButton upgradeButton4;
+    private TextButton upgradeButton5;
     private Vector3 posTowerSell;
     private long lastTouchTime;
     private int lastTouchCell;
     private boolean endcapture;
     private boolean islevelmax;
+    private int towertouched;
 
 
 
@@ -160,6 +165,7 @@ public class PlayScreen implements Screen{
         initMapCollision();
         initMapTower();
         islevelmax = false;
+        towertouched = 0;
         world = new World(new Vector2(0, 0), true);
         Tank = new Texture("ennemies_sprite/red1.png");
         Pistol1 = new Texture("Pistol.png");
@@ -203,10 +209,18 @@ public class PlayScreen implements Screen{
         sellButton = new TextButton("Sell\nTower", skin);
         cancelButton = new TextButton("No", skin);
         skipButton = new TextButton("Next\nRound", skin);
-        upgradeButton = new TextButton("Upgrade\nTower", skin);
+        upgradeButton1 = new TextButton("Upgrade\nTower: 40", skin);
+        upgradeButton2 = new TextButton("Upgrade\nTower: 120", skin);
+        upgradeButton3 = new TextButton("Upgrade\nTower: 300", skin);
+        upgradeButton4 = new TextButton("Upgrade\nTower: 600", skin);
+        upgradeButton5 = new TextButton("Upgrade\nTower: 200", skin);
 
         propertiesButton(sellButton,-25,180,2.3f);
-        propertiesButton(upgradeButton, -35, 80, 2.0f);
+        propertiesButton(upgradeButton1, -35, 80, 2.0f);
+        propertiesButton(upgradeButton2, -35, 80, 2.0f);
+        propertiesButton(upgradeButton3, -35, 80, 2.0f);
+        propertiesButton(upgradeButton4, -35, 80, 2.0f);
+        propertiesButton(upgradeButton5, -35, 80, 2.0f);
         propertiesButton(cancelButton,5,-25, 2.8f);
         propertiesButton(skipButton, -40, 70, 2.5f);
 
@@ -226,9 +240,9 @@ public class PlayScreen implements Screen{
 
         tower1 = new Tower(1,"Classic",6, 350, 60, 50, 0, 0, Weapon1, Base1, Gun1, laser, .5f, mainStage, world);
         tower2 = new Tower(2,"Cadence",8, 275, 20, 150, 0, 0, Weapon2, Base2, Gun2, laser, .4f, mainStage, world);
-        tower3 = new Tower(3,"Portée",120, 800, 400, 375, 0, 0, Weapon3, Base3, Gun3, laser, .8f, mainStage, world);
+        tower3 = new Tower(3,"Portée",100, 800, 400, 375, 0, 0, Weapon3, Base3, Gun3, laser, .8f, mainStage, world);
         tower4 = new Tower(4,"Dégats",120, 400, 100, 800, 0, 0, Weapon4, Base4, Gun4, laser, .6f, mainStage, world);
-        tower5 = new FreezeTower(5, "Freeze",0, 375, 120, 250, 0, 0, FreezerBase, FreezerGun, snowlaser, .3f, mainStage, world, 2);
+        tower5 = new FreezeTower(5, "Freeze",0, 300, 120, 250, 0, 0, FreezerBase, FreezerGun, snowlaser, .3f, mainStage, world, 2);
         tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 300, 0, 0, MoneyCoin, blank, laser, 2, mainStage, world, 1.15f, player);
         player.setMoneyboost(0);
 
@@ -552,7 +566,7 @@ public class PlayScreen implements Screen{
                         posTowerSell = null;
                     }
                 }
-                if(round.getTemps() > 50 && round.getRoundnbr() < 30 && !dialogSellOrNot){
+                else if(round.getTemps() > 50 && round.getRoundnbr() < 37 && !dialogSellOrNot){
                     if(pos3.x>0.86 && pos3.x<6.8 && pos3.y>3.5 && pos3.y<5.9){
                         System.out.println("SKIP");
                         round.setTemps(1500);
@@ -566,6 +580,7 @@ public class PlayScreen implements Screen{
                             System.out.println("vendre");
                             System.out.println(towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x].getName());
                             dialogSellOrNot = true;
+                            towertouched = towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x].getID();
                             if(towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x].getUpgraded() == 3){
                                 islevelmax = true;
                             }
@@ -639,11 +654,11 @@ public class PlayScreen implements Screen{
         if(player.getNuke().getCooldown() > 0){
             player.getNuke().setCooldown(player.getNuke().getCooldown()-1);
         }
-        if(player.getLife() <= 0 && round.getRoundnbr() < 30){
+        if(player.getLife() <= 0 && round.getRoundnbr() < 37){
             this.gameOver = true;
             game.setScreen(new LoseScreen(game, player));
         }
-        else if(round.getRoundnbr() == 30 && player.getLife()<=0){
+        else if(round.getRoundnbr() == 37 && player.getLife()<=0){
             player.setScore(player.getScore());
             this.gameOver = true;
             game.setScreen(new WinScreen(game, player));
@@ -801,11 +816,47 @@ public class PlayScreen implements Screen{
                 temps1 = 0;
             }
             else if (round.getRoundnbr() == 29 && ennemycount < 88 && temps1 > 125) {
+                player.getNuke().setNumber(player.getNuke().getNumber()+1);
                 round.round29(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 30 && ennemycount < 1000 && temps1 > 500) {
+            else if (round.getRoundnbr() == 30 && ennemycount < 93 && temps1 > 125) {
+                round.round30(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 31 && ennemycount < 96 && temps1 > 125) {
+                round.round31(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 32 && ennemycount < 98 && temps1 > 125) {
+                round.round32(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 33 && ennemycount < 100 && temps1 > 125) {
+                round.round33(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 34 && ennemycount < 101 && temps1 > 125) {
+                round.round34(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 35 && ennemycount < 102 && temps1 > 125) {
+                round.round35(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 36 && ennemycount < 105 && temps1 > 125) {
+                round.round36(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 37 && ennemycount < 1000 && temps1 > 500) {
                 if(!endcapture){
                     player.setEndlife(player.getLife());
                     endcapture = true;
@@ -918,20 +969,32 @@ public class PlayScreen implements Screen{
         if(dialogSellOrNot){
             sellButton.draw(batch, 1);
             cancelButton.draw(batch, 1);
-            if(!islevelmax) {
-                upgradeButton.draw(batch, 1);
+            if(!islevelmax && towertouched == 1) {
+                upgradeButton1.draw(batch, 1);
+            }
+            else if(!islevelmax && towertouched == 2) {
+                upgradeButton2.draw(batch, 1);
+            }
+            else if(!islevelmax && towertouched == 3) {
+                upgradeButton3.draw(batch, 1);
+            }
+            else if(!islevelmax && towertouched == 4) {
+                upgradeButton4.draw(batch, 1);
+            }
+            else if(!islevelmax && towertouched == 5) {
+                upgradeButton5.draw(batch, 1);
             }
         }
-        if(round.getTemps() > 50 && !dialogSellOrNot && round.getRoundnbr() < 30){
+        else if(round.getTemps() > 50 && !dialogSellOrNot && round.getRoundnbr() < 37){
             skipButton.draw(batch, 1);
         }
         font.setColor(Color.BLACK);
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), Gdx.graphics.getWidth()-110, 30);
         //font.getData().setScale(1.8f);
-        if(round.getRoundnbr()>-1 && round.getRoundnbr()<30) {
+        if(round.getRoundnbr()>-1 && round.getRoundnbr()<37) {
             font.draw(batch, "Round: " + (round.getRoundnbr()+1), 10, HEIGHT - 10);
         }
-        else if(round.getRoundnbr() == 30){
+        else if(round.getRoundnbr() == 37){
             font.draw(batch, "BONUS ROUND" , 10, HEIGHT - 10);
         }
         font.getData().setScale(2f);

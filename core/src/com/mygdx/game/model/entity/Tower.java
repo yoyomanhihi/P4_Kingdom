@@ -39,6 +39,7 @@ public class Tower extends BaseActor {
     private int yOrigin;
     private Vector3 posOrigin;
     private int upgraded;
+    private int prixtotal;
 
 
     /**
@@ -63,6 +64,7 @@ public class Tower extends BaseActor {
         this.range = portee;
         this.fireRate = cadence;
         this.price = prix;
+        prixtotal = prix;
         this.locked = true;
         this.globalTexture = globalTexture;
         this.base_texture = base_texture;
@@ -254,6 +256,14 @@ public class Tower extends BaseActor {
 
     public int getUpgraded(){
         return this.upgraded;
+    }
+
+    public int getPrixtotal(){
+        return prixtotal;
+    }
+
+    public void setPrixtotal(int prixtotal){
+        this.prixtotal = prixtotal;
     }
 
 

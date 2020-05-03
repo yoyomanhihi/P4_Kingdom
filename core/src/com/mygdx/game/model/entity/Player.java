@@ -52,7 +52,7 @@ public class Player {
         if(tour.getPrice() == 500){
             this.setMoneyboost(moneyboost - 1);
         }
-        setMoney(getMoney() + tour.getPrice()/2);
+        setMoney(getMoney() + tour.getPrixtotal()/2);
         weapons.remove(tour);
 
     }
@@ -62,6 +62,7 @@ public class Player {
             if (this.money >= 40) {
                 if (tower.getUpgraded() == 0) {
                     setMoney(getMoney() - 40);
+                    tower.setPrixtotal(tower.getPrixtotal()+40);
                     int indexTower = weapons.indexOf(tower);
                     weapons.get(indexTower).setDamage(10);
                     weapons.get(indexTower).getBase_sprite().setColor(Color.BLUE);
@@ -70,6 +71,7 @@ public class Player {
                 }
                 else if (tower.getUpgraded() == 1) {
                     setMoney(getMoney() - 40);
+                    tower.setPrixtotal(tower.getPrixtotal()+40);
                     int indexTower = weapons.indexOf(tower);
                     weapons.get(indexTower).setDamage(14);
                     weapons.get(indexTower).getBase_sprite().setColor(Color.PURPLE);
@@ -78,6 +80,7 @@ public class Player {
                 }
                 else if (tower.getUpgraded() == 2) {
                     setMoney(getMoney() - 40);
+                    tower.setPrixtotal(tower.getPrixtotal()+40);
                     int indexTower = weapons.indexOf(tower);
                     weapons.get(indexTower).setDamage(20);
                     weapons.get(indexTower).getBase_sprite().setColor(Color.GOLD);
@@ -91,6 +94,7 @@ public class Player {
             if (this.money >= 120) {
                 if (tower.getUpgraded() == 0) {
                     setMoney(getMoney() - 120);
+                    tower.setPrixtotal(tower.getPrixtotal()+120);
                     int indexTower = weapons.indexOf(tower);
                     weapons.get(indexTower).setDamage(12);
                     weapons.get(indexTower).getBase_sprite().setColor(Color.BLUE);
@@ -99,6 +103,7 @@ public class Player {
                 }
                 else if (tower.getUpgraded() == 1) {
                     setMoney(getMoney() - 120);
+                    tower.setPrixtotal(tower.getPrixtotal()+120);
                     int indexTower = weapons.indexOf(tower);
                     weapons.get(indexTower).setDamage(16);
                     weapons.get(indexTower).getBase_sprite().setColor(Color.PURPLE);
@@ -107,6 +112,7 @@ public class Player {
                 }
                 else if (tower.getUpgraded() == 2) {
                     setMoney(getMoney() - 120);
+                    tower.setPrixtotal(tower.getPrixtotal()+120);
                     int indexTower = weapons.indexOf(tower);
                     weapons.get(indexTower).setDamage(22);
                     weapons.get(indexTower).getBase_sprite().setColor(Color.GOLD);
@@ -120,24 +126,27 @@ public class Player {
             if (this.money >= 300) {
                 if (tower.getUpgraded() == 0) {
                     setMoney(getMoney() - 300);
+                    tower.setPrixtotal(tower.getPrixtotal()+300);
                     int indexTower = weapons.indexOf(tower);
-                    weapons.get(indexTower).setDamage(195);
+                    weapons.get(indexTower).setDamage(165);
                     weapons.get(indexTower).getBase_sprite().setColor(Color.BLUE);
                     weapons.get(indexTower).setUpgraded(1);
                     //weapons.get(indexTower).getWeapon_sprite().setColor(Color.BLUE);
                 }
                 else if (tower.getUpgraded() == 1) {
                     setMoney(getMoney() - 300);
+                    tower.setPrixtotal(tower.getPrixtotal()+300);
                     int indexTower = weapons.indexOf(tower);
-                    weapons.get(indexTower).setDamage(275);
+                    weapons.get(indexTower).setDamage(230);
                     weapons.get(indexTower).getBase_sprite().setColor(Color.PURPLE);
                     weapons.get(indexTower).setUpgraded(2);
                     //weapons.get(indexTower).getWeapon_sprite().setColor(Color.BLUE);
                 }
                 else if (tower.getUpgraded() == 2) {
                     setMoney(getMoney() - 300);
+                    tower.setPrixtotal(tower.getPrixtotal()+300);
                     int indexTower = weapons.indexOf(tower);
-                    weapons.get(indexTower).setDamage(365);
+                    weapons.get(indexTower).setDamage(310);
                     weapons.get(indexTower).getBase_sprite().setColor(Color.GOLD);
                     weapons.get(indexTower).setUpgraded(3);
                     //weapons.get(indexTower).getWeapon_sprite().setColor(Color.BLUE);
@@ -149,6 +158,7 @@ public class Player {
             if (this.money >= 640) {
                 if (tower.getUpgraded() == 0) {
                     setMoney(getMoney() - 640);
+                    tower.setPrixtotal(tower.getPrixtotal()+640);
                     int indexTower = weapons.indexOf(tower);
                     weapons.get(indexTower).setDamage(195);
                     weapons.get(indexTower).getBase_sprite().setColor(Color.BLUE);
@@ -156,6 +166,7 @@ public class Player {
                 }
                 else if (tower.getUpgraded() == 1) {
                     setMoney(getMoney() - 640);
+                    tower.setPrixtotal(tower.getPrixtotal()+640);
                     int indexTower = weapons.indexOf(tower);
                     weapons.get(indexTower).setDamage(275);
                     weapons.get(indexTower).getBase_sprite().setColor(Color.PURPLE);
@@ -163,6 +174,7 @@ public class Player {
                 }
                 else if (tower.getUpgraded() == 2) {
                     setMoney(getMoney() - 640);
+                    tower.setPrixtotal(tower.getPrixtotal()+640);
                     int indexTower = weapons.indexOf(tower);
                     weapons.get(indexTower).setDamage(365);
                     weapons.get(indexTower).getBase_sprite().setColor(Color.GOLD);
@@ -175,6 +187,7 @@ public class Player {
             if (this.money >= 200) {
                 if (tower.getUpgraded() == 0) {
                     setMoney(getMoney() - 200);
+                    tower.setPrixtotal(tower.getPrixtotal()+200);
                     int indexTower = weapons.indexOf(tower);
                     weapons.get(indexTower).setFireRate(80);
                     weapons.get(indexTower).getBase_sprite().setColor(Color.BLUE);
@@ -183,6 +196,7 @@ public class Player {
                 }
                 else if (tower.getUpgraded() == 1) {
                     setMoney(getMoney() - 200);
+                    tower.setPrixtotal(tower.getPrixtotal()+200);
                     int indexTower = weapons.indexOf(tower);
                     weapons.get(indexTower).setDamage(50);
                     weapons.get(indexTower).getBase_sprite().setColor(Color.PURPLE);
@@ -191,6 +205,7 @@ public class Player {
                 }
                 else if (tower.getUpgraded() == 2) {
                     setMoney(getMoney() - 200);
+                    tower.setPrixtotal(tower.getPrixtotal()+200);
                     int indexTower = weapons.indexOf(tower);
                     weapons.get(indexTower).setDamage(25);
                     weapons.get(indexTower).getBase_sprite().setColor(Color.GOLD);
