@@ -143,6 +143,8 @@ public class PlayScreen implements Screen{
     private boolean endcapture;
     private boolean islevelmax;
     private int towertouched;
+    private Sprite moab;
+    private float transitionmoab;
 
 
 
@@ -169,6 +171,8 @@ public class PlayScreen implements Screen{
         world = new World(new Vector2(0, 0), true);
         Tank = new Texture("ennemies_sprite/red1.png");
         Pistol1 = new Texture("Pistol.png");
+        moab = new Sprite(new Texture("blanc.jpg"));
+        transitionmoab = 0;
 
         Weapon1 = new Texture("weapon_sprites/Weapon1.png");
         Weapon2 = new Texture("weapon_sprites/Weapon2.png");
@@ -1030,6 +1034,12 @@ public class PlayScreen implements Screen{
             for(Tower tower : player.getWeapons()){
                 round.updateTower(delta, batch, game, uiStage, tower);
             }
+        }
+        if(player.getNuke().getCooldown() > 300){
+            transitionmoab = (float) ((player.getNuke().getCooldown() - 300)/300);
+            moab.setScale(4);
+            moab.setAlpha(transitionmoab);
+            moab.draw(batch);
         }
         temps++;
         batch.end();
