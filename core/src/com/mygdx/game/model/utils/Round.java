@@ -59,7 +59,7 @@ public class Round {
     public void round0(int temps, Stage stage, World world, int ennemynbr){ //Un ennemi 1       8
         ennemies.add(new Ennemy(100, 120, 8, new Texture("ennemies_sprite/red2.png"), stage, world,directionsEnemy,startX,startY, 1));
         ennemies.get(ennemynbr-deadennemies).defineEnnemy();
-        ennemies.get(ennemynbr-deadennemies).beFast();
+        //ennemies.get(ennemynbr-deadennemies).beFast();
     }
 
     public void round1(int temps, Stage stage, World world, int ennemynbr){ //Deux ennemis 1    16  24
