@@ -31,7 +31,7 @@
 			player = new Player();
 			music = Gdx.audio.newMusic(Gdx.files.internal("Actofwar.mp3"));
 			music.setLooping(true);
-			music.setVolume(0.5f);
+			music.setVolume(0.3f);
 			music.play();
 			menuScreen = new MenuScreen(this);
 			setScreen(menuScreen);

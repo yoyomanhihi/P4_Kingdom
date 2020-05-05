@@ -116,10 +116,10 @@ public class Tower extends BaseActor {
         //    return;
         //}
         if(price != 375 && price != 250) {
-            laser.getSound().play(0.15f);
+            laser.getSound().play(0.09f);
         }
         else{
-            laser.getSound().play();
+            laser.getSound().play(0.6f);
         }
         laser.centerAtActor(this);
         laser.update(dt, batch, ennemy, game, stage);

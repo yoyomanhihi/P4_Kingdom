@@ -198,7 +198,7 @@ public class Player {
                     setMoney(getMoney() - 200);
                     tower.setPrixtotal(tower.getPrixtotal()+200);
                     int indexTower = weapons.indexOf(tower);
-                    weapons.get(indexTower).setDamage(50);
+                    weapons.get(indexTower).setFireRate(50);
                     weapons.get(indexTower).getBase_sprite().setColor(Color.PURPLE);
                     weapons.get(indexTower).setUpgraded(2);
                     //weapons.get(indexTower).getWeapon_sprite().setColor(Color.BLUE);
@@ -207,7 +207,7 @@ public class Player {
                     setMoney(getMoney() - 200);
                     tower.setPrixtotal(tower.getPrixtotal()+200);
                     int indexTower = weapons.indexOf(tower);
-                    weapons.get(indexTower).setDamage(25);
+                    weapons.get(indexTower).setFireRate(30);
                     weapons.get(indexTower).getBase_sprite().setColor(Color.GOLD);
                     weapons.get(indexTower).setUpgraded(3);
                 }

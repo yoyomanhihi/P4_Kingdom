@@ -62,10 +62,10 @@ public class Ennemy extends BaseActor {
         this.texture = texture;
         this.speedsprite = new Sprite(new Texture("speedflame.png"));
         speedsprite.setScale(.04f, .05f);
-        if(life == 80 || life == 300) {
+        if(life == 100 || life == 350) {
             sprite.setScale(0.32f, 0.4f);
         }
-        else if(life == 1200 || life == 1500) {
+        else if(life == 1400 || life == 1700) {
             sprite.setScale(0.4f, 0.5f);
         }
         else{
@@ -121,14 +121,14 @@ public class Ennemy extends BaseActor {
         }
         else {
             if(doreload && life < initiallife){
-                if(initiallife == 300) {
-                    life = life + (initiallife / 1000);
+                if(initiallife == 350) {
+                    life = life + (initiallife / 1100);
                 }
-                else if(initiallife == 1200){
-                    life = life +(initiallife / 2200);
+                else if(initiallife == 1400){
+                    life = life +(initiallife / 1800);
                 }
-                else if(initiallife == 1500){
-                    life = life +(initiallife / 2600);
+                else if(initiallife == 1700){
+                    life = life +(initiallife / 2000);
                 }
             }
             if(isfreezed){

@@ -28,12 +28,19 @@ public class Laser extends BaseActor
     private float angle;
     private Sound sound;
     private float conversion2 = 0.0174533f;
+    private boolean snow;
 
 
     public Laser(float x, float y, float lasersize, Texture texture, int speed, Sound sound, Stage s, World world)
     {
         super(x,y,s);
         this.sprite = new Sprite(texture);
+        if(lasersize == .3f){
+            snow = true;
+        }
+        else{
+            snow = false;
+        }
         sprite.setScale(lasersize);
         addAction( Actions.delay(1) );
         addAction( Actions.after( Actions.fadeOut(0.5f) ) );
@@ -62,7 +69,12 @@ public class Laser extends BaseActor
         if(this.getX() < 4500)
         angle = this.getOrientation(Ennemy); //calcule ou le laser doit aller
         move(angle, dt); // fait bouger le laser
-        sprite.setPosition(this.getX(), this.getY());
+        if(snow){
+            sprite.setPosition(this.getX()-45, this.getY()-45);
+        }
+        else {
+            sprite.setPosition(this.getX(), this.getY());
+        }
         sprite.draw(batch);
     }
 

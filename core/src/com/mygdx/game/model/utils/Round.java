@@ -57,13 +57,14 @@ public class Round {
     } //Put the good size for the first wave
 
     public void round0(int temps, Stage stage, World world, int ennemynbr){ //Un ennemi 1       8
-        ennemies.add(new Ennemy(80, 120, 8, new Texture("ennemies_sprite/red2.png"), stage, world,directionsEnemy,startX,startY, 1));
+        ennemies.add(new Ennemy(100, 120, 8, new Texture("ennemies_sprite/red2.png"), stage, world,directionsEnemy,startX,startY, 1));
         ennemies.get(ennemynbr-deadennemies).defineEnnemy();
+        ennemies.get(ennemynbr-deadennemies).beFast();
     }
 
     public void round1(int temps, Stage stage, World world, int ennemynbr){ //Deux ennemis 1    16  24
         if(ennemynbr < 2){
-            ennemies1transition.getFirst().setLife(80);
+            ennemies1transition.getFirst().setLife(100);
             ennemies1transition.getFirst().setPosition(startX, startY);
             ennemies1transition.getFirst().setDirection(0);
             ennemies1transition.getFirst().setTarget(0);
@@ -75,14 +76,14 @@ public class Round {
             ennemies1transition.removeFirst();
         }
         else {
-            ennemies.add(new Ennemy(80, 120, 8, new Texture("ennemies_sprite/red2.png"), stage, world, directionsEnemy, startX, startY, 1));
+            ennemies.add(new Ennemy(100, 120, 8, new Texture("ennemies_sprite/red2.png"), stage, world, directionsEnemy, startX, startY, 1));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
         }
     }
 
     public void round2(int temps, Stage stage, World world, int ennemynbr){ //Trois ennemis 1   24  40
         if(ennemynbr < 5){
-            ennemies1transition.getFirst().setLife(80);
+            ennemies1transition.getFirst().setLife(100);
             ennemies1transition.getFirst().setPosition(startX, startY);
             ennemies1transition.getFirst().setDirection(0);
             ennemies1transition.getFirst().setTarget(0);
@@ -94,19 +95,19 @@ public class Round {
             ennemies1transition.removeFirst();
         }
         else {
-            ennemies.add(new Ennemy(80, 120, 8, new Texture("ennemies_sprite/red2.png"), stage, world, directionsEnemy, startX, startY, 1));
+            ennemies.add(new Ennemy(100, 120, 8, new Texture("ennemies_sprite/red2.png"), stage, world, directionsEnemy, startX, startY, 1));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
         }
     }
 
     public void round3(int temps, Stage stage, World world, int ennemynbr){ //Un ennemi 2       30  70
-        ennemies.add(new Ennemy(300, 75, 30, new Texture("ennemies_sprite/red3.png"), stage, world,directionsEnemy,startX,startY, 1));
+        ennemies.add(new Ennemy(350, 75, 30, new Texture("ennemies_sprite/red3.png"), stage, world,directionsEnemy,startX,startY, 1));
         ennemies.get(ennemynbr - deadennemies).defineEnnemy();
     }
 
     public void round4(int temps, Stage stage, World world, int ennemynbr) { // Cinq ennemis 1
         if(ennemynbr < 10){
-            ennemies1transition.getFirst().setLife(80);
+            ennemies1transition.getFirst().setLife(100);
             ennemies1transition.getFirst().setPosition(startX, startY);
             ennemies1transition.getFirst().setDirection(0);
             ennemies1transition.getFirst().setTarget(0);
@@ -118,7 +119,7 @@ public class Round {
             ennemies1transition.removeFirst();
         }
         else{
-            ennemies.add(new Ennemy(80, 120, 8, new Texture("ennemies_sprite/red2.png"), stage, world,directionsEnemy,startX,startY, 1));
+            ennemies.add(new Ennemy(100, 120, 8, new Texture("ennemies_sprite/red2.png"), stage, world,directionsEnemy,startX,startY, 1));
             ennemies.get(ennemynbr-deadennemies).defineEnnemy();
         }
     }
@@ -127,7 +128,7 @@ public class Round {
 
     public void round5(int temps, Stage stage, World world, int ennemynbr) { //Trois ennemis 1 & Un ennemi 2    54  124
         if(ennemynbr < 15) {
-            ennemies1transition.getFirst().setLife(80);
+            ennemies1transition.getFirst().setLife(100);
             ennemies1transition.getFirst().setPosition(startX, startY);
             ennemies1transition.getFirst().setDirection(0);
             ennemies1transition.getFirst().setTarget(0);
@@ -139,7 +140,7 @@ public class Round {
             ennemies1transition.removeFirst();
         }
         else {
-            ennemies2transition.getFirst().setLife(300);
+            ennemies2transition.getFirst().setLife(350);
             ennemies2transition.getFirst().setPosition(startX, startY);
             ennemies2transition.getFirst().setDirection(0);
             ennemies2transition.getFirst().setTarget(0);
@@ -154,7 +155,7 @@ public class Round {
 
     public void round6(int temps, Stage stage, World world, int ennemynbr){ // Deux ennemis 2   60  184
         if(ennemynbr < 17) {
-            ennemies2transition.getFirst().setLife(300);
+            ennemies2transition.getFirst().setLife(350);
             ennemies2transition.getFirst().setPosition(startX, startY);
             ennemies2transition.getFirst().setDirection(0);
             ennemies2transition.getFirst().setTarget(0);
@@ -166,14 +167,14 @@ public class Round {
             ennemies2transition.removeFirst();
         }
         else{
-            ennemies.add(new Ennemy(300, 75, 30, new Texture("ennemies_sprite/red3.png"), stage, world,directionsEnemy,startX,startY, 1));
+            ennemies.add(new Ennemy(350, 75, 30, new Texture("ennemies_sprite/red3.png"), stage, world,directionsEnemy,startX,startY, 1));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
         }
     }
 
     public void round7(int temps, Stage stage, World world, int ennemynbr) { //Cinq ennemis 1 et Trois ennemis 2    130     314
         if(ennemynbr < 23){
-            ennemies1transition.getFirst().setLife(80);
+            ennemies1transition.getFirst().setLife(100);
             ennemies1transition.getFirst().setPosition(startX, startY);
             ennemies1transition.getFirst().setDirection(0);
             ennemies1transition.getFirst().setTarget(0);
@@ -185,7 +186,7 @@ public class Round {
             ennemies1transition.removeFirst();
         }
         else if(ennemynbr < 25){
-            ennemies2transition.getFirst().setLife(300);
+            ennemies2transition.getFirst().setLife(350);
             ennemies2transition.getFirst().setPosition(startX, startY);
             ennemies2transition.getFirst().setDirection(0);
             ennemies2transition.getFirst().setTarget(0);
@@ -197,14 +198,14 @@ public class Round {
             ennemies2transition.removeFirst();
         }
         else{
-            ennemies.add(new Ennemy(300, 75, 30, new Texture("ennemies_sprite/red3.png"), stage, world,directionsEnemy,startX,startY, 1));
+            ennemies.add(new Ennemy(350, 75, 30, new Texture("ennemies_sprite/red3.png"), stage, world,directionsEnemy,startX,startY, 1));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
         }
     }
 
     public void round8(int temps, Stage stage, World world, int ennemynbr) { //Dix ennemis 1 rapides    120     434
         if(ennemynbr < 31){
-            ennemies1transition.getFirst().setLife(80);
+            ennemies1transition.getFirst().setLife(100);
             ennemies1transition.getFirst().setPosition(startX, startY);
             ennemies1transition.getFirst().setDirection(0);
             ennemies1transition.getFirst().setTarget(0);
@@ -216,7 +217,7 @@ public class Round {
             ennemies1transition.removeFirst();
         }
         else{
-            ennemies.add(new Ennemy(80, 120, 8, new Texture("ennemies_sprite/red2.png"), stage, world,directionsEnemy,startX,startY, 1));
+            ennemies.add(new Ennemy(100, 120, 8, new Texture("ennemies_sprite/red2.png"), stage, world,directionsEnemy,startX,startY, 1));
             ennemies.get(ennemynbr-deadennemies).defineEnnemy();
             ennemies.get(ennemynbr-deadennemies).beFast();
             ennemies.get(ennemynbr-deadennemies).setPoint(12);
@@ -224,7 +225,7 @@ public class Round {
     }
 
     public void round9(int temps, Stage stage, World world, int ennemynbr) { // Un ennemi 2 rapide      40      474
-        ennemies2transition.getFirst().setLife(300);
+        ennemies2transition.getFirst().setLife(350);
         ennemies2transition.getFirst().setPosition(startX, startY);
         ennemies2transition.getFirst().setDirection(0);
         ennemies2transition.getFirst().setTarget(0);
@@ -237,7 +238,7 @@ public class Round {
 
     public void round10(int temps, Stage stage, World world, int ennemynbr) { //Quatre ennemis 2        120     594
         if(ennemynbr < 39){
-            ennemies2transition.getFirst().setLife(300);
+            ennemies2transition.getFirst().setLife(350);
             ennemies2transition.getFirst().setPosition(startX, startY);
             ennemies2transition.getFirst().setDirection(0);
             ennemies2transition.getFirst().setTarget(0);
@@ -251,7 +252,7 @@ public class Round {
             ennemies2transition.removeFirst();
         }
         else{
-            ennemies.add(new Ennemy(300, 75, 30, new Texture("ennemies_sprite/red3.png"), stage, world,directionsEnemy,startX,startY, 1));
+            ennemies.add(new Ennemy(350, 75, 30, new Texture("ennemies_sprite/red3.png"), stage, world,directionsEnemy,startX,startY, 1));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
         }
     }
@@ -259,12 +260,12 @@ public class Round {
 
 
     public void round11(int temps, Stage stage, World world, int ennemynbr) { // Un ennemi 3        70      664
-        ennemies.add(new Ennemy(1200, 65, 70, new Texture("ennemies_sprite/red4.png"), stage, world,directionsEnemy,startX,startY, 2));
+        ennemies.add(new Ennemy(1400, 65, 70, new Texture("ennemies_sprite/red4.png"), stage, world,directionsEnemy,startX,startY, 2));
         ennemies.get(ennemynbr - deadennemies).defineEnnemy();
     }
 
     public void round12(int temps, Stage stage, World world, int ennemynbr) { // Un ennemi 2 avec recharge  60  724
-        ennemies2transition.getFirst().setLife(300);
+        ennemies2transition.getFirst().setLife(350);
         ennemies2transition.getFirst().setSpeed(ennemies2transition.getFirst().getNormalspeed());
         ennemies2transition.getFirst().setIsfast(false);
         ennemies2transition.getFirst().setPosition(startX, startY);
@@ -280,7 +281,7 @@ public class Round {
 
     public void round13(int temps, Stage stage, World world, int ennemynbr) { //Trois ennemis 2 et un ennemi 3  160     884
         if(ennemynbr < 46){
-            ennemies2transition.getFirst().setLife(300);
+            ennemies2transition.getFirst().setLife(350);
             ennemies2transition.getFirst().setPosition(startX, startY);
             ennemies2transition.getFirst().setDirection(0);
             ennemies2transition.getFirst().setTarget(0);
@@ -294,7 +295,7 @@ public class Round {
             ennemies2transition.removeFirst();
         }
         else{
-            ennemies3transition.getFirst().setLife(1200);
+            ennemies3transition.getFirst().setLife(1400);
             ennemies3transition.getFirst().setPosition(startX, startY);
             ennemies3transition.getFirst().setDirection(0);
             ennemies3transition.getFirst().setTarget(0);
@@ -310,7 +311,7 @@ public class Round {
     }
 
     public void round14(int temps, Stage stage, World world, int ennemynbr) { //Un ennemi 2 rapide avec recharge    60      964
-        ennemies2transition.getFirst().setLife(300);
+        ennemies2transition.getFirst().setLife(350);
         ennemies2transition.getFirst().setPosition(startX, startY);
         ennemies2transition.getFirst().setDirection(0);
         ennemies2transition.getFirst().setTarget(0);
@@ -323,7 +324,7 @@ public class Round {
     }
 
     public void round15(int temps, Stage stage, World world, int ennemynbr) { //Cinq ennemis 2 rapides      200     1164
-        ennemies2transition.getFirst().setLife(300);
+        ennemies2transition.getFirst().setLife(350);
         ennemies2transition.getFirst().setPosition(startX, startY);
         ennemies2transition.getFirst().setDirection(0);
         ennemies2transition.getFirst().setTarget(0);
@@ -337,7 +338,7 @@ public class Round {
 
     public void round16(int temps, Stage stage, World world, int ennemynbr) { // Deux ennemis 3         140     1304
         if(ennemynbr < 54) {
-            ennemies3transition.getFirst().setLife(1200);
+            ennemies3transition.getFirst().setLife(1400);
             ennemies3transition.getFirst().setPosition(startX, startY);
             ennemies3transition.getFirst().setDirection(0);
             ennemies3transition.getFirst().setTarget(0);
@@ -351,14 +352,14 @@ public class Round {
             ennemies3transition.removeFirst();
         }
         else{
-            ennemies.add(new Ennemy(1200, 65, 70, new Texture("ennemies_sprite/red4.png"), stage, world,directionsEnemy,startX,startY, 2));
+            ennemies.add(new Ennemy(1400, 65, 70, new Texture("ennemies_sprite/red4.png"), stage, world,directionsEnemy,startX,startY, 2));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
         }
     }
 
 
     public void round17(int temps, Stage stage, World world, int ennemynbr) { // Trois ennemis 2 rapides avec recharge      180     1544
-        ennemies2transition.getFirst().setLife(300);
+        ennemies2transition.getFirst().setLife(350);
         ennemies2transition.getFirst().setPosition(startX, startY);
         ennemies2transition.getFirst().setDirection(0);
         ennemies2transition.getFirst().setTarget(0);
@@ -372,18 +373,18 @@ public class Round {
 
 
     public void round18(int temps, Stage stage, World world, int ennemynbr) { // Un ennemi 4        100     1644
-        ennemies.add(new Ennemy(1500, 85, 100, new Texture("ennemies_sprite/red1.png"), stage, world,directionsEnemy,startX,startY, 2));
+        ennemies.add(new Ennemy(1700, 85, 100, new Texture("ennemies_sprite/red1.png"), stage, world,directionsEnemy,startX,startY, 2));
         ennemies.get(ennemynbr - deadennemies).defineEnnemy();
     }
 
     public void round19(int temps, Stage stage, World world, int ennemynbr) { // Un ennemi 3 rapide         90      1734
-        ennemies3transition.getFirst().setLife(1200);
+        ennemies3transition.getFirst().setLife(1400);
         ennemies3transition.getFirst().setDirection(0);
         ennemies3transition.getFirst().setPosition(startX, startY);
         ennemies3transition.getFirst().setTarget(0);
         ennemies3transition.getFirst().setAttackPlayer(false);
         ennemies3transition.getFirst().beFast();
-        ennemies3transition.getFirst().setPoint(90);
+        ennemies3transition.getFirst().setPoint(80);
         ennemies.add(ennemies3transition.getFirst());
         ennemies3transition.removeFirst();
     }
@@ -391,7 +392,7 @@ public class Round {
 
     public void round20(int temps, Stage stage, World world, int ennemynbr) { // Trois ennemis 3        210     1944
         if(ennemynbr < 62) {
-            ennemies3transition.getFirst().setLife(1200);
+            ennemies3transition.getFirst().setLife(1400);
             ennemies3transition.getFirst().setPosition(startX, startY);
             ennemies3transition.getFirst().setDirection(0);
             ennemies3transition.getFirst().setTarget(0);
@@ -405,13 +406,13 @@ public class Round {
             ennemies3transition.removeFirst();
         }
         else{
-            ennemies.add(new Ennemy(1200, 65, 70, new Texture("ennemies_sprite/red4.png"), stage, world,directionsEnemy,startX,startY, 2));
+            ennemies.add(new Ennemy(1400, 65, 70, new Texture("ennemies_sprite/red4.png"), stage, world,directionsEnemy,startX,startY, 2));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
         }
     }
 
     public void round21(int temps, Stage stage, World world, int ennemynbr) { // Cinq ennemis 2 rapides avec recharge       300     2344
-        ennemies2transition.getFirst().setLife(300);
+        ennemies2transition.getFirst().setLife(350);
         ennemies2transition.getFirst().setPosition(startX, startY);
         ennemies2transition.getFirst().setDirection(0);
         ennemies2transition.getFirst().setTarget(0);
@@ -425,7 +426,7 @@ public class Round {
 
     public void round22(int temps, Stage stage, World world, int ennemynbr) { // Deux ennemis 4     200     2544
         if(ennemynbr < 69) {
-            ennemies4transition.getFirst().setLife(1500);
+            ennemies4transition.getFirst().setLife(1700);
             ennemies4transition.getFirst().setPosition(startX, startY);
             ennemies4transition.getFirst().setDirection(0);
             ennemies4transition.getFirst().setTarget(0);
@@ -439,14 +440,14 @@ public class Round {
             ennemies4transition.removeFirst();
         }
         else{
-            ennemies.add(new Ennemy(1500, 85, 100, new Texture("ennemies_sprite/red1.png"), stage, world,directionsEnemy,startX,startY, 2));
+            ennemies.add(new Ennemy(1700, 85, 100, new Texture("ennemies_sprite/red1.png"), stage, world,directionsEnemy,startX,startY, 2));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
         }
     }
 
     public void round23(int temps, Stage stage, World world, int ennemynbr) { // Un ennemi 4 et deux ennemis 3      240     2784
         if(ennemynbr < 71) {
-            ennemies4transition.getFirst().setLife(1500);
+            ennemies4transition.getFirst().setLife(1700);
             ennemies4transition.getFirst().setPosition(startX, startY);
             ennemies4transition.getFirst().setDirection(0);
             ennemies4transition.getFirst().setTarget(0);
@@ -460,7 +461,7 @@ public class Round {
             ennemies4transition.removeFirst();
         }
         else{
-            ennemies3transition.getFirst().setLife(1200);
+            ennemies3transition.getFirst().setLife(1400);
             ennemies3transition.getFirst().setPosition(startX, startY);
             ennemies3transition.getFirst().setDirection(0);
             ennemies3transition.getFirst().setTarget(0);
@@ -476,7 +477,7 @@ public class Round {
     }
 
     public void round24(int temps, Stage stage, World world, int ennemynbr) { // Un ennemi 3 avec recharge      120  2924
-        ennemies3transition.getFirst().setLife(1200);
+        ennemies3transition.getFirst().setLife(1400);
         ennemies3transition.getFirst().setPosition(startX, startY);
         ennemies3transition.getFirst().setDirection(0);
         ennemies3transition.getFirst().setTarget(0);
@@ -491,7 +492,7 @@ public class Round {
 
     public void round25(int temps, Stage stage, World world, int ennemynbr) { // Quatre ennemis 3       280     3204
         if(ennemynbr < 77) {
-            ennemies3transition.getFirst().setLife(1200);
+            ennemies3transition.getFirst().setLife(1400);
             ennemies3transition.getFirst().setPosition(startX, startY);
             ennemies3transition.getFirst().setDirection(0);
             ennemies3transition.getFirst().setTarget(0);
@@ -505,14 +506,14 @@ public class Round {
             ennemies3transition.removeFirst();
         }
         else{
-            ennemies.add(new Ennemy(1200, 65, 70, new Texture("ennemies_sprite/red4.png"), stage, world,directionsEnemy,startX,startY, 2));
+            ennemies.add(new Ennemy(1400, 65, 70, new Texture("ennemies_sprite/red4.png"), stage, world,directionsEnemy,startX,startY, 2));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
         }
     }
 
     public void round26(int temps, Stage stage, World world, int ennemynbr) { // Trois ennemis 4       300      3504
         if(ennemynbr < 80) {
-            ennemies4transition.getFirst().setLife(1500);
+            ennemies4transition.getFirst().setLife(1700);
             ennemies4transition.getFirst().setPosition(startX, startY);
             ennemies4transition.getFirst().setDirection(0);
             ennemies4transition.getFirst().setTarget(0);
@@ -526,19 +527,19 @@ public class Round {
             ennemies4transition.removeFirst();
         }
         else{
-            ennemies.add(new Ennemy(1500, 85, 100, new Texture("ennemies_sprite/red1.png"), stage, world,directionsEnemy,startX,startY, 2));
+            ennemies.add(new Ennemy(1700, 85, 100, new Texture("ennemies_sprite/red1.png"), stage, world,directionsEnemy,startX,startY, 2));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
         }
     }
 
     public void round27(int temps, Stage stage, World world, int ennemynbr) { // Un ennemi 5        150     3704
-        ennemies.add(new Ennemy(3500, 50, 150, new Texture("ennemies_sprite/red2.png"), stage, world,directionsEnemy,startX,startY, 3));
+        ennemies.add(new Ennemy(4200, 50, 150, new Texture("ennemies_sprite/red2.png"), stage, world,directionsEnemy,startX,startY, 3));
         ennemies.get(ennemynbr - deadennemies).defineEnnemy();
     }
 
     public void round28(int temps, Stage stage, World world, int ennemynbr) { //Cinq ennemis 3      350     4054
         if(ennemynbr < 86) {
-            ennemies3transition.getFirst().setLife(1200);
+            ennemies3transition.getFirst().setLife(1400);
             ennemies3transition.getFirst().setPosition(startX, startY);
             ennemies3transition.getFirst().setDirection(0);
             ennemies3transition.getFirst().setTarget(0);
@@ -552,13 +553,13 @@ public class Round {
             ennemies3transition.removeFirst();
         }
         else{
-            ennemies.add(new Ennemy(1200, 65, 70, new Texture("ennemies_sprite/red4.png"), stage, world,directionsEnemy,startX,startY, 2));
+            ennemies.add(new Ennemy(1400, 65, 70, new Texture("ennemies_sprite/red4.png"), stage, world,directionsEnemy,startX,startY, 2));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
         }
     }
 
     public void round29(int temps, Stage stage, World world, int ennemynbr) { // Un ennemi 4 rapide     130     4204
-        ennemies4transition.getFirst().setLife(1500);
+        ennemies4transition.getFirst().setLife(1700);
         ennemies4transition.getFirst().setPosition(startX, startY);
         ennemies4transition.getFirst().setDirection(0);
         ennemies4transition.getFirst().setTarget(0);
@@ -572,7 +573,7 @@ public class Round {
 
     public void round30(int temps, Stage stage, World world, int ennemynbr) { // Cinq ennemis 4   500     4704
         if(ennemynbr < 91) {
-            ennemies4transition.getFirst().setLife(1500);
+            ennemies4transition.getFirst().setLife(1700);
             ennemies4transition.getFirst().setPosition(startX, startY);
             ennemies4transition.getFirst().setDirection(0);
             ennemies4transition.getFirst().setTarget(0);
@@ -586,13 +587,13 @@ public class Round {
             ennemies4transition.removeFirst();
         }
         else{
-            ennemies.add(new Ennemy(1500, 85, 100, new Texture("ennemies_sprite/red1.png"), stage, world,directionsEnemy,startX,startY, 2));
+            ennemies.add(new Ennemy(1700, 85, 100, new Texture("ennemies_sprite/red1.png"), stage, world,directionsEnemy,startX,startY, 2));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
         }
     }
 
     public void round31(int temps, Stage stage, World world, int ennemynbr) { // Trois ennemis 3 avec recharge   360     5124
-        ennemies3transition.getFirst().setLife(1200);
+        ennemies3transition.getFirst().setLife(1400);
         ennemies3transition.getFirst().setPosition(startX, startY);
         ennemies3transition.getFirst().setDirection(0);
         ennemies3transition.getFirst().setTarget(0);
@@ -607,7 +608,7 @@ public class Round {
 
     public void round32(int temps, Stage stage, World world, int ennemynbr) { // Deux ennemis 5     300        5324
         if(ennemynbr < 97) {
-            ennemies5transition.getFirst().setLife(3500);
+            ennemies5transition.getFirst().setLife(4200);
             ennemies5transition.getFirst().setPosition(startX, startY);
             ennemies5transition.getFirst().setDirection(0);
             ennemies5transition.getFirst().setTarget(0);
@@ -620,13 +621,13 @@ public class Round {
             ennemies5transition.removeFirst();
         }
         else {
-            ennemies.add(new Ennemy(3500, 50, 150, new Texture("ennemies_sprite/red2.png"), stage, world, directionsEnemy, startX, startY, 3));
+            ennemies.add(new Ennemy(4200, 50, 150, new Texture("ennemies_sprite/red2.png"), stage, world, directionsEnemy, startX, startY, 3));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
         }
     }
 
     public void round33(int temps, Stage stage, World world, int ennemynbr) { // Deux ennemis 4 rapides     240        5584
-        ennemies4transition.getFirst().setLife(1500);
+        ennemies4transition.getFirst().setLife(1700);
         ennemies4transition.getFirst().setPosition(startX, startY);
         ennemies4transition.getFirst().setDirection(0);
         ennemies4transition.getFirst().setTarget(0);
@@ -639,7 +640,7 @@ public class Round {
     }
 
     public void round34(int temps, Stage stage, World world, int ennemynbr) { // Un ennemi 4 avec recharge     180        5844
-        ennemies4transition.getFirst().setLife(1500);
+        ennemies4transition.getFirst().setLife(1700);
         ennemies4transition.getFirst().setPosition(startX, startY);
         ennemies4transition.getFirst().setDirection(0);
         ennemies4transition.getFirst().setTarget(0);
@@ -652,7 +653,7 @@ public class Round {
     }
 
     public void round35(int temps, Stage stage, World world, int ennemynbr) { // Un ennemi 5 rapide    180        6024
-        ennemies5transition.getFirst().setLife(3500);
+        ennemies5transition.getFirst().setLife(4200);
         ennemies5transition.getFirst().setPosition(startX, startY);
         ennemies5transition.getFirst().setDirection(0);
         ennemies5transition.getFirst().setTarget(0);
@@ -666,7 +667,7 @@ public class Round {
 
     public void round36(int temps, Stage stage, World world, int ennemynbr) { // Trois ennemis 5     450        6504
         if(ennemynbr < 104) {
-            ennemies5transition.getFirst().setLife(3500);
+            ennemies5transition.getFirst().setLife(4200);
             ennemies5transition.getFirst().setPosition(startX, startY);
             ennemies5transition.getFirst().setDirection(0);
             ennemies5transition.getFirst().setTarget(0);
@@ -679,7 +680,7 @@ public class Round {
             ennemies5transition.removeFirst();
         }
         else {
-            ennemies.add(new Ennemy(3500, 50, 150, new Texture("ennemies_sprite/red2.png"), stage, world, directionsEnemy, startX, startY, 3));
+            ennemies.add(new Ennemy(4200, 50, 150, new Texture("ennemies_sprite/red2.png"), stage, world, directionsEnemy, startX, startY, 3));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
         }
     }
@@ -689,7 +690,7 @@ public class Round {
 
 
     public void finalround(int temps, Stage stage, World world, int ennemynbr) { // Liste d'ennemis de plus en plus forts
-        ennemies.add(new Ennemy(1000+(finalroundbooster*100), 120, 0, new Texture("ennemies_sprite/blue2.png"), stage, world,directionsEnemy,startX,startY, 10));
+        ennemies.add(new Ennemy(2000+(finalroundbooster*200), 120, 0, new Texture("ennemies_sprite/blue2.png"), stage, world,directionsEnemy,startX,startY, 10));
         ennemies.get(ennemynbr - deadennemies).defineEnnemy();
         finalroundbooster++;
     }
@@ -700,7 +701,7 @@ public class Round {
         if(ennemies.size()==0 && roundnbr < 37){
             temps++;
 
-            if(temps > 1500){
+            if(temps > 1800){
                 roundnbr++;
                 temps = 0;
             }
@@ -710,19 +711,19 @@ public class Round {
                 ennemies.get(i).update(dt,this.endRect);
                 if(ennemies.get(i).getAttackPlayer()){
                     player.loseLife(ennemies.get(i).getDamage());
-                    if(ennemies.get(i).getInitiallife() == 80){
+                    if(ennemies.get(i).getInitiallife() == 100){
                         ennemies1transition.addLast(ennemies.get(i));
                     }
-                    else if(ennemies.get(i).getInitiallife() == 300){
+                    else if(ennemies.get(i).getInitiallife() == 350){
                         ennemies2transition.addLast(ennemies.get(i));
                     }
-                    else if(ennemies.get(i).getInitiallife() == 1200){
+                    else if(ennemies.get(i).getInitiallife() == 1400){
                         ennemies3transition.addLast(ennemies.get(i));
                     }
-                    else if(ennemies.get(i).getInitiallife() == 1500){
+                    else if(ennemies.get(i).getInitiallife() == 1700){
                         ennemies4transition.addLast(ennemies.get(i));
                     }
-                    else if(ennemies.get(i).getInitiallife() == 3500){
+                    else if(ennemies.get(i).getInitiallife() == 4200){
                         ennemies5transition.addLast(ennemies.get(i));
                     }
                     deadennemies++;
@@ -735,19 +736,19 @@ public class Round {
                     if(roundnbr == 37){
                         player.setBonusennemies(player.getBonusennemies()+1);
                     }
-                    else if(ennemies.get(i).getInitiallife() == 80){
+                    else if(ennemies.get(i).getInitiallife() == 100){
                         ennemies1transition.addLast(ennemies.get(i));
                     }
-                    else if(ennemies.get(i).getInitiallife() == 300){
+                    else if(ennemies.get(i).getInitiallife() == 350){
                         ennemies2transition.addLast(ennemies.get(i));
                     }
-                    else if(ennemies.get(i).getInitiallife() == 1200){
+                    else if(ennemies.get(i).getInitiallife() == 1400){
                         ennemies3transition.addLast(ennemies.get(i));
                     }
-                    else if(ennemies.get(i).getInitiallife() == 1500){
+                    else if(ennemies.get(i).getInitiallife() == 1700){
                         ennemies4transition.addLast(ennemies.get(i));
                     }
-                    else if(ennemies.get(i).getInitiallife() == 3500){
+                    else if(ennemies.get(i).getInitiallife() == 4200){
                         ennemies5transition.addLast(ennemies.get(i));
                     }
                     deadennemies++;
@@ -764,7 +765,7 @@ public class Round {
             if(ennemies.get(i).isIsfast() && ennemies.get(i).getDirection() == 90){ //vers le haut
                 ennemies.get(i).getSpeedsprite().setPosition(ennemies.get(i).getX()-1035,ennemies.get(i).getY()-375);
                 ennemies.get(i).getSpeedsprite().draw(batch);
-                ennemies.get(i).getSpeedsprite().setRotation(90);
+                ennemies.get(i).getSpeedsprite().setRotation(100);
             }
             else if(ennemies.get(i).isIsfast() && ennemies.get(i).getDirection() == 270){//vers le bas
                 ennemies.get(i).getSpeedsprite().setRotation(270);
@@ -780,19 +781,19 @@ public class Round {
                 ennemies.get(i).getSprite().setPosition(ennemies.get(i).getX() - 65, ennemies.get(i).getY() - 32);
                 ennemies.get(i).getSprite().draw(batch);
             }
-            else if(ennemies.get(i).getInitiallife() == 300) {
+            else if(ennemies.get(i).getInitiallife() == 350) {
                 ennemies.get(i).getSprite().setPosition(ennemies.get(i).getX() - 62, ennemies.get(i).getY() - 30);
                 ennemies.get(i).getSprite().draw(batch);
             }
-            else if(ennemies.get(i).getInitiallife() == 1200) {
+            else if(ennemies.get(i).getInitiallife() == 1400) {
                 ennemies.get(i).getSprite().setPosition(ennemies.get(i).getX() - 74, ennemies.get(i).getY() - 28);
                 ennemies.get(i).getSprite().draw(batch);
             }
-            else if(ennemies.get(i).getInitiallife() == 1500) {
+            else if(ennemies.get(i).getInitiallife() == 1700) {
                 ennemies.get(i).getSprite().setPosition(ennemies.get(i).getX() - 74, ennemies.get(i).getY() - 30);
                 ennemies.get(i).getSprite().draw(batch);
             }
-            else if(ennemies.get(i).getInitiallife() == 3500) {
+            else if(ennemies.get(i).getInitiallife() == 4200) {
                 ennemies.get(i).getSprite().setPosition(ennemies.get(i).getX() - 62, ennemies.get(i).getY() - 30);
                 ennemies.get(i).getSprite().draw(batch);
             }

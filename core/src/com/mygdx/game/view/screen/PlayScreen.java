@@ -142,7 +142,6 @@ public class PlayScreen implements Screen{
     private int lastTouchCell;
     private boolean endcapture;
     private boolean islevelmax;
-    private int towertouched;
     private Sprite moab;
     private float transitionmoab;
 
@@ -167,7 +166,6 @@ public class PlayScreen implements Screen{
         initMapCollision();
         initMapTower();
         islevelmax = false;
-        towertouched = 0;
         world = new World(new Vector2(0, 0), true);
         Tank = new Texture("ennemies_sprite/red1.png");
         Pistol1 = new Texture("Pistol.png");
@@ -246,7 +244,7 @@ public class PlayScreen implements Screen{
         tower2 = new Tower(2,"Cadence",8, 275, 20, 150, 0, 0, Weapon2, Base2, Gun2, laser, .4f, mainStage, world);
         tower3 = new Tower(3,"Portée",100, 800, 400, 375, 0, 0, Weapon3, Base3, Gun3, laser, .8f, mainStage, world);
         tower4 = new Tower(4,"Dégats",120, 400, 100, 800, 0, 0, Weapon4, Base4, Gun4, laser, .6f, mainStage, world);
-        tower5 = new FreezeTower(5, "Freeze",0, 300, 120, 250, 0, 0, FreezerBase, FreezerGun, snowlaser, .3f, mainStage, world, 2);
+        tower5 = new FreezeTower(5, "Freeze",0, 250, 120, 250, 0, 0, FreezerBase, FreezerGun, snowlaser, .3f, mainStage, world, 2);
         tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 300, 0, 0, MoneyCoin, blank, laser, 2, mainStage, world, 1.15f, player);
         player.setMoneyboost(0);
 
@@ -573,7 +571,7 @@ public class PlayScreen implements Screen{
                 else if(round.getTemps() > 50 && round.getRoundnbr() < 37 && !dialogSellOrNot){
                     if(pos3.x>0.86 && pos3.x<6.8 && pos3.y>3.5 && pos3.y<5.9){
                         System.out.println("SKIP");
-                        round.setTemps(1500);
+                        round.setTemps(1800);
                     }
                 }
             } else {
@@ -584,7 +582,6 @@ public class PlayScreen implements Screen{
                             System.out.println("vendre");
                             System.out.println(towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x].getName());
                             dialogSellOrNot = true;
-                            towertouched = towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x].getID();
                             if(towersMap[(numTilesVertical-1) - (int)pos3.y][(int)pos3.x].getUpgraded() == 3){
                                 islevelmax = true;
                             }
@@ -669,11 +666,8 @@ public class PlayScreen implements Screen{
         }
         else {
             handleInput(dt);
-            if (round.getRoundnbr() != -1) { // met le round a jour
-                round.update(dt, game, player, mainStage);
-            }
-            if (round.getRoundnbr() == -1 && ennemycount < 1 && temps1 > 125) { //demarre le premier round
-                round.setRoundnbr(0);
+            round.update(dt, game, player, mainStage);
+            if (round.getRoundnbr() == 0 && ennemycount < 1 && temps1 > 125) { //demarre le premier round
                 round.round0(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
@@ -973,19 +967,19 @@ public class PlayScreen implements Screen{
         if(dialogSellOrNot){
             sellButton.draw(batch, 1);
             cancelButton.draw(batch, 1);
-            if(!islevelmax && towertouched == 1) {
+            if(towerToSell.getUpgraded() < 3 && towerToSell.getID()==1) {
                 upgradeButton1.draw(batch, 1);
             }
-            else if(!islevelmax && towertouched == 2) {
+            else if(towerToSell.getUpgraded() < 3 && towerToSell.getID()==2) {
                 upgradeButton2.draw(batch, 1);
             }
-            else if(!islevelmax && towertouched == 3) {
+            else if(towerToSell.getUpgraded() < 3 && towerToSell.getID()==3) {
                 upgradeButton3.draw(batch, 1);
             }
-            else if(!islevelmax && towertouched == 4) {
+            else if(towerToSell.getUpgraded() < 3 && towerToSell.getID()==4) {
                 upgradeButton4.draw(batch, 1);
             }
-            else if(!islevelmax && towertouched == 5) {
+            else if(towerToSell.getUpgraded() < 3 && towerToSell.getID()==5) {
                 upgradeButton5.draw(batch, 1);
             }
         }
