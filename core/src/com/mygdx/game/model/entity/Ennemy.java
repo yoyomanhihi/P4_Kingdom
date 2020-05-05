@@ -65,7 +65,7 @@ public class Ennemy extends BaseActor {
         if(life == 100 || life == 350) {
             sprite.setScale(0.32f, 0.4f);
         }
-        else if(life == 1400 || life == 1700) {
+        else if(life == 1500 || life == 1750) {
             sprite.setScale(0.4f, 0.5f);
         }
         else{
@@ -122,13 +122,13 @@ public class Ennemy extends BaseActor {
         else {
             if(doreload && life < initiallife){
                 if(initiallife == 350) {
-                    life = life + (initiallife / 1100);
+                    life = life + (initiallife / 1050);
                 }
-                else if(initiallife == 1400){
-                    life = life +(initiallife / 1800);
+                else if(initiallife == 1500){
+                    life = life +(initiallife / 1700);
                 }
-                else if(initiallife == 1700){
-                    life = life +(initiallife / 2000);
+                else if(initiallife == 1750){
+                    life = life +(initiallife / 1900);
                 }
             }
             if(isfreezed){

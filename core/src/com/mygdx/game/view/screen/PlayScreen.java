@@ -217,13 +217,13 @@ public class PlayScreen implements Screen{
         upgradeButton4 = new TextButton("Upgrade\nTower: 600", skin);
         upgradeButton5 = new TextButton("Upgrade\nTower: 200", skin);
 
-        propertiesButton(sellButton,-25,180,2.3f);
+        propertiesButton(sellButton,-10,180,2.3f);
         propertiesButton(upgradeButton1, -35, 80, 2.0f);
         propertiesButton(upgradeButton2, -35, 80, 2.0f);
         propertiesButton(upgradeButton3, -35, 80, 2.0f);
         propertiesButton(upgradeButton4, -35, 80, 2.0f);
         propertiesButton(upgradeButton5, -35, 80, 2.0f);
-        propertiesButton(cancelButton,5,-25, 2.8f);
+        propertiesButton(cancelButton,25,-25, 2.8f);
         propertiesButton(skipButton, -40, 70, 2.5f);
 
         this.game = game;
