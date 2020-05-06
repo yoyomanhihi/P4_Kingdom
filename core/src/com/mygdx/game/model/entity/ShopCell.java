@@ -76,7 +76,7 @@ public class ShopCell extends Group {
         select.setPosition(this.getWidth()/2f-select.getWidth()/2f, this.getHeight()-select.getHeight());
 
         btn = new ImageButton(image);
-        if (tower.getID()<5) btn.setScale(2f);
+        //if (tower.getID()<5) btn.setScale(2f);
         btn.setPosition(this.getWidth() / 2f - btn.getWidth() / 2f,this.getHeight() / 2f - btn.getHeight() / 2f);
 
         nameLabel = new Label(tower.getName(), new Label.LabelStyle(font, Color.WHITE));
@@ -98,6 +98,8 @@ public class ShopCell extends Group {
         Label fireRate = new Label(String.format("%.2f",(double)60f/tower.getFireRate()), new Label.LabelStyle(font, Color.WHITE));
         Label range = new Label(String.format("%d",(int)tower.getRange()), new Label.LabelStyle(font, Color.WHITE));
         Label cost = new Label(String.format("%d",tower.getPrice()), new Label.LabelStyle(font, Color.WHITE));
+        Label freeze = new Label("Slow down\n(x0.5)\nin range", new Label.LabelStyle(font, Color.WHITE));
+        Label money = new Label("Money boost\n(+15%)", new Label.LabelStyle(font, Color.WHITE));
 
         name.setText(tower.getName());
 
@@ -106,12 +108,22 @@ public class ShopCell extends Group {
 
         infos.add(name).expandX().expandY().colspan(2).pad(50,0,20,0);
         infos.row();
-        infos.add(damageLabel).expandY().left();
-        infos.add(damage).expandY().right();
-        infos.row();
-        infos.add(fireRateLabel).expandY().left();
-        infos.add(fireRate).expandY().right();
-        infos.row();
+        if (tower.getID()<5) {
+            infos.add(damageLabel).expandY().left();
+            infos.add(damage).expandY().right();
+            infos.row();
+            infos.add(fireRateLabel).expandY().left();
+            infos.add(fireRate).expandY().right();
+            infos.row();
+        }
+        else if (tower.getID()==5) {
+            infos.add(freeze).colspan(2).expandY();
+            infos.row();
+        }
+        else {
+            infos.add(money).colspan(2).expandY();
+            infos.row();
+        }
         infos.add(rangeLabel).expandY().left();
         infos.add(range).expandY().right();
         infos.row();

@@ -513,7 +513,13 @@ public class PlayScreen implements Screen{
                 handleSelected(3);
             }
             else if (pos3.x >49.5 && pos3.x <53 && pos3.y>3 && pos3.y<8) {
-                System.out.println("Button 3 detected");
+                if (doubleTap(5)) {
+                    menuStage.setInfo(menuStage.getItem5(), true);
+                }
+                else {
+                    lastTouchCell = 5;
+                    lastTouchTime = System.currentTimeMillis();
+                }
                 handleSelected(5);
             }
             else if (pos3.x >55.5 && pos3.x <59 && pos3.y>20.5 && pos3.y<25.5) {
@@ -537,7 +543,13 @@ public class PlayScreen implements Screen{
                 handleSelected(4);
             }
             else if (pos3.x >55.5 && pos3.x <59 && pos3.y>3 && pos3.y<8) {
-                System.out.println("Button 6 detected");
+                if (doubleTap(6)) {
+                    menuStage.setInfo(menuStage.getItem6(), true);
+                }
+                else {
+                    lastTouchCell = 6;
+                    lastTouchTime = System.currentTimeMillis();
+                }
                 handleSelected(6);
             }
             else if (cell != null) {
