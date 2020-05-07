@@ -137,6 +137,7 @@ public class PlayScreen implements Screen{
     private TextButton upgradeButton3;
     private TextButton upgradeButton4;
     private TextButton upgradeButton5;
+    TextButton test;
     private Vector3 posTowerSell;
     private long lastTouchTime;
     private int lastTouchCell;
@@ -217,14 +218,19 @@ public class PlayScreen implements Screen{
         upgradeButton4 = new TextButton("Upgrade\nTower: 600", skin);
         upgradeButton5 = new TextButton("Upgrade\nTower: 200", skin);
 
-        propertiesButton(sellButton,-10,180,2.3f);
-        propertiesButton(upgradeButton1, -35, 80, 2.0f);
-        propertiesButton(upgradeButton2, -35, 80, 2.0f);
-        propertiesButton(upgradeButton3, -35, 80, 2.0f);
-        propertiesButton(upgradeButton4, -35, 80, 2.0f);
-        propertiesButton(upgradeButton5, -35, 80, 2.0f);
-        propertiesButton(cancelButton,25,-25, 2.8f);
-        propertiesButton(skipButton, -40, 70, 2.5f);
+        int row_height = (int) (HEIGHT/3)/3;
+        //propertiesButton(sellButton,-10,180,2.3f);
+        propertiesButton(sellButton,-10,row_height*2-30,2.1f);
+        //propertiesButton(upgradeButton1, -35, 80, 2.0f);
+        propertiesButton(upgradeButton1, -35, row_height*1-25, 2.0f);
+        propertiesButton(upgradeButton2, -35, row_height*1-25, 2.0f);
+        propertiesButton(upgradeButton3, -35, row_height*1-25, 2.0f);
+        propertiesButton(upgradeButton4, -35, row_height*1-25, 2.0f);
+        propertiesButton(upgradeButton5, -35, row_height*1-25, 2.0f);
+        propertiesButton(cancelButton,25,row_height*0-25, 2.8f);
+        //propertiesButton(cancelButton,25,-25, 2.8f);
+        //propertiesButton(skipButton, -40, 70, 2.5f);
+        propertiesButton(skipButton, -40, row_height*1-25, 2.5f);
 
         this.game = game;
         this.player = this.game.player;
@@ -652,6 +658,13 @@ public class PlayScreen implements Screen{
         if((numTilesVertical-1) - (int)pos.y !=0 ){
             towersMap[((numTilesVertical-1) - (int)pos.y)-1][(int)pos.x] = emptyTower;
         }
+        if((int) pos.x != towersMap[0].length - 1){
+            towersMap[((numTilesVertical-1) - (int)pos.y)][(int)pos.x + 1] = emptyTower;
+        }
+        if((int)pos.x != 0){
+            towersMap[((numTilesVertical-1) - (int)pos.y)][(int)pos.x - 1] = emptyTower;
+        }
+
     }
 
     private void removeEmptyTowerMap(int x, int y){
@@ -660,6 +673,12 @@ public class PlayScreen implements Screen{
         }
         if(y != 0 ){
             towersMap[y-1][x] = null;
+        }
+        if(x != towersMap[0].length - 1){
+            towersMap[y][x+1] = null;
+        }
+        if(x != 0 ){
+            towersMap[y][x-1] = null;
         }
     }
 
@@ -961,6 +980,7 @@ public class PlayScreen implements Screen{
     }*/
 
     private void propertiesButton(TextButton button,int x, int y, float scale){
+        System.out.println("Height "+ HEIGHT);
         button.setPosition(x, y);
         button.setTransform(true);
         button.setScale(scale);
