@@ -21,6 +21,7 @@ public class WinScreen implements Screen{
     private Stage stage;
     private Game game;
 
+
         public WinScreen(Game game, Player player){
             this.game = game;
             stage = new Stage();
@@ -74,6 +75,7 @@ public class WinScreen implements Screen{
             table.add(scoreLabel).fillX().uniformX();
             table.row().pad(10, 0, 10, 0);
             table.add(playAgainLabel).fillX().uniformX();
+
 
             stage.addActor(table);
         }

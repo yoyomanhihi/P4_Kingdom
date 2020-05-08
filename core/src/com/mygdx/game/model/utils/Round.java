@@ -647,6 +647,7 @@ public class Round {
         ennemies4transition.getFirst().setAttackPlayer(false);
         ennemies4transition.getFirst().setSpeed(ennemies4transition.getFirst().getNormalspeed());
         ennemies4transition.getFirst().setPoint(180);
+        ennemies4transition.getFirst().setIsfast(false);
         ennemies4transition.getFirst().beReload();
         ennemies.add(ennemies4transition.getFirst());
         ennemies4transition.removeFirst();
@@ -685,20 +686,58 @@ public class Round {
         }
     }
 
+    public void round37(int temps, Stage stage, World world, int ennemynbr) { // Un ennemi 4 rapide avec recharge     450        6504
+        ennemies4transition.getFirst().setLife(1750);
+        ennemies4transition.getFirst().setPosition(startX, startY);
+        ennemies4transition.getFirst().setDirection(0);
+        ennemies4transition.getFirst().setTarget(0);
+        ennemies4transition.getFirst().setAttackPlayer(false);
+        ennemies4transition.getFirst().beFast();
+        ennemies4transition.getFirst().setPoint(200);
+        ennemies4transition.getFirst().beReload();
+        ennemies.add(ennemies4transition.getFirst());
+        ennemies4transition.removeFirst();
+    }
 
+    public void round38(int temps, Stage stage, World world, int ennemynbr) { // Cinq ennemis 3 rapides     450        6504
+        ennemies3transition.getFirst().setLife(1500);
+        ennemies3transition.getFirst().setPosition(startX, startY);
+        ennemies3transition.getFirst().setDirection(0);
+        ennemies3transition.getFirst().setTarget(0);
+        ennemies3transition.getFirst().setAttackPlayer(false);
+        ennemies3transition.getFirst().beFast();
+        ennemies3transition.getFirst().getSprite().setColor(Color.WHITE);
+        ennemies3transition.getFirst().setPoint(80);
+        ennemies3transition.getFirst().setDoreload(false);
+        ennemies.add(ennemies3transition.getFirst());
+        ennemies3transition.removeFirst();
+    }
 
+    public void round39(int temps, Stage stage, World world, int ennemynbr) { // Un ennemi 5 avec recharge    450        6504
+        ennemies5transition.getFirst().setLife(4500);
+        ennemies5transition.getFirst().setPosition(startX, startY);
+        ennemies5transition.getFirst().setDirection(0);
+        ennemies5transition.getFirst().setTarget(0);
+        ennemies5transition.getFirst().setAttackPlayer(false);
+        ennemies5transition.getFirst().setSpeed(ennemies5transition.getFirst().getNormalspeed());
+        ennemies5transition.getFirst().setIsfast(false);
+        ennemies5transition.getFirst().beReload();
+        ennemies5transition.getFirst().setPoint(250);
+        ennemies.add(ennemies5transition.getFirst());
+        ennemies5transition.removeFirst();
+    }
 
 
     public void finalround(int temps, Stage stage, World world, int ennemynbr) { // Liste d'ennemis de plus en plus forts
-        if(ennemynbr < 108) {
+        if(ennemynbr < 115) {
             ennemies.add(new Ennemy(2000 + (finalroundbooster * 200), 120, 0, new Texture("ennemies_sprite/blue2.png"), stage, world, directionsEnemy, startX, startY, 10));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
         }
-        else if(ennemynbr < 111) {
+        else if(ennemynbr < 118) {
             ennemies.add(new Ennemy(2000 + (finalroundbooster * 200), 120, 0, new Texture("ennemies_sprite/blue3.png"), stage, world, directionsEnemy, startX, startY, 10));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
         }
-        else if(ennemynbr < 114) {
+        else if(ennemynbr < 121) {
             ennemies.add(new Ennemy(2000 + (finalroundbooster * 200), 120, 0, new Texture("ennemies_sprite/blue4.png"), stage, world, directionsEnemy, startX, startY, 10));
             ennemies.get(ennemynbr - deadennemies).defineEnnemy();
         }
@@ -712,7 +751,7 @@ public class Round {
 
 
     public void update(float dt, Game game, Player player, Stage stage){ //update la position et l etat des ennemis
-        if(ennemies.size()==0 && roundnbr < 37){
+        if(ennemies.size()==0 && roundnbr < 40){
             temps++;
 
             if(temps > 1800){
@@ -744,10 +783,10 @@ public class Round {
                     ennemies.remove(i);
                 }
                 if (0 < ennemies.size() && !ennemies.get(i).isAlive()) {
-                    transition = (int) ((ennemies.get(i).getPoint()) * (1 + (player.getMoneyboost()/10)));
+                    transition = (int) ((ennemies.get(i).getPoint()) * (1 + (player.getMoneyboost()*.15f)));
                     player.setMoney(player.getMoney() + transition);
                     player.setScore(player.getScore() + ennemies.get(i).getPoint());
-                    if(roundnbr == 37){
+                    if(roundnbr == 40){
                         player.setBonusennemies(player.getBonusennemies()+1);
                     }
                     else if(ennemies.get(i).getInitiallife() == 100){

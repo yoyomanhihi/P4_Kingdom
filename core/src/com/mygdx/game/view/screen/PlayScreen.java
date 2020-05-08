@@ -215,7 +215,7 @@ public class PlayScreen implements Screen{
         upgradeButton1 = new TextButton("Upgrade\nTower: 40", skin);
         upgradeButton2 = new TextButton("Upgrade\nTower: 120", skin);
         upgradeButton3 = new TextButton("Upgrade\nTower: 300", skin);
-        upgradeButton4 = new TextButton("Upgrade\nTower: 600", skin);
+        upgradeButton4 = new TextButton("Upgrade\nTower: 640", skin);
         upgradeButton5 = new TextButton("Upgrade\nTower: 200", skin);
 
         int row_height = (int) (HEIGHT/3)/3;
@@ -251,7 +251,7 @@ public class PlayScreen implements Screen{
         tower3 = new Tower(3,"Portée",100, 800, 400, 375, 0, 0, Weapon3, Base3, Gun3, laser, .8f, mainStage, world);
         tower4 = new Tower(4,"Dégats",120, 400, 100, 800, 0, 0, Weapon4, Base4, Gun4, laser, .6f, mainStage, world);
         tower5 = new FreezeTower(5, "Freeze",0, 250, 120, 250, 0, 0, FreezerBase, FreezerGun, snowlaser, .3f, mainStage, world, 2);
-        tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 300, 0, 0, MoneyCoin, blank, laser, 2, mainStage, world, 1.15f, player);
+        tower6 = new MoneyTower(6,"Money",0, 0, Integer.MAX_VALUE, 250, 0, 0, MoneyCoin, blank, laser, 2, mainStage, world, 1.15f, player);
         player.setMoneyboost(0);
 
         menuStage = new MenuStage(menuAreaViewport, game, tower1, tower2, tower3, tower4, tower5, tower6);
@@ -586,7 +586,7 @@ public class PlayScreen implements Screen{
                         posTowerSell = null;
                     }
                 }
-                else if(round.getTemps() > 50 && round.getRoundnbr() < 37 && !dialogSellOrNot){
+                else if(round.getTemps() > 50 && round.getRoundnbr() < 40 && !dialogSellOrNot){
                     if(pos3.x>0.86 && pos3.x<6.8 && pos3.y>3.5 && pos3.y<5.9){
                         System.out.println("SKIP");
                         round.setTemps(1800);
@@ -686,11 +686,11 @@ public class PlayScreen implements Screen{
         if(player.getNuke().getCooldown() > 0){
             player.getNuke().setCooldown(player.getNuke().getCooldown()-1);
         }
-        if(player.getLife() <= 0 && round.getRoundnbr() < 37){
+        if(player.getLife() <= 0 && round.getRoundnbr() < 40){
             this.gameOver = true;
             game.setScreen(new LoseScreen(game, player));
         }
-        else if(round.getRoundnbr() == 37 && player.getLife()<=0){
+        else if(round.getRoundnbr() == 40 && player.getLife()<=0){
             player.setScore(player.getScore());
             this.gameOver = true;
             game.setScreen(new WinScreen(game, player));
@@ -698,7 +698,7 @@ public class PlayScreen implements Screen{
         else {
             handleInput(dt);
             round.update(dt, game, player, mainStage);
-            if (round.getRoundnbr() == 0 && ennemycount < 1 && temps1 > 125) { //demarre le premier round
+            if (round.getRoundnbr() == 0 && ennemycount < 1) { //demarre le premier round
                 round.round0(temps, uiStage, world, ennemycount);
                 ennemycount++;
                 temps1 = 0;
@@ -885,7 +885,22 @@ public class PlayScreen implements Screen{
                 ennemycount++;
                 temps1 = 0;
             }
-            else if (round.getRoundnbr() == 37 && ennemycount < 1000 && temps1 > 500) {
+            else if (round.getRoundnbr() == 37 && ennemycount < 106 && temps1 > 125) {
+                round.round37(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 38 && ennemycount < 111 && temps1 > 125) {
+                round.round38(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 39 && ennemycount < 112 && temps1 > 125) {
+                round.round39(temps, uiStage, world, ennemycount);
+                ennemycount++;
+                temps1 = 0;
+            }
+            else if (round.getRoundnbr() == 40 && ennemycount < 1000 && temps1 > 500) {
                 if(!endcapture){
                     player.setEndlife(player.getLife());
                     endcapture = true;
@@ -1015,16 +1030,16 @@ public class PlayScreen implements Screen{
                 upgradeButton5.draw(batch, 1);
             }
         }
-        else if(round.getTemps() > 50 && !dialogSellOrNot && round.getRoundnbr() < 37){
+        else if(round.getTemps() > 50 && !dialogSellOrNot && round.getRoundnbr() < 40){
             skipButton.draw(batch, 1);
         }
         font.setColor(Color.BLACK);
         font.draw(batch, "FPS: " + Gdx.graphics.getFramesPerSecond(), Gdx.graphics.getWidth()-110, 30);
         //font.getData().setScale(1.8f);
-        if(round.getRoundnbr()>-1 && round.getRoundnbr()<37) {
+        if(round.getRoundnbr()>-1 && round.getRoundnbr()<40) {
             font.draw(batch, "Round: " + (round.getRoundnbr()+1), 10, HEIGHT - 10);
         }
-        else if(round.getRoundnbr() == 37){
+        else if(round.getRoundnbr() == 40){
             font.draw(batch, "BONUS ROUND" , 10, HEIGHT - 10);
         }
         font.getData().setScale(2f);

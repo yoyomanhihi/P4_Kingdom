@@ -13,6 +13,7 @@ public class MoneyTower extends Tower {
 
         super(ID ,nom, degats, portee, cadence, prix, x, y, base_texture, base_texture, gun_texture, texture2, lasersize, s, world);
         player.setMoneyboost(player.getMoneyboost()+1);
+        this.moneyboost = moneyboost;
     }
 
     public float getMoneyboost(){
